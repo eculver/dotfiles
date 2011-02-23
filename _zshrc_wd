@@ -1,0 +1,5 @@
+
+alias rmdotunder='find . -type f -name "._*" -exec rm -f {} \; -print'
+alias gowd='cd ~/dev_wd'
+alias mount_wd='mount_sshfs eculver@eculver.iowalab.com:/home/eculver/projects/wd ~/dev_wd'
+alias exclude_svn='grep -v "/\.svn/"'

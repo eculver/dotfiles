@@ -1,0 +1,38 @@
+# Path to your oh-my-zsh configuration.
+export ZSH=$HOME/.oh-my-zsh
+
+# Set to the name theme to load.
+# Look in ~/.oh-my-zsh/themes/
+export ZSH_THEME="clean"
+
+# Set to this to use case-sensitive completion
+# export CASE_SENSITIVE="true"
+
+# Comment this out to disable weekly auto-update checks
+# export DISABLE_AUTO_UPDATE="true"
+
+# Uncomment following line if you want to disable colors in ls
+# export DISABLE_LS_COLORS="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git svn brew github osx)
+
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
+
+# WD/dev aliases
+source ~/.zshrc_wd
+
+# Path
+PATH=$PATH:~/.gem/ruby/1.8/bin:/usr/local/Cellar/python/2.7.1/bin:~/bin
+export PATH
+
+# Virtualenv
+export WORKON_HOME=~/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.1/bin/python
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Python
+export PYTHONSTARTUP=$HOME/.pythonrc.py
