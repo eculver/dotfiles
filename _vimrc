@@ -178,3 +178,7 @@ endif
 
 """" Display
 colorscheme wombat 
+
+"""" Gist.vim
+let g:github_user='eculver'
+let g:github_token='SECRET'
