@@ -147,7 +147,7 @@ map <C-h> :py EvaluateCurrentRange()<CR>
 map T :TaskList<CR><C-w><Left>
 
 " Show Project Menu
-map <F3> :NERDTreeToggle<CR>
+map <F5> :NERDTreeToggle<CR>
 
 
 let Tlist_GainFocus_On_ToggleOpen=1
