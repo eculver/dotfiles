@@ -180,5 +180,10 @@ endif
 colorscheme wombat 
 
 """" Gist.vim
-let g:github_user='eculver'
-let g:github_token='SECRET'
+let g:gist_clip_command='pbcopy'
+let g:gist_open_browser_after_post=1
+
+"""" Pathogen
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+

@@ -1,0 +1,18 @@
+[submodule "_vim/bundle/gist-vim"]
+	path = _vim/bundle/gist-vim
+	url = https://github.com/mattn/gist-vim.git
+[submodule "_vim/bundle/snipmate"]
+	path = _vim/bundle/snipmate
+	url = https://github.com/msanders/snipmate.vim.git
+[submodule "_vim/bundle/The-NERD-tree"]
+	path = _vim/bundle/The-NERD-tree
+	url = https://github.com/vim-scripts/The-NERD-tree.git
+[submodule "_vim/bundle/vim-css-color"]
+	path = _vim/bundle/vim-css-color
+	url = https://github.com/skammer/vim-css-color.git
+[submodule "_vim/bundle/snipmate-snippets"]
+	path = _vim/bundle/snipmate-snippets
+	url = https://github.com/scrooloose/snipmate-snippets.git
+[submodule "_vim/snippets"]
+	path = _vim/snippets
+	url = https://github.com/scrooloose/snipmate-snippets.git
