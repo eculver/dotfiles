@@ -178,7 +178,7 @@ EOF
 endif
 
 """" Display
-colorscheme wombat 
+colorscheme vividchalk
 
 """" Gist.vim
 let g:gist_clip_command='pbcopy'
