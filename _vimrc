@@ -50,7 +50,7 @@ if exists("&colorcolumn")
 endif
 
 " displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:▸\ ,eol:¬,trail:-,precedes:<,extends:>
+set listchars=tab:>-,eol:$,trail:-,precedes:<,extends:>
 set list
 
 """" Messages, Info, Status
