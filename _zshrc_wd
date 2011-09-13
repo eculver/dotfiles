@@ -1,5 +1,32 @@
 
 alias rmdotunder='find . -type f -name "._*" -exec rm -f {} \; -print'
-alias gowd='cd ~/dev_wd'
-alias mount_wd='mount_sshfs eculver@eculver.iowalab.com:/home/eculver/projects/wd ~/dev_wd'
+alias gowd='cd ~/projects/wd-app'
 alias exclude_svn='grep -v "/\.svn/"'
+alias svn_st='rmdotunder&&svn st'
+alias git_add_commit='git_add_modified; git commit -m '
+alias buildwd='~/projects/wd-app/bin/build.php -a'
+alias rmbuildfiles='rm ~/projects/wd-app/resources/*.{js,css}'
+alias nummodules='find ~/projects/wd-app/resources/module -name "*.js" | grep -v AppleDouble | wc -l'
+alias numwidgets='find ~/projects/wd-app/resources/widget -name "*.js" | grep -v AppleDouble | wc -l'
+alias numplugins='find ~/projects/wd-app/resources/plugin -name "*.js" | grep -v AppleDouble | wc -l'
+
+noie () {
+    git checkout ~/projects/wd-app/Wd/App/View/Html/ResourceBuilder.php
+    rmbuildfiles
+}
+
+git_add_modified () {
+    git status | grep modified | awk '{print $3}' | xargs git add
+}
+
+git_rm_deleted () {
+    git status | grep deleted | awk '{print $3}' | xargs git rm
+}
+
+git_reset_modified () {
+    git status | grep modified | awk '{print $3}' | xargs git reset
+}
+
+rm_built_resources () {
+    git status | grep 'resources' | awk '{print $2}' | xargs rm
+}
