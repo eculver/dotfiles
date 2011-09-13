@@ -157,6 +157,12 @@ let g:skip_loading_mswin=1
 " treat html files as django templates
 autocmd BufRead *.html set filetype=htmldjango
 
+" treat pjs files as JavaScript
+autocmd BufRead *.pjs set filetype=javascript
+
+" treat phtml files as HTML
+autocmd BufRead *.phtml set filetype=html
+
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"      
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m       
