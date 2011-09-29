@@ -184,7 +184,7 @@ EOF
 endif
 
 """" Display
-colorscheme vividchalk
+colorscheme tomorrow-night-bright
 
 """" Gist.vim
 let g:gist_clip_command='pbcopy'
