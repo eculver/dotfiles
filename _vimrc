@@ -150,6 +150,10 @@ map T :TaskList<CR><C-w><Left>
 " Show Project Menu
 map <F5> :NERDTreeToggle<CR>
 
+" Toggle Paste Mode
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
 
 let Tlist_GainFocus_On_ToggleOpen=1
 let g:skip_loading_mswin=1
