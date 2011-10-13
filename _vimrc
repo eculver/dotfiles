@@ -155,6 +155,9 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
+" Ignore .o, ~ and .pyc extensions
+set wildignore=*.o,*~,*.pyc
+
 let Tlist_GainFocus_On_ToggleOpen=1
 let g:skip_loading_mswin=1
 
