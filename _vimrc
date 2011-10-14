@@ -65,7 +65,7 @@ set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [LINE=%l:%c]\ [LEN=%L]
 
 """" Tabs/Indent Levels
 set tabstop=4               " <tab> inserts 4 spaces 
-set shiftwidth=2            " but an indent level is 2 spaces wide.
+set shiftwidth=4            " but an indent level is 2 spaces wide.
 set softtabstop=4           " <BS> over an autoindent deletes both spaces.
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
 set shiftround              " rounds indent to a multiple of shiftwidth
@@ -161,6 +161,9 @@ set wildignore=*.o,*~,*.pyc
 let Tlist_GainFocus_On_ToggleOpen=1
 let g:skip_loading_mswin=1
 
+" Set terminal title
+set title
+
 " treat html files as django templates
 autocmd BufRead *.html set filetype=htmldjango
 
@@ -173,22 +176,6 @@ autocmd BufRead *.phtml set filetype=html
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"      
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m       
-
-if has("python")
-python << EOF
-import os
-import sys
-import vim
-# lets us use 'gf' to go to files imported
-for p in sys.path:
-    if os.path.isdir(p):
-        vim.command(r"set path+=%s" % (p.replace(" ", r"\ ")))
-
-# lets us execute the highlighted portion of the script
-def EvaluateCurrentRange():
-    eval(compile('\n'.join(vim.current.range),'','exec'),globals())
-EOF
-endif
 
 """" Display
 colorscheme tomorrow-night-bright
