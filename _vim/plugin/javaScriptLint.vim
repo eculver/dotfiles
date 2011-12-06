@@ -15,6 +15,10 @@ if !exists("jslint_command")
   let jslint_command = 'jsl'
 endif
 
+if !exists("jslint_conf_file")
+  let jslint_conf_file = '~/.jslrc'
+endif
+
 if !exists("jslint_command_options")
   let jslint_command_options = '-nofilelisting -nocontext -nosummary -nologo -process'
 endif
@@ -32,7 +36,7 @@ autocmd BufWinLeave * call s:MaybeClearCursorLineColor()
 function JavascriptLint() 
   " run javascript lint on the current file
   let current_file = shellescape(expand('%:p'))
-  let cmd_output = system(g:jslint_command . ' ' . g:jslint_command_options . ' ' . current_file)
+  let cmd_output = system(g:jslint_command . ' -conf ' . g:jslint_conf_file . ' ' . g:jslint_command_options . ' ' . current_file)
 
   " if some warnings were found, we process them
   if strlen(cmd_output) > 0
