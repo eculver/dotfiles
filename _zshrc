@@ -50,3 +50,7 @@ alias godio='cd ~/dev/dio ; workon dio'
 alias goeio='cd ~/dev/eculver.io ; workon eio'
 alias gojute='cd ~/dev/JUTE/backend/nodejute'
 alias godpp='cd ~/dev/dpp ; workon dpp'
+alias gotamoshunas='cd ~/dev/tamoshunas ; workon tamoshunas'
+
+alias pwgen='nocorrect pwgen'
+alias ack='nocorrect ack'
