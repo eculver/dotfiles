@@ -41,8 +41,9 @@ if has("gui_running")
     set guioptions-=m           " remove menu bar
     set guioptions-=T           " remove toolbar
     set guioptions-=r           " remove right-hand scroll bar
-    set t_Co=256
 endif
+
+set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
 
 " show a line at column 79
 if exists("&colorcolumn")
@@ -61,7 +62,8 @@ set report=0                " : commands always print changed line count.
 set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
 set ruler                   " Show some info, even without statuslines.
 set laststatus=2            " Always show statusline, even if only 1 window.
-set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [LINE=%l:%c]\ [LEN=%L]
+"set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [LINE=%l:%c]\ [LEN=%L]
+
 
 """" Tabs/Indent Levels
 set tabstop=4               " <tab> inserts 4 spaces 
@@ -182,7 +184,7 @@ autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stde
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m       
 
 """" Display
-colorscheme tomorrow-night-bright
+colorscheme matrix
 
 """" Gist.vim
 let g:gist_clip_command='pbcopy'
