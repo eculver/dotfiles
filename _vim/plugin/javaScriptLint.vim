@@ -11,12 +11,16 @@
 "               http://www.javascriptlint.com/docs/index.htm
 " Last Modified: May 5, 2009
 
+if !exists("jslint_conf")
+  let jslint_conf = '~/.jslrc'
+endif
+
 if !exists("jslint_command")
   let jslint_command = 'jsl'
 endif
 
 if !exists("jslint_command_options")
-  let jslint_command_options = '-nofilelisting -nocontext -nosummary -nologo -process'
+  let jslint_command_options = '-conf ' . g:jslint_conf . ' -nofilelisting -nocontext -nosummary -nologo -process'
 endif
 
 if !exists("jslint_highlight_color")
