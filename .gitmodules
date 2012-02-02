@@ -25,6 +25,9 @@
 [submodule "_oh-my-zsh"]
 	path = _oh-my-zsh
 	url = ssh://git@github.com/robbyrussell/oh-my-zsh.git
+[submodule "_vim/bundle/YankRing"]
+	path = _vim/bundle/YankRing
+	url = https://github.com/vim-scripts/YankRing.vim.git
 [submodule "_vim/bundle/powerline"]
 	path = _vim/bundle/powerline
 	url = https://github.com/Lokaltog/vim-powerline.git
