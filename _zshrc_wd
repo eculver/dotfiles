@@ -1,4 +1,7 @@
 
+# force $TERM to set 256 colors
+TERM=xterm-256color
+
 # force tmux to use UTF-8
 alias tmux='tmux -u'
 
@@ -19,6 +22,7 @@ alias numplugins='find ~/projects/wd-app/resources/plugin -name "*.js" | grep -v
 # turn off correction for these
 alias npm='nocorrect npm'
 alias ack='nocorrect ack'
+alias cap='nocorrect cap'
 
 noie () {
     git checkout ~/projects/wd-app/Wd/App/View/Html/ResourceBuilder.php
