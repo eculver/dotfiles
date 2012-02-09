@@ -7,9 +7,6 @@
 [submodule "_vim/bundle/The-NERD-tree"]
 	path = _vim/bundle/The-NERD-tree
 	url = https://github.com/vim-scripts/The-NERD-tree.git
-[submodule "_vim/bundle/vim-css-color"]
-	path = _vim/bundle/vim-css-color
-	url = https://github.com/skammer/vim-css-color.git
 [submodule "_vim/bundle/snipmate-snippets"]
 	path = _vim/bundle/snipmate-snippets
 	url = https://github.com/scrooloose/snipmate-snippets.git
