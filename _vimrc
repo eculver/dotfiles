@@ -1,7 +1,7 @@
-" Author: John Anderson (sontek@gmail.com)
+" Original Author: John Anderson (sontek@gmail.com)
 
 " Stop behaving like vi; vim enhancements are better
-set nocompatible 
+set nocompatible
 
 """ Moving Around/Editing
 set nostartofline           " Avoid moving cursor to BOL when jumping around
@@ -35,7 +35,7 @@ set foldlevelstart=99       " All folds open by default
 
 set number                  " Display line numbers
 set numberwidth=1           " using only 1 column (and 1 space) while possible
-set background=dark 
+set background=dark
 
 if has("gui_running")
     set guioptions-=m           " remove menu bar
@@ -74,8 +74,8 @@ set shiftround              " rounds indent to a multiple of shiftwidth
 
 """" Tags
 " Tags can be in ./tags, ../tags, ..., /home/tags.
-"set tags+=$HOME/.vim/tags/python.ctags
-"set tags+=$HOME/.vim/tags/django.ctags
+set tags+=$HOME/.vim/tags/python.ctags
+set tags+=$HOME/.vim/tags/django.ctags
 
 set showfulltag             " Show more information while completing tags.
 set cscopetag               " When using :tag, <C-]>, or "vim -t", try cscope:
@@ -136,12 +136,18 @@ filetype plugin on          " also allow for filetype-specific plugins,
 syntax on                   " and turn on per-filetype syntax highlighting.
 
 """ Key Mappings
+let mapleader=","
+let maplocalleader="."
+
 map <silent><C-Left> <C-T>
 map <silent><C-Right> <C-]>
 
 " easily move around tabs
-map <silent><A-Right> :tabnext<CR>
-map <silent><A-Left> :tabprevious<CR>
+map <silent><S-n> :tabnext<CR>
+
+" easily move around long wrapped lines
+nnoremap k gk
+nnoremap j gj
 
 " execute selected script
 map <C-h> :py EvaluateCurrentRange()<CR>
@@ -156,6 +162,18 @@ map <F5> :NERDTreeToggle<CR>
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
+
+" Prompt for a command to run
+map <Leader>rp :PromptVimTmuxCommand<CR>
+
+" Run last command executed by RunVimTmuxCommand
+map <Leader>rl :RunLastVimTmuxCommand<CR>
+
+" Close all other tmux panes in current window
+map <Leader>rx :CloseVimTmuxPanes<CR>
+
+" If text is selected, save it in the v buffer and send that buffer it to tmux
+vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
 
 " Ignore .o, ~ and .pyc extensions
 set wildignore=*.o,*~,*.pyc
@@ -184,7 +202,7 @@ autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stde
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m       
 
 """" Display
-colorscheme matrix
+colorscheme jellybeans
 
 """" Gist.vim
 let g:gist_clip_command='pbcopy'

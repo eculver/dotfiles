@@ -37,3 +37,9 @@
 [submodule "_vim/bundle/vimux"]
 	path = _vim/bundle/vimux
 	url = https://github.com/benmills/vimux.git
+[submodule "_vim/bundle/surround"]
+	path = _vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "_vim/bundle/webapi-vim"]
+	path = _vim/bundle/webapi-vim
+	url = https://github.com/mattn/webapi-vim.git
