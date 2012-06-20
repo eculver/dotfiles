@@ -16,7 +16,7 @@ export ZSH_THEME="gozilla"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git svn brew github osx)
+plugins=(git git-flow svn brew github osx)
 
 source $ZSH/oh-my-zsh.sh
 
