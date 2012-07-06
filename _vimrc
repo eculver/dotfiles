@@ -1,5 +1,3 @@
-" Original Author: John Anderson (sontek@gmail.com)
-
 " Stop behaving like vi; vim enhancements are better
 set nocompatible
 
@@ -63,7 +61,6 @@ set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
 set ruler                   " Show some info, even without statuslines.
 set laststatus=2            " Always show statusline, even if only 1 window.
 "set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [LINE=%l:%c]\ [LEN=%L]
-
 
 """" Tabs/Indent Levels
 set tabstop=4               " <tab> inserts 4 spaces 
@@ -193,9 +190,18 @@ autocmd BufRead *.pjs set filetype=javascript
 " treat phtml files as HTML
 autocmd BufRead *.phtml set filetype=html
 
+" treat json files as JavaScript
+autocmd BufRead *.json set filetype=javascript
+
+" YAML Highlighting
+au! BufRead,BufNewFile *.yaml,*.yml so ~/.vim/syntax/yaml.vim
+
+" LESS Highlighting
+au! BufRead,BufNewFile *.less set filetype=less
+
 " SASS Highlighting
-au! BufRead,BufNewFile *.sass setfiletype sass
-au! BufRead,BufNewFile *.scss setfiletype scss
+au! BufRead,BufNewFile *.sass set filetype=sass
+au! BufRead,BufNewFile *.scss set filetype=scss
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"      
@@ -207,8 +213,77 @@ colorscheme jellybeans
 """" Gist.vim
 let g:gist_clip_command='pbcopy'
 let g:gist_open_browser_after_post=1
+let g:gist_browser_command = 'open %URL%'
+
+"""" Bundles
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle "gmarik/vundle"
+
+" Programming
+Bundle "jQuery"
+Bundle "less.vim"
+Bundle "briandoll/change-inside-surroundings.vim"
+
+" JSHint
+Bundle "jshint.vim--Stelmach"
+let jshint_highlight_color = "DarkGray"
+
+" Snippets
+Bundle "gmarik/snipmate.vim"
+
+" Syntax highlight
+Bundle "Syntastic"
+Bundle "Markdown"
+Bundle "Sass"
+Bundle "less-syntax"
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+
+" Git integration
+Bundle "mattn/gist-vim"
+Bundle "Git-Branch-Info"
+Bundle "git.zip"
+Bundle "gitignore"
+Bundle "fugitive.vim"
+
+" (HT|X)ml tool
+Bundle "ragtag.vim"
+Bundle "rstacruz/sparkup", {'rtp': 'vim/'}
+
+" Utility
+Bundle 'ScrollColors'
+Bundle 'openssl.vim'
+Bundle "YankRing.vim"
+Bundle "The-NERD-tree"
+Bundle "repeat.vim"
+Bundle "surround.vim"
+Bundle "SuperTab"
+Bundle "WebAPI.vim"
+Bundle "vimux"
+Bundle "powerline"
+
+" Ack
+Bundle "ack.vim"
+noremap <LocalLeader># "ayiw:Ack <C-r>a<CR>
+vnoremap <LocalLeader># "ay:Ack <C-r>a<CR>
+
+" " tComment
+Bundle "tComment"
+nnoremap // :TComment<CR>
+vnoremap // :TComment<CR>
+
+" Command-T
+Bundle "git://git.wincent.com/command-t.git"
+let g:CommandTMatchWindowAtTop=1 " show window at top
+
+" " Navigation
+Bundle "gmarik/vim-visual-star-search"
+
 
 """" Pathogen
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+"call pathogen#runtime_append_all_bundles()
+"call pathogen#helptags()
 
