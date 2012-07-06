@@ -1,45 +1,80 @@
 [submodule "_vim/bundle/gist-vim"]
 	path = _vim/bundle/gist-vim
-	url = https://github.com/mattn/gist-vim.git
-[submodule "_vim/bundle/snipmate"]
-	path = _vim/bundle/snipmate
-	url = https://github.com/msanders/snipmate.vim.git
+    url = https://github.com/mattn/gist-vim.git
+    ignore = dirty
+[submodule "_vim/bundle/snipmate.vim"]
+	path = _vim/bundle/snipmate.vim
+    url = https://github.com/gmarik/snipmate.vim.git
+    ignore = dirty
+[submodule "_vim/bundle/vundle"]
+	path = _vim/bundle/vundle
+    url = https://github.com/gmarik/vundle.git
+    ignore = dirty
+[submodule "_vim/bundle/sparkup"]
+	path = _vim/bundle/sparkup
+    url = https://github.com/vim-scripts/sparkup.git
+    ignore = dirty
 [submodule "_vim/bundle/The-NERD-tree"]
 	path = _vim/bundle/The-NERD-tree
-	url = https://github.com/vim-scripts/The-NERD-tree.git
+    url = https://github.com/vim-scripts/The-NERD-tree.git
+    ignore = dirty
 [submodule "_vim/bundle/snipmate-snippets"]
 	path = _vim/bundle/snipmate-snippets
-	url = https://github.com/scrooloose/snipmate-snippets.git
-[submodule "_vim/snippets"]
-	path = _vim/snippets
-	url = git://github.com/eculver/dotfiles.git
-[submodule "_vim/bundle/vim-fugitive"]
-	path = _vim/bundle/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "_vim/bundle/ack"]
-	path = _vim/bundle/ack
-	url = ssh://git@github.com/mileszs/ack.vim.git
+    url = https://github.com/scrooloose/snipmate-snippets.git
+    ignore = dirty
+[submodule "_vim/bundle/fugitive.vim"]
+	path = _vim/bundle/fugitive.vim
+    url = https://github.com/vim-scripts/fugitive.vim.git
+    ignore = dirty
+[submodule "_vim/bundle/ack.vim"]
+	path = _vim/bundle/ack.vim
+    url = ssh://git@github.com/vim-scripts/ack.vim.git
+    ignore = dirty
+[submodule "_vim/bundle/ragtag.vim"]
+	path = _vim/bundle/ragtag.vim
+    url = ssh://git@github.com/vim-scripts/ragtag.vim.git
+    ignore = dirty
 [submodule "_oh-my-zsh"]
 	path = _oh-my-zsh
 	url = ssh://git@github.com/robbyrussell/oh-my-zsh.git
-[submodule "_vim/bundle/YankRing"]
-	path = _vim/bundle/YankRing
-	url = https://github.com/vim-scripts/YankRing.vim.git
+[submodule "_vim/bundle/YankRing.vim"]
+	path = _vim/bundle/YankRing.vim
+    url = https://github.com/vim-scripts/YankRing.vim.git
+    ignore = dirty
 [submodule "_vim/bundle/powerline"]
 	path = _vim/bundle/powerline
 	url = https://github.com/Lokaltog/vim-powerline.git
 [submodule "_vim/bundle/change-inside-surroundings"]
 	path = _vim/bundle/change-inside-surroundings
-	url = git://github.com/briandoll/change-inside-surroundings.vim.git
-[submodule "_vim/bundle/vim-less"]
-	path = _vim/bundle/vim-less
-	url = git://github.com/lunaru/vim-less.git
+    url = git://github.com/briandoll/change-inside-surroundings.vim.git
+[submodule "_vim/bundle/less"]
+	path = _vim/bundle/less
+    url = git://github.com/vim-scripts/less.git
+    ignore = dirty
+[submodule "_vim/bundle/less-syntax"]
+    path = _vim/bundle/less-syntax
+    url = git://github.com/vim-scripts/less-syntax.git
+    ignore = dirty
 [submodule "_vim/bundle/vimux"]
 	path = _vim/bundle/vimux
-	url = https://github.com/benmills/vimux.git
-[submodule "_vim/bundle/surround"]
-	path = _vim/bundle/surround
-	url = https://github.com/tpope/vim-surround.git
-[submodule "_vim/bundle/webapi-vim"]
-	path = _vim/bundle/webapi-vim
-	url = https://github.com/mattn/webapi-vim.git
+	url = https://github.com/vim-scripts/vimux.git
+[submodule "_vim/bundle/surround.vim"]
+	path = _vim/bundle/surround.vim
+    url = https://github.com/vim-scripts/surround.vim.git
+    ignore = dirty
+[submodule "_vim/bundle/tComment"]
+	path = _vim/bundle/tComment
+    url = https://github.com/vim-scripts/tComment.git
+    ignore = dirty
+[submodule "_vim/bundle/WebAPI.vim"]
+	path = _vim/bundle/WebAPI.vim
+    url = https://github.com/vim-scripts/WebAPI.vim.git
+    ignore = dirty
+[submodule "_vim/bundle/Syntastic"]
+	path = _vim/bundle/Syntastic
+    url = https://git@github.com/vim-scripts/Syntastic
+    ignore = dirty
+[submodule "_vim/bundle/command-t"]
+	path = _vim/bundle/command-t
+    url = git://git.wincent.com/command-t.git
+    ignore = dirty
