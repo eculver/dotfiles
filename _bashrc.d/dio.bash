@@ -2,12 +2,16 @@
 # Bash conf specific to DIO environment
 # ========================================================================
 
+# Virtual env
+export WORKON_HOME=/usr/local/dio/.virtualenvs
 
 # ------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------
 
 alias pkg_upgrade='sudo apt-get -uV upgrade'
+alias start_ssh_agent='eval `ssh-agent`; ssh-add ~/.ssh/id_rsa ; ssh-add -l'
+alias tsnow='date +%Y%m%d%H%M%S'
 
 
 # ------------------------------------------------------------------------
