@@ -10,6 +10,7 @@
 alias wdvim='ssh -t evan tmux -u -2 at -t vim'
 alias wdirc='ssh -t evan tmux -u -2 at -t irc'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
+alias dio='ssh -t leeroy tmux -u -2 at -t base'
 
 # tmuxinator/project aliases
 alias gousc='mux start usc'
