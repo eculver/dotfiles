@@ -125,9 +125,7 @@ source $CONFDIR/common.zsh
 #
 # mylaptop.local -> local.zsh
 # some.host.with.fqdn.com -> my_server.zsh
-#
-#
-#
+
 [[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
 
 
