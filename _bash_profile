@@ -1,0 +1,76 @@
+export EDITOR=vim
+export TZ="/usr/share/zoneinfo/America/Los_Angeles"
+NM="\[\033[0;38m\]" #means no background and white lines
+HI="\[\033[0;37m\]" #change this for letter colors
+HII="\[\033[0;31m\]" #change this for letter colors
+SI="\[\033[0;33m\]" #this is for the current directory
+IN="\[\033[0m\]"
+ 
+safe_term=${TERM//[^[:alnum:]]/?}   # sanitize TERM
+if [[ -f /etc/DIR_COLORS ]] ; then
+        match_lhs=$(</etc/DIR_COLORS)
+elif type -p dircolors >/dev/null ; then
+        match_lhs=$(dircolors --print-database)
+else
+        match_lhs=""
+fi
+[[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
+
+if ${use_color} ; then
+        if [[ ${EUID} == 0 ]] ; then
+                PS1='\[\033[01;31m\]\H\[\033[01;34m\] \W \$\[\033[00m\] '
+        else
+                PS1='\[\033[01;32m\]\u@\H\[\033[01;34m\] \w \$\[\033[00m\] '
+        fi
+
+        alias grep='grep --colour=auto'
+else
+        if [[ ${EUID} == 0 ]] ; then
+                # show root@ when we don't have colors
+                PS1='\u@\h \W \$ '
+        else
+                PS1='\u@\h \w \$ '
+        fi
+fi
+ 
+    export LS_OPTIONS='--color=always'
+        eval `dircolors ~/.dir_colors`
+         
+# Useful aliases
+        
+	alias ls='ls $LS_OPTIONS -hF'
+        alias ll='ls $LS_OPTIONS -lhF'
+        alias l='ls $LS_OPTIONS -lAhF'
+        alias cd..="cd .."
+        alias c="clear"
+        alias e="exit"
+        alias ssh="ssh -X"
+        alias ..="cd .."
+	
+HISTFILESIZE=50000000
+HISTSIZE=500
+#export HISTTIMEFORMAT='%a, %d %b %Y %l:%M:%S%p %z '
+export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+alias df='df -h'  # '19G' instead of '19228276'
+alias du='du -h'  # '501M' instead of '512116'
+
+shopt -s cdspell
+shopt -s cmdhist
+shopt -s lithist
+shopt -s histappend
+complete -o default -A hostname   ssh ftp ping telnet traceroute
+# Returns a listing of processes I own
+function psme ( ) { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command; }
+
+# Show my processes with tree like structure of threads
+function psmep ( ) { psme f | awk '!/awk/ && $0~var' var=${1:-".*"}; }
+
+# colordiff is hella nice.  Let's use it with some SCM tools
+cvsdiff () { cvs diff -u "${@}" | colordiff; }
+svndiff () { svn diff "${@}" | colordiff; }
+gitdiff () { git diff "${@}" | colordiff; } # git can do it's own, but heck.
+export TERM=xterm-256color
+
+export EDITOR PATH CVSROOT CVS_RSH HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE PS1 PS2 LSCOLORS GREP_OPTIONS
+
+source ~/.bashrc

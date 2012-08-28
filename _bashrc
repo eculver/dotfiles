@@ -1,3 +1,15 @@
+# ========================================================================
+# Evan's Bash config
+# Note: Used in prod. environments, more lightweight than ZSH
+# ========================================================================
+
+
+# ------------------------------------------------------------------------
+# General setup
+# ------------------------------------------------------------------------
+
+# TODO cleanup and move in to common file
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -133,14 +145,35 @@ fi
   }
 } >/dev/null 2>/dev/null
 
-venwrap=`type -P virtualenvwrapper_bashrc`
-if [ "$venwrap" != "" ]; then
-    source $venwrap
-fi
-PATH=$PATH:/var/lib/gems/1.9.1/gems/haml-3.0.4/bin
-export PATH
 
-#PYTHONSTARTUP=~/.pythonrc.py
-#export PYTHONSTARTUP
+# ------------------------------------------------------------------------
+# Globals
+# ------------------------------------------------------------------------
 
-source /home/eculver/.bashrc_wd
+CONFDIR=$HOME/.bashrc.d
+HOSTNAME=$(hostname)
+
+
+# ------------------------------------------------------------------------
+# common settings
+# ------------------------------------------------------------------------
+
+source $CONFDIR/common.bash
+
+
+# ------------------------------------------------------------------------
+# environment-specific settings
+# ------------------------------------------------------------------------
+
+# This will load any configuration that matches the hostname for this box.
+# For shared configurations between hostnames just create a symlink for the
+# hostname to the share file. For example, I name the files genericly then
+# just symlink the hostname to the canonical configuration file for a given
+# environment.
+#
+# mylaptop.local -> local.bash
+# some.host.with.fqdn.com -> my_server.bash
+
+[[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
+
+

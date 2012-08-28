@@ -1,3 +1,12 @@
+# ========================================================================
+# Evan's ZSH config from hell (it's really simple and harmless actually)
+# ========================================================================
+
+
+# ------------------------------------------------------------------------
+# Oh-My-ZSH!!
+# ------------------------------------------------------------------------
+
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -16,41 +25,110 @@ export ZSH_THEME="gozilla"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow svn brew github osx)
+plugins=(git git-flow brew github osx)
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
 
-# WD/dev aliases
-source ~/.zshrc_wd
+# ------------------------------------------------------------------------
+# Globals
+# ------------------------------------------------------------------------
 
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+export CONFDIR=$HOME/.zshrc.d
+export HOSTNAME=$(hostname)
+
+
+# ------------------------------------------------------------------------
+# Common functions
+# ------------------------------------------------------------------------
+
+
+# ------------------------------------------------------------------------
+# Tmuxinator
+# ------------------------------------------------------------------------
+
+if [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]]; then
+    source $HOME/.tmuxinator/scripts/tmuxinator
+    source $HOME/.tmuxinator/scripts/tmuxinator_completion
+fi
+
+
+# ------------------------------------------------------------------------
+# VIM!
+# ------------------------------------------------------------------------
+
+export EDITOR='vim'
+
+
+# ------------------------------------------------------------------------
 # Path
-PATH=$PATH:~/.gem/ruby/1.8/bin:/usr/local/Cellar/python/2.7.1/bin:~/bin:~/local/node/bin
-export PATH
+# ------------------------------------------------------------------------
 
+path+=(
+    /opt/local/bin
+    /usr/local/bin
+    /usr/local/Cellar/python/2.7.1/bin
+    /Users/evanculver/bin
+    /Users/evanculver/.gem/ruby/1.8/bin
+)
+
+
+# ------------------------------------------------------------------------
 # Virtualenv
+# ------------------------------------------------------------------------
+
 export WORKON_HOME=~/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.1/bin/python
+export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
+export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
 
+
+# ------------------------------------------------------------------------
 # Python
+# ------------------------------------------------------------------------
+#
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
+
+# ------------------------------------------------------------------------
+# jstdutil
+# ------------------------------------------------------------------------
+
+export JSTESTDRIVER_HOME=$HOME/bin/jstd
+
+
+# ------------------------------------------------------------------------
 # NPM completion
+# ------------------------------------------------------------------------
+
+# this is a weird path, but we want this so bark if it doens't exist
 source ~/local/node/lib/node_modules/npm/lib/utils/completion.sh
 
-alias chrome_ipad='open /Applications/Google\ Chrome.app --args -user-agent="Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10"'
-alias update_db_widget='cp /Volumes/eculver/projects/wd-app/resources/widget/draggableBackground/js/draggable-background.js gallery-draggable-background/js'
-alias start_memcached='memcached -m 64 -p 11211 -u `whoami` -l 127.0.0.1'
-alias gousc='cd ~/dev/usc ; workon usc'
-alias goufogrid='cd ~/dev/ufogrid ; workon ufogrid'
-alias gototb='cd ~/dev/totb ; workon totb'
-alias godio='cd ~/dev/dio ; workon dio'
-alias goeio='cd ~/dev/eculver.io ; workon eio'
-alias gojute='cd ~/dev/JUTE/backend/nodejute'
-alias godpp='cd ~/dev/dpp ; workon dpp'
-alias gotamoshunas='cd ~/dev/tamoshunas ; workon tamoshunas'
 
-alias pwgen='nocorrect pwgen'
-alias ack='nocorrect ack'
+# ------------------------------------------------------------------------
+# common settings
+# ------------------------------------------------------------------------
+
+source $CONFDIR/common.zsh
+
+
+# ------------------------------------------------------------------------
+# environment-specific settings
+# ------------------------------------------------------------------------
+
+# This will load any configuration (file w/ .zsh extension) that matches
+# the hostname for this box. For shared configurations between hostnames
+# just create a symlink for the hostname to the share file.
+# For example, I name the files genericly then just symlink the hostname
+# to the canonical configuration file for a given environment.
+#
+# mylaptop.local -> local.zsh
+# some.host.with.fqdn.com -> my_server.zsh
+#
+#
+#
+[[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
+
+

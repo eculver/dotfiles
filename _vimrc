@@ -1,3 +1,5 @@
+" Evan's bitchin vimrc
+
 " Stop behaving like vi; vim enhancements are better
 set nocompatible
 
@@ -184,9 +186,6 @@ set title
 " treat html files as django templates
 autocmd BufRead *.html set filetype=htmldjango
 
-" treat pjs files as JavaScript
-autocmd BufRead *.pjs set filetype=javascript
-
 " treat phtml files as HTML
 autocmd BufRead *.phtml set filetype=html
 
@@ -235,10 +234,11 @@ let jshint_highlight_color = "DarkGray"
 Bundle "gmarik/snipmate.vim"
 
 " Syntax highlight
-Bundle "Syntastic"
+"Bundle "Syntastic"
 Bundle "Markdown"
 Bundle "Sass"
 Bundle "less-syntax"
+Bundle "pylint.vim"
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
 
@@ -281,9 +281,3 @@ let g:CommandTMatchWindowAtTop=1 " show window at top
 
 " " Navigation
 Bundle "gmarik/vim-visual-star-search"
-
-
-"""" Pathogen
-"call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
-

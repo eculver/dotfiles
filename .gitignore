@@ -2,3 +2,5 @@
 *.log
 *~
 .AppleDouble
+_vim/bundle
+!_vim/bundle/vundle
