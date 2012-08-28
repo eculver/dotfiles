@@ -9,6 +9,7 @@
 
 alias wdvim='ssh -t evan tmux -u -2 at -t vim'
 alias wdirc='ssh -t evan tmux -u -2 at -t irc'
+alias mdr='ssh -t mdr tmux -u -2 att'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
 alias dio='ssh -t leeroy tmux -u -2 at -t base'
 
@@ -28,7 +29,6 @@ alias golsm='mux start lsm'
 alias gotdt='mux start tdt'
 
 # turn off correction for these
-alias mdr='nocorrect mdr'
 alias npm='nocorrect npm'
 alias ack='nocorrect ack'
 alias cap='nocorrect cap'
