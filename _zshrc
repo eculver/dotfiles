@@ -74,16 +74,6 @@ path+=(
 )
 
 
-# ------------------------------------------------------------------------
-# Virtualenv
-# ------------------------------------------------------------------------
-
-export WORKON_HOME=~/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.1/bin/python
-export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
-export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
-source /usr/local/bin/virtualenvwrapper.sh
-
 
 # ------------------------------------------------------------------------
 # Python
@@ -104,7 +94,7 @@ export JSTESTDRIVER_HOME=$HOME/bin/jstd
 # ------------------------------------------------------------------------
 
 # this is a weird path, but we want this so bark if it doens't exist
-source ~/local/node/lib/node_modules/npm/lib/utils/completion.sh
+#source ~/local/node/lib/node_modules/npm/lib/utils/completion.sh
 
 
 # ------------------------------------------------------------------------
