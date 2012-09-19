@@ -13,6 +13,10 @@ alias mdr='ssh -t mdr tmux -u -2 att'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
 alias dio='ssh -t leeroy tmux -u -2 at -t base'
 
+# d.io Linode hosts
+alias app1.ca='ssh -t app1.ca tmux -u -2 at -t base'
+alias db1.ca='ssh -t db1.ca tmux -u -2 at -t base'
+
 # tmuxinator/project aliases
 alias gousc='mux start usc'
 alias goufogrid='mux start ufogrid'
