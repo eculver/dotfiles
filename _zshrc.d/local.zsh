@@ -2,6 +2,15 @@
 # ZSH conf specific to local environment
 # ========================================================================
 
+# ------------------------------------------------------------------------
+# Virtualenv
+# ------------------------------------------------------------------------
+
+export WORKON_HOME=~/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.1/bin/python
+export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
+export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
+source /usr/local/bin/virtualenvwrapper.sh
 
 # ------------------------------------------------------------------------
 # Aliases
@@ -54,3 +63,12 @@ alias espresso='/Users/evanculver/Downloads/The-M-Project_v1.0.0/Espresso/bin/es
 killmanage(){
     ps -ef | grep "manage\.py runserver" | awk '{print $2}' | xargs kill -9
 }
+
+function zle-line-init zle-keymap-select {
+    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+    RPS2=$RPS1
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select

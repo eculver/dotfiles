@@ -2,6 +2,19 @@
 # ZSH conf specific to WD (work) environment
 # ========================================================================
 
+# for various apps like vim to display correctly
+export LANG=en_US.UTF-8
+
+# ------------------------------------------------------------------------
+# Virtualenv
+# ------------------------------------------------------------------------
+
+export WORKON_HOME=~/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
+export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
+source /usr/local/bin/virtualenvwrapper.sh
+
 
 # ------------------------------------------------------------------------
 # Aliases
@@ -25,6 +38,7 @@ alias gocontroller='cd ~/projects/wd-legacy/resource/wd/web/pkg/controller'
 alias exclude_svn='grep -v "/\.svn/"'
 alias svn_st='rmdotunder&&svn st'
 
+alias buildconf='time ~/projects/wd-legacy/bin/build-config local'
 alias buildwd='time ~/projects/wd-legacy/bin/build-resources -v'
 alias buildrt='time ~/projects/wd-legacy/bin/build-resource-tree'
 
