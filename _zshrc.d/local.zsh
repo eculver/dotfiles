@@ -18,6 +18,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 alias wdvim='ssh -t evan tmux -u -2 at -t vim'
 alias wdirc='ssh -t evan tmux -u -2 at -t irc'
+alias wddocs='ssh -t evan tmux -u -2 at -t docs'
 alias mdr='ssh -t mdr tmux -u -2 att'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
 alias dio='ssh -t leeroy tmux -u -2 at -t base'
@@ -69,6 +70,12 @@ function zle-line-init zle-keymap-select {
     RPS2=$RPS1
     zle reset-prompt
 }
+
+# Load RVM function
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+
+# ZSH Line Editor selections
 
 zle -N zle-line-init
 zle -N zle-keymap-select
