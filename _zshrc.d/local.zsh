@@ -26,6 +26,7 @@ alias dio='ssh -t leeroy tmux -u -2 at -t base'
 # d.io Linode hosts
 alias app1.ca='ssh -t app1.ca tmux -u -2 at -t base'
 alias db1.ca='ssh -t db1.ca tmux -u -2 at -t base'
+alias util1.ca='ssh -t util1.ca tmux -u -2 at -t base'
 
 # tmuxinator/project aliases
 alias gousc='mux start usc'
