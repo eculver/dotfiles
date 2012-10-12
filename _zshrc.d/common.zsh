@@ -33,3 +33,23 @@ alias svnst='rmdotunder&&svn st'
 
 # just handy
 alias tsnow='date +%Y%m%d%H%M%S'
+
+
+# ------------------------------------------------------------------------
+# Functions
+# ------------------------------------------------------------------------
+
+function zle-line-init zle-keymap-select {
+    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+    RPS2=$RPS1
+    zle reset-prompt
+}
+
+# Load RVM function
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+
+# ZSH Line Editor selections
+
+zle -N zle-line-init
+zle -N zle-keymap-select

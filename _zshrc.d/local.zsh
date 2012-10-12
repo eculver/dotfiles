@@ -19,9 +19,13 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias wdvim='ssh -t evan tmux -u -2 at -t vim'
 alias wdirc='ssh -t evan tmux -u -2 at -t irc'
 alias wddocs='ssh -t evan tmux -u -2 at -t docs'
+alias wdapi='ssh -t evan tmux -u -2 at -t api'
 alias mdr='ssh -t mdr tmux -u -2 att'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
 alias dio='ssh -t leeroy tmux -u -2 at -t base'
+
+# home
+alias plow.remote='ssh -t plow.remote tmux -u -2 at -t base'
 
 # d.io Linode hosts
 alias app1.ca='ssh -t app1.ca tmux -u -2 at -t base'
@@ -65,18 +69,3 @@ alias espresso='/Users/evanculver/Downloads/The-M-Project_v1.0.0/Espresso/bin/es
 killmanage(){
     ps -ef | grep "manage\.py runserver" | awk '{print $2}' | xargs kill -9
 }
-
-function zle-line-init zle-keymap-select {
-    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-    RPS2=$RPS1
-    zle reset-prompt
-}
-
-# Load RVM function
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-
-# ZSH Line Editor selections
-
-zle -N zle-line-init
-zle -N zle-keymap-select
