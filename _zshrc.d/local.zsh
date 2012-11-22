@@ -12,6 +12,14 @@ export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
 export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
 
+
+# ------------------------------------------------------------------------
+# Postgres (Mac)
+# ------------------------------------------------------------------------
+
+export PGHOST=/tmp
+
+
 # ------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------
@@ -24,8 +32,14 @@ alias mdr='ssh -t mdr tmux -u -2 att'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
 alias dio='ssh -t leeroy tmux -u -2 at -t base'
 
+# WD-related
+alias update_sprite='scp /Volumes/Work\ Drive/Development/Graphic\ Library/Icon\ sprite/icon_sprite.png evan:~/projects/wd-legacy/resource/wd/web/theme/default/assets/'
+
 # home
+alias plow='ssh -t plow tmux -u -2 at -t base'
+alias plow.miner='ssh -t plow tmux -u -2 at -t miner'
 alias plow.remote='ssh -t plow.remote tmux -u -2 at -t base'
+alias plow.remote.miner='ssh -t plow.remote tmux -u -2 at -t miner'
 
 # d.io Linode hosts
 alias app1.ca='ssh -t app1.ca tmux -u -2 at -t base'

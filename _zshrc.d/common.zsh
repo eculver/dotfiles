@@ -23,6 +23,7 @@ bindkey '^R' history-incremental-search-backward
 alias tmux='tmux -u -2'
 
 # services
+alias memcached-stat='echo stats | nc 127.0.0.1 11211'
 alias start-memcached='memcached -m 64 -p 11211 -u `whoami` -l 127.0.0.1'
 alias start-ssh-agent='eval `ssh-agent`; ssh-add ~/.ssh/id_rsa ; ssh-add -l'
 
