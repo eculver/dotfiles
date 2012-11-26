@@ -175,5 +175,3 @@ source $CONFDIR/common.bash
 # some.host.with.fqdn.com -> my_server.bash
 
 [[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
-
-
