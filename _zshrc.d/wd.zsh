@@ -46,6 +46,9 @@ alias testwd='jsautotest --config ~/projects/wd-legacy/resource/jstd.conf'
 alias capture='java -jar ~/bin/jstd/JsTestDriver-1.3.4.b.jar --config ~/projects/wd-legacy/resource/jstd.conf --port 4224 --runnerMode DEBUG'
 alias resetclients='java -jar ~/bin/jstd/JsTestDriver-1.3.4.b.jar --config ~/projects/wd-legacy/resource/jstd.conf --runnerMode DEBUG --reset'
 
+# git fu
+alias rmrctags='git tag | grep -e "\.rc$" | xargs -p -I {} git push origin :refs/tags/{} && git tag -l | xargs git tag -d && git fetch --tags'
+
 # ------------------------------------------------------------------------
 # Functions
 # ------------------------------------------------------------------------
