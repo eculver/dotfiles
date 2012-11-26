@@ -42,6 +42,7 @@ alias buildconf='time ~/projects/wd-legacy/bin/build-config local'
 alias buildwd='time ~/projects/wd-legacy/bin/build-resources -v'
 alias buildrt='time ~/projects/wd-legacy/bin/build-resource-tree'
 
+alias docwd='yuidoc --server 8080 resource/wd/web/pkg/model'
 alias testwd='jsautotest --config ~/projects/wd-legacy/resource/jstd.conf'
 alias capture='java -jar ~/bin/jstd/JsTestDriver-1.3.4.b.jar --config ~/projects/wd-legacy/resource/jstd.conf --port 4224 --runnerMode DEBUG'
 alias resetclients='java -jar ~/bin/jstd/JsTestDriver-1.3.4.b.jar --config ~/projects/wd-legacy/resource/jstd.conf --runnerMode DEBUG --reset'
