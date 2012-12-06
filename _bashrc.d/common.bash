@@ -2,11 +2,15 @@
 # Bash conf common to all environments
 # ========================================================================
 
+# Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin
+
+# Load RVM function
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
 # Virtualenv wrapper functions
 source /usr/local/bin/virtualenvwrapper.sh
 
-# Add RVM to PATH for scripting
-PATH=$PATH:$HOME/.rvm/bin
 
 # ------------------------------------------------------------------------
 # Aliases
