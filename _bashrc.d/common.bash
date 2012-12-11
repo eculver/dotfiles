@@ -22,6 +22,7 @@ alias tmux='tmux -u -2'
 # ssh agent forwarding made easy
 alias memcached-stat='echo stats | nc 127.0.0.1 11211'
 alias start-ssh-agent='eval `ssh-agent`; ssh-add ~/.ssh/id_rsa ; ssh-add -l'
+alias runserver='./manage.py runserver 0.0.0.0:8000'
 
 # just handy
 alias tsnow='date +%Y%m%d%H%M%S'
