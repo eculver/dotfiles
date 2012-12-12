@@ -41,6 +41,11 @@ alias svnst='rmdotunder&&svn st'
 # just handy
 alias tsnow='date +%Y%m%d%H%M%S'
 
+# dev
+alias runserver='./manage.py runserver 0.0.0.0:8000'
+alias dbshell='./manage.py dbshell'
+alias shell='./manage.py shell_plus'
+alias buildr='watchr static.watchr'
 
 # ------------------------------------------------------------------------
 # Functions
