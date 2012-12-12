@@ -40,6 +40,8 @@ alias plow='ssh -t plow tmux -u -2 at -t base'
 alias plow.miner='ssh -t plow tmux -u -2 at -t miner'
 alias plow.remote='ssh -t plow.remote tmux -u -2 at -t base'
 alias plow.remote.miner='ssh -t plow.remote tmux -u -2 at -t miner'
+alias miner='ssh -t miner tmux -u -2 at -t miner'
+alias miner.remote='ssh -t miner.remote tmux -u -2 at -t miner'
 
 # d.io Linode hosts
 alias app1.ca='ssh -t app1.ca tmux -u -2 at -t base'
