@@ -231,10 +231,11 @@ Bundle "jshint.vim--Stelmach"
 let jshint_highlight_color = "DarkGray"
 
 " Snippets
-Bundle "gmarik/snipmate.vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/snipmate-snippets"
 
 " Syntax highlight
-"Bundle "Syntastic"
+Bundle "Syntastic"
 Bundle "Markdown"
 Bundle "Sass"
 Bundle "less-syntax"
@@ -270,7 +271,7 @@ Bundle "ack.vim"
 noremap <LocalLeader># "ayiw:Ack <C-r>a<CR>
 vnoremap <LocalLeader># "ay:Ack <C-r>a<CR>
 
-" " tComment
+" tComment
 Bundle "tComment"
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
@@ -279,5 +280,5 @@ vnoremap // :TComment<CR>
 Bundle "git://git.wincent.com/command-t.git"
 let g:CommandTMatchWindowAtTop=1 " show window at top
 
-" " Navigation
+" Navigation
 Bundle "gmarik/vim-visual-star-search"
