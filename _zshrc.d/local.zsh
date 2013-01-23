@@ -24,10 +24,11 @@ export PGHOST=/tmp
 # Aliases
 # ------------------------------------------------------------------------
 
-alias wdvim='ssh -t evan tmux -u -2 at -t vim'
+alias wdapp='ssh -t evan tmux -u -2 at -t app'
 alias wdirc='ssh -t evan tmux -u -2 at -t irc'
-alias wddocs='ssh -t evan tmux -u -2 at -t docs'
+alias wddocs='ssh -t evan tmux -u -2 at -t apidocs'
 alias wdapi='ssh -t evan tmux -u -2 at -t api'
+alias wddata='ssh -t evan tmux -u -2 at -t data'
 alias mdr='ssh -t mdr tmux -u -2 att'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
 alias dio='ssh -t leeroy tmux -u -2 at -t base'
@@ -42,6 +43,8 @@ alias plow.remote='ssh -t plow.remote tmux -u -2 at -t base'
 alias plow.remote.miner='ssh -t plow.remote tmux -u -2 at -t miner'
 alias miner='ssh -t miner tmux -u -2 at -t miner'
 alias miner.remote='ssh -t miner.remote tmux -u -2 at -t miner'
+alias miner2='ssh -t miner2 tmux -u -2 at -t miner'
+alias miner2.remote='ssh -t miner2.remote tmux -u -2 at -t miner'
 
 # d.io Linode hosts
 alias app1.ca='ssh -t app1.ca tmux -u -2 at -t base'
