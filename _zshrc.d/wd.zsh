@@ -2,6 +2,12 @@
 # ZSH conf specific to WD (work) environment
 # ========================================================================
 
+# because history is hard on i/o and because our environments are virtualized
+# having a large history becomes a big terd for performance, so set it to
+# something small and use a simple cron script for saving history out of band
+export HISTSIZE=1000
+export SAVEHIST=1000
+
 # for various apps like vim to display correctly
 export LANG=en_US.UTF-8
 
