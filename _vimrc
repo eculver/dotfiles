@@ -174,6 +174,10 @@ map <Leader>rx :CloseVimTmuxPanes<CR>
 " If text is selected, save it in the v buffer and send that buffer it to tmux
 vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
 
+" Mappings for handling unwanted whitespace
+nnoremap <leader>ss :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
+
 " Ignore .o, ~ and .pyc extensions
 set wildignore=*.o,*~,*.pyc
 
@@ -190,7 +194,7 @@ autocmd BufRead *.html set filetype=htmldjango
 autocmd BufRead *.phtml set filetype=html
 
 " treat json files as JavaScript
-autocmd BufRead *.json set filetype=javascript
+autocmd BufRead *.json set filetype=json
 
 " YAML Highlighting
 au! BufRead,BufNewFile *.yaml,*.yml so ~/.vim/syntax/yaml.vim
@@ -231,8 +235,32 @@ Bundle "jshint.vim--Stelmach"
 let jshint_highlight_color = "DarkGray"
 
 " Snippets
-Bundle "garbas/vim-snipmate"
 Bundle "honza/snipmate-snippets"
+Bundle "Shougo/neocomplcache"
+Bundle "Shougo/neosnippet"
+
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underscore completion.
+let g:neocomplcache_enable_underbar_completion = 1
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
 
 " Syntax highlight
 Bundle "Syntastic"
@@ -249,6 +277,7 @@ Bundle "Git-Branch-Info"
 Bundle "git.zip"
 Bundle "gitignore"
 Bundle "fugitive.vim"
+Bundle "airblade/vim-gitgutter"
 
 " (HT|X)ml tool
 Bundle "ragtag.vim"
@@ -264,7 +293,12 @@ Bundle "surround.vim"
 Bundle "SuperTab"
 Bundle "WebAPI.vim"
 Bundle "vimux"
-Bundle "powerline"
+
+" Powerline
+" Bundle "powerline"
+Bundle "Lokaltog/vim-powerline"
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+let g:Powerline_symbols = 'fancy'
 
 " Ack
 Bundle "ack.vim"
