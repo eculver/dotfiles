@@ -2,7 +2,6 @@
 # Evan's ZSH config from hell (it's really simple and harmless actually)
 # ========================================================================
 
-
 # ------------------------------------------------------------------------
 # Oh-My-ZSH!!
 # ------------------------------------------------------------------------
@@ -27,6 +26,7 @@ export ZSH_THEME="gozilla"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git git-flow brew github osx rvm)
 
+# meat-and-potatoes
 source $ZSH/oh-my-zsh.sh
 
 

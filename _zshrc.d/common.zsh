@@ -42,7 +42,6 @@ alias svnst='rmdotunder&&svn st'
 alias tsnow='date +%Y%m%d%H%M%S'
 
 # dev
-alias runserver='./manage.py runserver 0.0.0.0:8000'
 alias dbshell='./manage.py dbshell'
 alias shell='./manage.py shell_plus'
 alias buildr='watchr static.watchr'
@@ -60,3 +59,19 @@ function zle-line-init zle-keymap-select {
 # ZSH Line Editor selections
 zle -N zle-line-init
 zle -N zle-keymap-select
+
+
+# django devserver helper
+# `devserver <port>` - defaults to 8000
+devserver () {
+    port=8000
+    if  (( $# > 0 )) then
+        port=$1;
+    fi
+
+    if [[ -e manage.py ]] then
+        ./manage.py runserver 0.0.0.0:$port
+    else
+        echo "No manage.py found in current directory. Change to project home first."
+    fi
+}

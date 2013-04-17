@@ -34,8 +34,14 @@ alias numwidgets='find ~/projects/wd-app/resources/widget -name "*.js" | grep -v
 alias numplugins='find ~/projects/wd-app/resources/plugin -name "*.js" | grep -v AppleDouble | wc -l'
 alias update_db_widget='cp /Volumes/eculver/projects/wd-app/resources/widget/draggableBackground/js/draggable-background.js gallery-draggable-background/js'
 
-alias gowd='cd ~/projects/wd-app'
-alias gowdl='cd ~/projects/wd-legacy'
+
+alias goapp='cd ~/projects/wd-legacy'
+alias goapi='cd ~/projects/wd-api'
+alias goauth='cd ~/projects/wd-auth'
+alias godata='cd ~/projects/wd-database'
+alias godeploy='cd ~/projects/wd-deploy'
+alias goopsmdr='cd ~/projects/ops-mdr'
+
 alias gotest='cd ~/projects/wd-legacy/resource/wd/web/test'
 alias gomodel='cd ~/projects/wd-legacy/resource/wd/web/pkg/model'
 alias goview='cd ~/projects/wd-legacy/resource/wd/web/pkg/view'
@@ -86,4 +92,3 @@ noie () {
         echo "not in IE mode?\n"
     fi
 }
-
