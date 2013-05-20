@@ -180,6 +180,9 @@ vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
 nnoremap <leader>ss :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 nnoremap <leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
 
+" Clear search highlight
+nnoremap <Leader>/ :noh<CR>
+
 " Ignore .o, ~ and .pyc extensions
 set wildignore=*.o,*~,*.pyc
 
