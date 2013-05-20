@@ -90,3 +90,5 @@ alias espresso='/Users/evanculver/Downloads/The-M-Project_v1.0.0/Espresso/bin/es
 killmanage(){
     ps -ef | grep "manage\.py runserver" | awk '{print $2}' | xargs kill -9
 }
+
+beepwhenup () { echo 'Enter host you want to ping:'; read PHOST; if [[ "$PHOST" == "" ]]; then exit; fi; while true; do ping -c1 -W2 $PHOST 2>&1 >/dev/null; if [[ "$?" == "0" ]]; then for j in $(seq 1 4); do beep; done; ping -c1 $PHOST; break; fi; done; }
