@@ -24,11 +24,13 @@ export PGHOST=/tmp
 # Aliases
 # ------------------------------------------------------------------------
 
+alias wd='ssh -t evan tmux -u -2 at -t base'
 alias wdapp='ssh -t evan tmux -u -2 at -t app'
-alias wdirc='ssh -t evan tmux -u -2 at -t irc'
-alias wddocs='ssh -t evan tmux -u -2 at -t apidocs'
 alias wdapi='ssh -t evan tmux -u -2 at -t api'
+alias wdauth='ssh -t evan tmux -u -2 at -t auth'
 alias wddata='ssh -t evan tmux -u -2 at -t data'
+alias wddocs='ssh -t evan tmux -u -2 at -t apidocs'
+alias wdirc='ssh -t evan tmux -u -2 at -t irc'
 alias mdr='ssh -t mdr tmux -u -2 att'
 alias irc='ssh -t leeroy tmux -u -2 at -t irc'
 alias dio='ssh -t leeroy tmux -u -2 at -t base'
