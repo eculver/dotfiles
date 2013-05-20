@@ -141,18 +141,20 @@ let maplocalleader="."
 map <silent><C-Left> <C-T>
 map <silent><C-Right> <C-]>
 
-" easily move around tabs
+" Tab management
 map <silent><S-n> :tabnext<CR>
+map <silent><S-p> :tabprevious<CR>
+map <silent><S-t> :tabnew<CR>
 
-" easily move around long wrapped lines
+" Open new tab and toggle NERDTree
+nnoremap <Leader>tt :tablast<CR><Bar>:tabnew<CR><Bar>:NERDTreeToggle<CR><Bar><C-w><Right><Bar>:q<CR>
+
+" Easily move around long wrapped lines
 nnoremap k gk
 nnoremap j gj
 
 " execute selected script
 map <C-h> :py EvaluateCurrentRange()<CR>
-
-" Show tasks in current buffer
-map T :TaskList<CR><C-w><Left>
 
 " Show Project Menu
 map <F5> :NERDTreeToggle<CR>
