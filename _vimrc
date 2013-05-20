@@ -316,9 +316,5 @@ Bundle "tComment"
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
-" Command-T
-Bundle "git://git.wincent.com/command-t.git"
-let g:CommandTMatchWindowAtTop=1 " show window at top
-
 " Navigation
 Bundle "gmarik/vim-visual-star-search"
