@@ -1,0 +1,133 @@
+# ----------------------------------------------------------------------------
+# Global Config
+# ----------------------------------------------------------------------------
+config defaultToCurrentScreen true
+
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+config windowHintsSpread true
+
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+config secondsBetweenRepeat 0.1
+config checkDefaultsOnLoad true
+
+# ----------------------------------------------------------------------------
+# Alias
+# ----------------------------------------------------------------------------
+
+# Fullscreen
+alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
+
+# Halves, full vertical
+alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
+alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
+
+# Relative 60/40
+alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY
+alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY
+alias leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY
+alias leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY
+
+# Quarters, full vertical
+alias leftquarter   move screenOriginX;screenOriginY                     screenSizeX/4;screenSizeY
+alias rightquarter  move screenOriginX+(3*(screenSizeX/4));screenOriginY screenSizeX/4;screenSizeY
+
+# Corners
+alias topleft       corner top-left resize:screenSizeX/2;screenSizeY/2
+alias topright      corner top-right resize:screenSizeX/2;screenSizeY/2
+alias bottomleft    corner bottom-left resize:screenSizeX/2;screenSizeY/2
+alias bottomright   corner bottom-right resize:screenSizeX/2;screenSizeY/2
+
+# Concrete w/ monitor
+alias 1-full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY     0
+alias 1-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY   0
+alias 1-lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY   0
+alias 1-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY 0
+alias 1-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY 0
+alias 1-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY 0
+alias 1-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY 0
+alias 1-topleft       corner top-left                                   resize:screenSizeX/2;screenSizeY/2 0
+alias 1-topright      corner top-right                                  resize:screenSizeX/2;screenSizeY/2 0
+alias 1-bottomleft    corner bottom-left                                resize:screenSizeX/2;screenSizeY/2 0
+alias 1-bottomright   corner bottom-right                               resize:screenSizeX/2;screenSizeY/2 0
+
+alias 2-full          move screenOriginX;screenOriginY screenSizeX;screenSizeY                      1
+alias 2-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY   1
+alias 2-lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY                    1
+alias 2-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY 1
+alias 2-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY 1
+alias 2-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY 1
+alias 2-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY 1
+alias 2-topleft       corner top-left                                   resize:screenSizeX/2;screenSizeY/2 1
+alias 2-topright      corner top-right                                  resize:screenSizeX/2;screenSizeY/2 1
+alias 2-bottomleft    corner bottom-left                                resize:screenSizeX/2;screenSizeY/2 1
+alias 2-bottomright   corner bottom-right                               resize:screenSizeX/2;screenSizeY/2 1
+
+alias 3-full          move screenOriginX;screenOriginY screenSizeX;screenSizeY                      2
+alias 3-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY   2
+alias 3-lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY                    2
+alias 3-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY 2
+alias 3-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY 2
+alias 3-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY 2
+alias 3-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY 2
+alias 3-topleft       corner top-left                                   resize:screenSizeX/2;screenSizeY/2 2
+alias 3-topright      corner top-right                                  resize:screenSizeX/2;screenSizeY/2 2
+alias 3-bottomleft    corner bottom-left                                resize:screenSizeX/2;screenSizeY/2 2
+alias 3-bottomright   corner bottom-right                               resize:screenSizeX/2;screenSizeY/2 2
+
+
+# ----------------------------------------------------------------------------
+# Layouts
+# ----------------------------------------------------------------------------
+
+# 1 monitor
+layout 1monitor 'iTerm':REPEAT ${1-full}
+layout 1monitor 'Google Chrome':REPEAT ${1-full}
+layout 1monitor 'Mail':REPEAT ${1-full}
+layout 1monitor 'Path Finder':REPEAT ${1-full}
+layout 1monitor 'iTunes':REPEAT ${full}
+layout 1monitor 'Adium':REPEAT ${rightquarter}
+layout 1monitor 'TorBrowser':REPEAT ${full}
+layout 1monitor 'Evernote':REPEAT ${full}
+
+# 2 monitor
+layout 2monitor 'iTerm':REPEAT ${2-full}
+layout 2monitor 'Google Chrome':REPEAT ${1-full}
+layout 2monitor 'Mail':REPEAT ${1-full}
+layout 2monitor 'Path Finder':REPEAT ${1-full}
+layout 2monitor 'iTunes':REPEAT ${1-full}
+layout 2monitor 'Adium':REPEAT ${2-rightless}
+layout 2monitor 'TorBrowser':REPEAT ${1-full}
+layout 2monitor 'Evernote':REPEAT ${1-full}
+
+# 3 monitor
+layout 3monitor 'iTerm':REPEAT_LAST ${2-full} | ${3-lefthalf}
+layout 3monitor 'Google Chrome':REPEAT ${1-full}
+layout 3monitor 'Mail':REPEAT ${1-full}
+layout 3monitor 'Path Finder':REPEAT ${1-full}
+layout 3monitor 'iTunes':REPEAT ${1-full}
+layout 3monitor 'Adium':REPEAT ${3-righthalf}
+layout 3monitor 'TorBrowser':REPEAT ${1-full}
+layout 3monitor 'Evernote':REPEAT ${3-full}
+
+default 1monitor count:1
+default 2monitor count:2
+default 3monitor count:3
+
+# ----------------------------------------------------------------------------
+# Binds
+# ----------------------------------------------------------------------------
+
+# CMD+e for hints
+bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN
+
+# CMD+Shift+1 for laptop layout
+bind 1:alt;shift layout 1monitor
+
+# CMD+Shift+2 for dual monitor layout
+bind 2:alt;shift layout 2monitor
+
+# CMD+Shift+3 for triple monitor layout
+bind 3:alt;shift layout 3monitor
+
