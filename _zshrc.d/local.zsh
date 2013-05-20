@@ -7,7 +7,7 @@
 # ------------------------------------------------------------------------
 
 export WORKON_HOME=~/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.1/bin/python
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.3/bin/python
 export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
 export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
