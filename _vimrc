@@ -298,6 +298,7 @@ Bundle "surround.vim"
 Bundle "SuperTab"
 Bundle "WebAPI.vim"
 Bundle "vimux"
+Bundle "sudo.vim"
 
 " Powerline
 " Bundle "powerline"
