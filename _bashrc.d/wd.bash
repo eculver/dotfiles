@@ -5,6 +5,10 @@
 # Virtual env
 export WORKON_HOME=~/.virtualenvs
 
+# Dev environment variables
+export WEB_ENV='dev'
+export AUTH_ENV='dev'
+
 # ------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------
