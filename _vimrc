@@ -3,6 +3,17 @@
 " Stop behaving like vi; vim enhancements are better
 set nocompatible
 
+" Encoding
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  "setglobal bomb
+  set fileencodings=utf-8,latin1
+endif
+
 """ Moving Around/Editing
 set nostartofline           " Avoid moving cursor to BOL when jumping around
 set virtualedit=block       " Let cursor move past the last char in <C-v> mode
@@ -65,7 +76,7 @@ set laststatus=2            " Always show statusline, even if only 1 window.
 "set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [LINE=%l:%c]\ [LEN=%L]
 
 """" Tabs/Indent Levels
-set tabstop=4               " <tab> inserts 4 spaces 
+set tabstop=4               " <tab> inserts 4 spaces
 set shiftwidth=4            " but an indent level is 2 spaces wide.
 set softtabstop=4           " <BS> over an autoindent deletes both spaces.
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
@@ -90,7 +101,7 @@ set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
 
 """" Backups/Swap Files
 " Make sure that the directory where we want to put swap/backup files exists.
-if has("win32") 
+if has("win32")
     if ! len(glob("~/backup/"))
         echomsg "Backup directory ~/backup doesn't exist!"
     endif
@@ -153,7 +164,7 @@ nnoremap <Leader>tt :tablast<CR><Bar>:tabnew<CR><Bar>:NERDTreeToggle<CR><Bar><C-
 nnoremap k gk
 nnoremap j gj
 
-" execute selected script
+" Execute selected script
 map <C-h> :py EvaluateCurrentRange()<CR>
 
 " Show Project Menu
@@ -177,8 +188,8 @@ map <Leader>rx :CloseVimTmuxPanes<CR>
 vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
 
 " Mappings for handling unwanted whitespace
-nnoremap <leader>ss :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-nnoremap <leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <Leader>ss :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <Leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " Clear search highlight
 nnoremap <Leader>/ :noh<CR>
@@ -195,9 +206,6 @@ set title
 " treat html files as django templates
 autocmd BufRead *.html set filetype=htmldjango
 
-" treat phtml files as HTML
-autocmd BufRead *.phtml set filetype=html
-
 " treat json files as JavaScript
 autocmd BufRead *.json set filetype=json
 
@@ -212,8 +220,8 @@ au! BufRead,BufNewFile *.sass set filetype=sass
 au! BufRead,BufNewFile *.scss set filetype=scss
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"      
-autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m       
+autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
 """" Display
 colorscheme jellybeans
@@ -229,15 +237,6 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 Bundle "gmarik/vundle"
-
-" Programming
-Bundle "jQuery"
-Bundle "less.vim"
-Bundle "briandoll/change-inside-surroundings.vim"
-
-" JSHint
-Bundle "jshint.vim--Stelmach"
-let jshint_highlight_color = "DarkGray"
 
 " Snippets
 Bundle "honza/snipmate-snippets"
@@ -267,14 +266,20 @@ endif
 
 let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
 
-" Syntax highlight
+" Syntax checking/highlight
 Bundle "Syntastic"
+
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_less_options=""
+
 Bundle "Markdown"
 Bundle "Sass"
 Bundle "less-syntax"
-Bundle "pylint.vim"
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
+Bundle "JSON.vim"
+Bundle "lunaru/vim-less"
+Bundle "hail2u/vim-css3-syntax"
+
 
 " Git integration
 Bundle "mattn/gist-vim"
@@ -299,6 +304,7 @@ Bundle "SuperTab"
 Bundle "WebAPI.vim"
 Bundle "vimux"
 Bundle "sudo.vim"
+Bundle "briandoll/change-inside-surroundings.vim"
 
 " Powerline
 " Bundle "powerline"
@@ -316,5 +322,5 @@ Bundle "tComment"
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
-" Navigation
+" Search/Navigation
 Bundle "gmarik/vim-visual-star-search"
