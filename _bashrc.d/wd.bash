@@ -14,6 +14,9 @@ export AUTH_ENV='dev'
 # ------------------------------------------------------------------------
 
 alias atlassian='ssh -t atlassian tmux at -t base'
+alias buildconf='time ~/projects/wd-legacy/bin/build-config local'
+alias buildwd='time ~/projects/wd-legacy/bin/build-resources -v'
+alias buildrt='time ~/projects/wd-legacy/bin/build-resource-tree'
 
 # ------------------------------------------------------------------------
 # Functions
