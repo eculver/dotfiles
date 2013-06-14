@@ -1,1 +1,5 @@
-/* global $:true, Handlebars:true, google:true */
+{
+    "jquery"   : true,
+    "laxbreak" : true,
+    "laxcomma" : true
+}
