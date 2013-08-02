@@ -1,5 +1,21 @@
 {
-    "jquery"   : true,
-    "laxbreak" : true,
-    "laxcomma" : true
+    "jquery"   : true, // allow globals exposed by jQuery
+    "laxbreak" : true, // surpress warnings about unsafe line breaks
+    "laxcomma" : true, // surpress warnings about comma-first coding style
+    "eqeqeq"   : true, // prohibit use of "==" and "!="
+    "expr"     : true, // surpress warnings about use of expressions where assign. expected
+    "sub"      : true, // surpress warnings about [] notation
+    "latedef"  : true, // prohibit variable use before they are defined
+    "newcap"   : true, // require constructor names to be capitalized
+    "noarg"    : true, // prohibit use of arguments.{caller,callee}
+    "nomen"    : true, // disallow dangling "_" in variables
+    "undef"    : true, // prohibit use of explicitly undeclared variables
+    "browser"  : true, // define globals by modern browser
+    "globals"  : {
+        define    : true,
+        requirejs : true,
+        require   : true,
+        Ember     : true,
+        WD        : true
+    }
 }
