@@ -40,9 +40,7 @@ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 """" Folding
-set foldmethod=indent       " By default, use syntax to determine folds
-set foldlevelstart=99       " All folds open by default
-
+set nofoldenable            " Disable folding
 
 set number                  " Display line numbers
 set numberwidth=1           " using only 1 column (and 1 space) while possible
