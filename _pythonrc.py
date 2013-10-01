@@ -24,6 +24,8 @@ try:
     readline.set_history_length(1000)
 
     def savehist():
+        import readline
+        HISTFILE = "%s/.pyhistory" % os.environ["HOME"]
         readline.write_history_file(HISTFILE)
 
     atexit.register(savehist)
