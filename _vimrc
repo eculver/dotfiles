@@ -217,6 +217,9 @@ au! BufRead,BufNewFile *.less set filetype=less
 au! BufRead,BufNewFile *.sass set filetype=sass
 au! BufRead,BufNewFile *.scss set filetype=scss
 
+" Handlebars Highlighting
+au BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
+
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
