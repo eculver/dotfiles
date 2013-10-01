@@ -131,3 +131,11 @@ bind 2:alt;shift layout 2monitor
 # CMD+Shift+3 for triple monitor layout
 bind 3:alt;shift layout 3monitor
 
+# CTRL+ALT+NUMPAD1 to move window to screen 0
+bind pad1:alt,ctrl throw 0 resize
+
+# CTRL+ALT+NUMPAD2 to move window to screen 1
+bind pad2:alt,ctrl throw 1 resize
+
+# CTRL+ALT+NUMPAD3 to move window to screen 2
+bind pad3:alt,ctrl throw 2 resize
