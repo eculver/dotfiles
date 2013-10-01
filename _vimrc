@@ -174,10 +174,10 @@ set pastetoggle=<F2>
 set showmode
 
 " Prompt for a command to run
-map <Leader>rp :PromptVimTmuxCommand<CR>
+map <Leader>rp :VimuxPromptCommand<CR>
 
 " Run last command executed by RunVimTmuxCommand
-map <Leader>rl :RunLastVimTmuxCommand<CR>
+map <Leader>rl :VimuxRunLastCommand<CR>
 
 " Close all other tmux panes in current window
 map <Leader>rx :CloseVimTmuxPanes<CR>
