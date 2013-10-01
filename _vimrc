@@ -278,6 +278,7 @@ Bundle "Markdown"
 Bundle "Sass"
 Bundle "less-syntax"
 Bundle "JSON.vim"
+Bundle "nono/vim-handlebars"
 Bundle "lunaru/vim-less"
 Bundle "hail2u/vim-css3-syntax"
 
