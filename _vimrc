@@ -228,9 +228,7 @@ autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^
 colorscheme jellybeans
 
 """" Gist.vim
-let g:gist_clip_command='pbcopy'
-let g:gist_open_browser_after_post=1
-let g:gist_browser_command = 'open %URL%'
+let g:gist_open_browser_after_post=0
 
 """" Bundles
 set rtp+=~/.vim/bundle/vundle/
@@ -282,9 +280,9 @@ Bundle "nono/vim-handlebars"
 Bundle "lunaru/vim-less"
 Bundle "hail2u/vim-css3-syntax"
 
-
 " Git integration
 Bundle "mattn/gist-vim"
+Bundle "mattn/webapi-vim"
 Bundle "Git-Branch-Info"
 Bundle "git.zip"
 Bundle "gitignore"
@@ -303,8 +301,8 @@ Bundle "The-NERD-tree"
 Bundle "repeat.vim"
 Bundle "surround.vim"
 Bundle "SuperTab"
-Bundle "WebAPI.vim"
-Bundle "vimux"
+"Bundle "WebAPI.vim"
+Bundle "benmills/vimux"
 Bundle "sudo.vim"
 Bundle "briandoll/change-inside-surroundings.vim"
 
