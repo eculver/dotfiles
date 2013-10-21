@@ -2,6 +2,9 @@
   name = Evan Culver
   email = evan@evanculver.com
 
+[push]
+  default = current
+
 [branch]
   autosetupmerge = true
 
@@ -11,7 +14,7 @@
 
 [color]
   ui = auto
-  
+
   [color "branch"]
     current = yellow reverse
     local = yellow
@@ -26,9 +29,12 @@
     added = yellow
     changed = green
     untracked = cyan
-    
+
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  excludesfile = /Users/evanculver/.gitignore
+  autocrlf = false
+  editor = vim
 
 [alias]
   st = status
@@ -40,3 +46,19 @@
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
+  pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+  pullm = !"git fetch origin -v; git fetch mirror -v; git merge mirror/master"
+  pushm = !"git push; git push mirror"
+
+[github]
+  user = eculver
+  token = f37175c7b5455d80937fb7670fb2fd4f
+  password = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
+[mergetool "sourcetree"]
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+[rerere]
+  enabled = true
