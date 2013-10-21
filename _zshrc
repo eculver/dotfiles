@@ -75,6 +75,7 @@ path+=(
     /opt/local/bin
     /usr/local/bin
     /usr/local/share/npm/bin
+    /usr/local/Cellar/python/2.7.3/bin
     $HOME/bin
     $HOME/.gem/ruby/1.8/bin
     $HOME/.rvm/bin
