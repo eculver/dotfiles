@@ -74,7 +74,7 @@ export EDITOR='vim'
 path+=(
     /opt/local/bin
     /usr/local/bin
-    /usr/local/Cellar/python/2.7.1/bin
+    /usr/local/share/npm/bin
     $HOME/bin
     $HOME/.gem/ruby/1.8/bin
     $HOME/.rvm/bin
