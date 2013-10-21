@@ -32,6 +32,10 @@ source $ZSH/oh-my-zsh.sh
 # modify prompt -- this is theme-specific
 PROMPT='%{$fg_bold[green]%}%n@%{$fg_bold[green]%}%m %{$fg_bold[red]%}➜ %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
+# funcs/completions
+fpath=($HOME/.zsh/func $fpath)
+typeset -U fpath
+
 # ------------------------------------------------------------------------
 # Globals
 # ------------------------------------------------------------------------
