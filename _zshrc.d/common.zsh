@@ -75,3 +75,13 @@ devserver () {
         echo "No manage.py found in current directory. Change to project home first."
     fi
 }
+
+# generate a random character string
+random () {
+    len=32
+    if (( $# > 0 )) then
+        len=$1;
+    fi
+
+    python -c "import md5; from datetime import datetime; print md5.new(datetime.now().strftime(\"%s\")).hexdigest()[:$len]"
+}
