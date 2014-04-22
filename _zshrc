@@ -49,6 +49,34 @@ export HOSTNAME=$(hostname)
 # Common functions
 # ------------------------------------------------------------------------
 
+# clean up the $PATH and remove the specified path
+function remove-path {
+  cleanpath=$(echo $PATH |
+              tr ':' '\n' |
+              awk '{a[$0]++;if (a[$0]==1){b[max+1]=$0;max++}}END{for (x = 1; x <= max; x++) { print b[x] } }' |
+              grep -v $1 |
+              tr '\n' ':' |
+              sed -e 's/:$//')
+
+  export PATH=$cleanpath
+}
+
+function prepend-path {
+  remove-path $1
+  export PATH=$1:$PATH
+}
+
+function append-path {
+  remove-path $1
+  export PATH=$PATH:$1
+}
+
+function source-if-exists {
+  if [[ -s $1 ]] then
+    source $1
+  fi
+}
+
 
 # ------------------------------------------------------------------------
 # Tmuxinator
@@ -71,15 +99,13 @@ export EDITOR='vim'
 # Path
 # ------------------------------------------------------------------------
 
-path+=(
-    /opt/local/bin
-    /usr/local/bin
-    /usr/local/share/npm/bin
-    /usr/local/Cellar/python/2.7.3/bin
-    $HOME/bin
-    $HOME/.gem/ruby/1.8/bin
-    $HOME/.rvm/bin
-)
+# reset path to make sure system-provided programs do not take precedence over
+# user-installed alternatives
+prepend-path $HOME/bin
+prepend-path /opt/local/bin
+prepend-path /usr/local/bin
+prepend-path /usr/local/sbin
+prepend-path /usr/local/share/npm/bin
 
 
 # ------------------------------------------------------------------------
