@@ -141,6 +141,7 @@ map <F4> :emenu <C-Z>
 filetype on                 " Enable filetype detection,
 filetype indent on          " use filetype-specific indenting where available,
 filetype plugin on          " also allow for filetype-specific plugins,
+filetype plugin indent on   " required for Vundle
 syntax on                   " and turn on per-filetype syntax highlighting.
 
 """ Key Mappings
