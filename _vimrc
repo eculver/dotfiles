@@ -242,7 +242,7 @@ call vundle#rc()
 Bundle "gmarik/vundle"
 
 " Snippets
-Bundle "honza/snipmate-snippets"
+Bundle 'honza/vim-snippets'
 Bundle "Shougo/neocomplcache"
 Bundle "Shougo/neosnippet"
 
@@ -267,7 +267,7 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
 " Syntax checking/highlight
 Bundle "Syntastic"
