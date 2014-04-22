@@ -2,50 +2,64 @@
 # ZSH conf specific to local environment
 # ========================================================================
 
+# rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Add rbenv to PATH for scripting
+PATH=$PATH:$HOME/.rbenv/bin
+
+# And enable rbenv shims and completion
+eval "$(rbenv init -)"
+
+# Load Tmuxinator
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+# Load Resty
+source /usr/local/bin/resty
+
+# ------------------------------------------------------------------------
+# Z
+# ------------------------------------------------------------------------
+
+source-if-exists $HOME/devel/z/z.sh
+
+
 # ------------------------------------------------------------------------
 # Virtualenv
 # ------------------------------------------------------------------------
 
 export WORKON_HOME=~/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.3/bin/python
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.6_1/bin/python
 export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
 export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
 
 
 # ------------------------------------------------------------------------
-# Resty
+# NVM
 # ------------------------------------------------------------------------
 
-source ~/dev/resty/resty
-
+[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
+#NVM_SOURCE=
+#NVM_DIR=
+#NVM_PROFILE=
 
 # ------------------------------------------------------------------------
 # Postgres (Mac)
 # ------------------------------------------------------------------------
 
 export PGHOST=/tmp
+export PATH="/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH"
 
 
 # ------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------
 
-alias wd='ssh -t evan tmux -u -2 at -t base'
-alias wdapp='ssh -t evan tmux -u -2 at -t app'
-alias wdapi='ssh -t evan tmux -u -2 at -t api'
-alias wdauth='ssh -t evan tmux -u -2 at -t auth'
-alias wddata='ssh -t evan tmux -u -2 at -t data'
-alias wddigress='ssh -t evan tmux -u -2 at -t digress'
-alias wddocs='ssh -t evan tmux -u -2 at -t apidocs'
-alias wdirc='ssh -t evan tmux -u -2 at -t irc'
-alias wdweb='ssh -t evan tmux -u -2 at -t web'
 alias mdr='ssh -t mdr tmux -u -2 att'
-alias irc='ssh -t leeroy tmux -u -2 at -t irc'
-alias dio='ssh -t leeroy tmux -u -2 at -t base'
-
-# WD-related
-alias update_sprite='scp /Volumes/Work\ Drive/Development/Graphic\ Library/Icon\ sprite/icon_sprite.png evan:~/projects/wd-legacy/resource/wd/web/theme/default/assets/'
+alias nero='ssh -t nero tmux -u -2 at -t base'
+alias irc='ssh -t nero tmux -u -2 at -t irc'
+alias dio='ssh -t util1.ca tmux -u -2 at -t base'
 
 # home
 alias plow='ssh -t plow tmux -u -2 at -t base'
@@ -65,15 +79,9 @@ alias util1.ca='ssh -t util1.ca tmux -u -2 at -t base'
 # tmuxinator/project aliases
 alias gousc='mux start usc'
 alias goufogrid='mux start ufogrid'
-alias gototb='mux start totb'
 alias godio='mux start dio'
 alias goeio='mux start eio'
-alias gojute='cd ~/dev/JUTE/backend/nodejute'
-alias godpp='mux start dpp'
-alias gotamoshunas='mux tamoshunas'
 alias goculvers='mux start culvers'
-alias gocompcard='mux start compcard'
-alias gobnj='mux staet bnj'
 alias golsm='mux start lsm'
 alias gotdt='mux start tdt'
 
@@ -87,9 +95,14 @@ alias task='nocorrect task'
 alias pwgen='nocorrect pwgen'
 alias leeroy='nocorrect leeroy'
 
+# bower: noglob
+alias bower='noglob bower'
+
 # aliases for executables that aren't in $PATH
 alias espresso='/Users/evanculver/Downloads/The-M-Project_v1.0.0/Espresso/bin/espresso.js'
 
+# cURL via Tor
+alias torcurl='curl --socks4a localhost:9150'
 
 # ------------------------------------------------------------------------
 # Functions
@@ -101,3 +114,9 @@ killmanage(){
 }
 
 beepwhenup () { echo 'Enter host you want to ping:'; read PHOST; if [[ "$PHOST" == "" ]]; then exit; fi; while true; do ping -c1 -W2 $PHOST 2>&1 >/dev/null; if [[ "$?" == "0" ]]; then for j in $(seq 1 4); do beep; done; ping -c1 $PHOST; break; fi; done; }
+
+
+# ------------------------------------------------------------------------
+# Completions
+# ------------------------------------------------------------------------
+
