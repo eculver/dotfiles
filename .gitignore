@@ -4,3 +4,5 @@
 .AppleDouble
 _vim/bundle
 !_vim/bundle/vundle
+
+_pip/cache
