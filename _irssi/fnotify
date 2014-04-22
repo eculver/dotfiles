@@ -1,0 +1,451 @@
+ 
+ 
+josh these old styles are stupid, i have a div within a div within a div wrapping a button
+josh why so many layers, this ain't cake
+Kyle yo dawg
+Kyle I heard you like divs
+jason josh: I've updated the embed player tag with new bug fixes for sal to test on QA
+josh k, thanks jason
+josh how's the neck?
+jason not too bad, thanks. better than yesterday for sure. helps to have this heating pad on
+rzurad interesting: what does wiredrive.com look like to a colorblind person http://colorfilter.wickline.org/?a=1;r=;l=0;j=1;u=www.wiredrive.com;t=p
+rzurad filter any site to see what it looks like to various kinds of color blind people http://colorfilter.wickline.org/
+Kyle But what does Wiredrive.com look like to a dog ^_-
+Kyle these questions, beg to be answered.
+rzurad apparently colorblind people also have problems with image antialiasing :P
+rzurad hmmm... must find a Toto filter...
+josh Stefan: found the problem for library reel and SSL
+josh just a stupid 1 line fix
+josh just let me know when u want to test it
+Stefan I will run to truck for Daniel and he will test
+Stefan Please let him know/
+Stefan He is on IM
+josh eculver: is sal not in yet?
+josh no worries
+josh the more i read about django the more i wished we moved to it sooner
+josh the orm is table gateway but has crap tons of convenience tools
+josh i was going to ask you how it handles concurrency issues with save/delete
+josh so if a delete is called on a model within one request and a second request calls an update, the update may put the record back?
+josh yea
+josh i was just curious about the hard delete case with concurrent requests
+josh i guess transactions would fix that
+josh u can do a select for update through the orm?
+josh fancy that
+josh eculver: what do you mean? it calls new recusively?
+josh oh that, that's not recursive
+josh it just gets handled by the garbage collector
+josh if an object has no references, the php GC tosses it
+josh eculver: thats only in the error case
+josh it can potentially cause an out of memory exception since the stack trace gets too high
+josh yeah
+josh on production the problem was relayd losing the connection somewhere
+josh the exception should return false and have the calling code reinitialize the manager i think
+josh wait, i don't see the new call in the callback
+josh oh, inside the initconsume
+josh yeah..i'm not sure if that'll get GC'ed
+josh since the amqp library might still hold a reference
+josh yeah, u're understanding it correctly
+josh its not designed well
+josh haha
+ 
+josh ah, u got to the dispatch part
+josh btw does wsgi python run as a single process with multiple threads?
+josh i think it's like 100/sec on average?
+josh during peak hours i mean
+josh i think 8 physical, each running 4 virtual
+josh there might be more
+josh yeah
+josh probably
+josh running 8 each wouldn't be too much load though
+josh i think
+josh fyi, if you're still sick, eat the kiwi's
+josh they're high in vit C like oranges
+jason josh: did Nell tell you to convince us to eat the kiwis?
+josh no, i just noticed theres a bunch
+jason hey guys, I just ate two kiwis and they were delicious. you should really have some as well, highly recommended
+josh jason: maybe we should ask nell to cut them up and get those tiny swords so it's easier to eat
+jason ooh yeah, I would totally eat the crap out of sworded kiwi spears. also that takes all the hard work out of preparing them. good plan!
+josh werd
+jason eculver: let me know when you've got a chunk of time and we can go over what I need to do to get the api stuff running on my instance
+ 
+rzurad fuckyea.buffers
+jason nope, blank slate'
+jason eculver: what branch is Dana's stuff on?
+jason eculver: seems like the users api results don't have the user ids?
+jason eculver: I want to merge development, projects (which includes users) and danas stuff.  I assume I should just create a single integration branch off of development and merge the other 2 in and deal with the absurd conflict fallout yes?
+jason no worries, i'm busy merging more changes. it's conflict city
+jason awesome! thanks
+josh rzurad: finally got the billing data parsed and converted into an insert statement
+josh it's in my home directory on your box
+josh dbt.sql
+josh it's half a gig, 2012's billing data so far
+josh tap me on the shoulder when you have a second
+jason eculver: I've got a question about how to handle branching now
+jason so i've merged all the projects and users stuff with development in an integration branch. I'm wondering if I should leave that branch and create yet another branch where I merge dana's backbone mvc stuff? after all that conflict resolution I feel nervous about adding expirimental backbone stuff to that branch, though maybe now is the time to start integrating that stuff?
+jason Stefan: you should check this out http://sleepyti.me/
+jason get your sleep cycles in order
+Stefan I need to
+Stefan I am all out of whack
+Stefan Do you use this?
+jason I have, I actually have a watch that tracks your movement via accelerometer and determines your sleep cycles and then wakes you up within the best possible window
+Stefan I need that watch
+rzurad eculver: Y U BRING COFFEESCRIPT IN HERE!?!?!?!?!
+jason rzurad: I've got a question to run by you when you have a minute
+jason rzurad: I think I've got the table, search, sort, pagination, and the 2 synced tables working now
+Ahmed Hey Evan
+Ahmed when using oauth to do api request how do we access the user?
+Ahmed it seems that I'm getting an Anonymous user all the time
+Ahmed even though I'm using my consumer key and secret
+Ahmed well I set it not to do that to test and I'm still not getting the correct user
+Ahmed request.user is always an Anonymous user
+Ahmed anyhow, it seems that Django's default authorization might be enough for our purposes too
+Ahmed yep
+Ahmed just under the user resource
+Ahmed well it returns the results fine
+Ahmed and when I turn on debugging and check request under dispatch for example it has an Anon user
+Ahmed np
+Ahmed Yeah, I saw that, but I tried to turn DEBUG to False and it broke
+Ahmed so I overridden the authentication and authorization in the user resource and still Anon
+Ahmed anyways, it
+Ahmed is not a big deal
+Ahmed what's more important is how to hook up our users to the Django auth user
+Ahmed yeah I did that too and same result
+Ahmed I dug into Django authorization a bit and it seems to be enough for our purposes
+Ahmed but the big deal is authenticating against our users
+Ahmed hey
+Ahmed I figured out how to add the user to the request
+Ahmed yep
+Ahmed I had to modify the auth/authentication.py
+Ahmed just got the user_id from the cosumer, fetched the user and added the user to the request
+Ahmed now I can see the user in the request from the user resource
+Ahmed that'
+Ahmed s nice and all, but the hard part haven't been figured out yet
+Ahmed because this is still an auth_user
+jason have you guys ever seen this? freaking amazing: http://amzn.to/viu8TR
+jason you can plug it into your tv and it has controller inputs, so it replaces the super nintendo and doubles as a handheld! genius!
+rzurad ^ that is awesome!
+josh wd_asset_sessions
+jason josh: pushed out a new tag for int/embed-player to go to QA when you get a chance
+josh alrighty
+josh jason: it's up
+jason thanks!
+josh jason: unless the supaboy has hdmi out, i'm not sold on it
+jason haha, overkill?
+rzurad the NHL is on strike, so no hockey this year, but that's ok. Apparently the European Curling championships have a live streaming channel on youtube: https://www.youtube.com/user/WorldCurlingTV
+jason josh: ok, just pushed out the new tag for int/embed-player
+Kyle Today I gave rapper ludacris website advice: https://twitter.com/Ludacris/status/280811471825428481 lmao
+Kyle and he thanked me. #LIKEABOSS
+josh Kyle: lol
+josh what's his website?
+rzurad lol
+Kyle it's http://www.ludaversal.com/store/ lol
+josh eculver: is sentry set up? what's the log in information?
+Kyle One does not simply login to Sentry
+Kyle I'll create your user now josh
+josh Kyle: thanks, boromir
+josh Kyle: is sentry supposed to email everyone when there's an error?
+Kyle Everyone associated with the project, I added you to the API project as an admin
+josh oh, ok
+Kyle You can go to account settings -> notifications
+Kyle to turn it off for specific projects
+Kyle http://sentry.mdr.wiredrive.com/account/settings/notifications/
+josh k
+jason relatedly, in trying to find hot new restaurants to try: http://la.eater.com/archives/2012/12/06/updating_the_eater_heat_map_updating_the_eater_heatmap_where_to_eat_right_now.php
+josh bleh, zuora API uses SOAP
+josh welcome to 2006
+jason josh: pushed an updated tag for int/embed-player with some more bug fixes
+jason cool
+jason ok, how was it before? was video trying to play in QT?
+josh jason: sorry, launched it
+jason thanks
+jason rzurad: when we get to it, we could use these yui DD libraries http://yuilibrary.com/yui/docs/dd/scroll-list.html
+jason hah, it's been awhile huh?
+josh http://www.oldapps.com/firefox.php
+josh firefox 3.6 is readily available
+josh eculver: oh, ok, probably want to do it based on just project
+Stefan NOT WORK RELATED - But I am getting you all one of this for Christmas.  Thanks for the great year!  http://www.cseed.tv/c-seed-the-worlds-largest-outdoor-led-tv.html
+josh Stefan: thanks santa, best gift ever?
+jason I don't think I can fit that in my apartment, can you get me a new one of those as well?
+rzurad ^ now you're just getting greedy
+Kyle I think I can fit it
+Kyle How tall is it
+Kyle my ceilings are 10ft
+Kyle the screen is 15ft high :[ no bueno
+rzurad rent out the apartment above you and cut a hole in the floor
+rzurad problem solved
+jason or install it outside so you can watch tv through your window
+jason josh: Stefan: I pushed the updated int/embed-player.rc tag out with some more fixes to go to IT if it's ready
+Stefan jason:  Thanks.  Daniel is still uploading but it should be free when he is done
+Stefan david:  Just checking to see if this highlight for you in Adium as you name was written
+david i guess, i see it in teal
+josh josh: k, launched
+jason josh: just pushed a new embed tag to fix a QT bug that affected very large files and caused the custom controls to become unresponsive
+david          I'm going to go offline on IM and email for a while , while I'm going through the load testing turtorial.
+jason k
+josh k
+jason josh: Stefan: I've pushed an update to the int/embed-player.rc tag. it can go out if we like. it fixes an issue David found where when chrome prevents the quicktime plugin from loading the controls are still visible before you accept the plugin. Also improves quicktime event reporting.
+Kyle look what I found in the Etsy team's graphite dashboard code lol: https://github.com/etsy/dashboard/blob/master/htdocs/images/black.jpg
+Kyle and of course a nyan cat lol https://github.com/etsy/dashboard/blob/master/htdocs/images/nyan.gif
+jason amazing
+Kyle tis
+david gonna grab a quick lunch
+josh fyi if anyone designs a theming system for their own app, make sure you're not fetching it 4 times per request -.-
+josh 17 queries per request related to theming
+josh nevermind, 12
+josh yah
+josh and they're missing indexes
+jason josh: can you push the updated int/embed-player.rc when you get a chance
+jason josh: pushed a new int/embed-player.rc tag with some bug fixes related to stefan's findings
+jason josh: thanks
+josh np
+jason josh: Stefan: must be thumbnailer http://no-cdn.wiredrive.it/cdn/asset/view/client/iowa/package/projects/id/18540976/format/t/size/m/h/2effdf9eaf46a577a8f43e86cd18be0d/projects_18540976_m.jpg?7a6013aef28682d61703dff120d21b12266b54a2a637283d7d4f0c0843a5f751cc7abfd1babfb9a61cc5ab6c3072f4f4d8d0fd9682
+jason or something, that's the way the image is being served up
+josh oh, why does it have a transparency on live?
+jason it's like that on live
+jason https://cache.wdcdn.net/cdn/asset/view/client/iowa/package/projects/id/18540976/format/t/size/m/h/2effdf9eaf46a577a8f43e86cd18be0d/projects_18540976_m.jpg?7a6013aef28682d61703dff120d21b12266b54a2a637283d7d4f0c0843a5f751cc7abfd1babfb9a61cc5ab6c3072f4f4d8d0fd9682
+Stefan Baby Ahmed - http://1.bp.blogspot.com/_QfVWU-2pVL4/SdYCi9xVXNI/AAAAAAAAFG4/Be9kokPchBQ/s400/BabyBeard.jpg
+Kyle bahahaha
+Kyle b
+Kyle it's easy as 1, 2, 3
+Kyle haha
+Kyle http://open.spotify.com/track/01gwPP2h3ajRnqiIphUtR7 jammin lol
+Kyle lol
+Kyle What is hubot
+Kyle "dramatically improve and reduce employee efficiency." lol what
+Kyle wow
+Kyle you can search graphite metrics with it
+Kyle among a thousand other things
+Kyle lol
+david is there something going on with the wiredrive.ci environment?
+david i'm getting Internal Server Error right now.
+Kyle just saw a few more errors show up David, if this is related
+Kyle Dec 27 14:18:58 atlassian.mdr.wiredrive.com nginx: 2012/12/27 14:18:58 [error] 81639#0: *289014 open() "/wd/host/cl0/wiredrive.ci/branding/images/clients/WD-B1ZE4/20880f31023dcfaa55a71ba76187058f.jpg" failed (2: No such file or directory), client: 192.168.0.201, server: ~^([A-z0-9]+)\.wiredrive\.ci$, request: "GET /images/clients/WD-B1ZE4/20880f31023dcfaa55a71ba76187058f.jpg HTTP/1.1", host: "fullsample.wiredrive.ci", referrer: "http://fullsamp[CUT]
+Kyle Dec 27 14:19:04 atlassian.mdr.wiredrive.com nginx: 2012/12/27 14:19:04 [error] 81639#0: *289027 open() "/wd/host/cl0/wiredrive.ci/branding/images/clients/WD-B1ZE4/71b602a518475affa6d6325ae54389a1.gif" failed (2: No such file or directory), client: 192.168.0.201, server: ~^([A-z0-9]+)\.wiredrive\.ci$, request: "GET /images/clients/WD-B1ZE4/71b602a518475affa6d6325ae54389a1.gif HTTP/1.1", host: "fullsample.wiredrive.ci", referrer: "http://fullsamp[CUT]
+Kyle Dec 27 14:19:05 atlassian.mdr.wiredrive.com nginx: 2012/12/27 14:19:05 [error] 81638#0: *289048 open() "/wd/host/cl0/wiredrive.ci/branding/images/clients/WD-B1ZE4/7e994d334722609898d8f461bbe60071.gif" failed (2: No such file or directory), client: 192.168.0.201, server: ~^([A-z0-9]+)\.wiredrive\.ci$, request: "GET /images/clients/WD-B1ZE4/7e994d334722609898d8f461bbe60071.gif HTTP/1.1", host: "fullsample.wiredrive.ci", referrer: "http://fullsamp[CUT]
+Kyle Dec 27 14:19:05 atlassian.mdr.wiredrive.com nginx: 2012/12/27 14:19:05 [error] 81639#0: *289028 open() "/wd/host/cl0/wiredrive.ci/branding/images/clients/WD-B1ZE4/e28c72e9c773b71228d6121d640f553d.jpg" failed (2: No such file or directory), client: 192.168.0.201, server: ~^([A-z0-9]+)\.wiredrive\.ci$, request: "GET /images/clients/WD-B1ZE4/e28c72e9c773b71228d6121d640f553d.jpg HTTP/1.1", host: "fullsample.wiredrive.ci", referrer: "http://fullsamp[CUT]
+kelvin Just went and redid the database for wiredrive ci.  Should be back up again.
+david sorry anyone's using the vms on the mac pro.  VMWare Fusion seems to keep stalling when I launch IE on one of the virtual machines.
+david anyone know the best way to start a java app as a windows 7 service?
+Kyle Error: Switch to linux
+rzurad you could create a service that points to a bat file that just launches the appo
+rzurad *app
+rzurad probably the most hassle free way
+Stefan @eveanculver -
+Stefan 
+Stefan A big thanks goes out to Southwest Airlines for losing my bag. Hopefully this nightmare ends soon.
+rzurad :(
+rzurad it took american airlines 40 minutes to get the bags off the plane and then onto the wrong carousel at LAX
+josh fail
+josh too much eggnog
+rzurad i had 8 bottles of beer and a glass of wine in my checked bag. I was thinking the fuckers drank it.
+josh i wouldn't be surprised
+rzurad *bottle of wine
+david i'm suspending the vms to update vmware
+josh going truck today if anyone is interested
+david sure I can do the truck
+david I'm gonna shut down the vmware instances on the Mac Pro in the server room so I can update teh vmware
+Kyle Can someone spot me $5? :[
+Kyle so I can haz truck
+josh yea, i can spot you
+Kyle woot thanks man
+Kyle btw, your car and my car are both 2013 IIHS top safety picks, woot lol
+josh woo!
+jason josh: I've found a bug in presentations. If I click to a 3rd or 4th page of items, then click into the detail I get an internal server error. It appears that the carousel.phtml partial is looking for asset indexes that aren't provided for some of the assets ('displayUrl' and 'assetOffset'). I can modify it to work in spite of this, but I'd imagine we'd want to make sure all the assets are passing through that information.
+jason for example: http://fullsample.wiredrive.qa/present-project-detail/assetId/8239085/token/2c5ed0561c21c9f90068928f8eb62e48
+josh oh, this has been fixed on dev and master
+jason oh ok
+jason cool, never mind then
+josh not sure how you can pull in the fi
+josh *fix
+jason that's fine, I don't really need it to finish my stuff
+josh ah ok
+jason josh: I did just push a new tag though for int/embed-player fixing most of the open bugs
+josh k, i'll redeploy
+josh jason: did you want me to re-deploy again?
+jason sure, yeah, I made a small one-line fix I had missed
+jason thanks
+david I'm getting a "File Not Found" from the presentation links on CI currently.  Did something happen to CI env?
+david http://fullsample.wiredrive.ci/ppd/token/56b5be23398c961b96110ad42d3ff902
+Kyle As far as I can tell, that has not returned anything other than a 404 as of yesterday. The log starts at Sept 19th 2012 to today
+Kyle [root@atlassian /usr/home/kyle]# grep ppd /var/log/nginx-access.log  | head -n 2
+Kyle Jan  2 15:39:13 atlassian.mdr.wiredrive.com nginx: 192.168.0.81 - - [02/Jan/2013:15:39:13 -0800] "GET /ppd/token/8ec139296a32fac0c849b906dfe1f743 HTTP/1.1" 404 1823 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.101 Safari/537.11"
+Kyle Jan  2 18:25:45 atlassian.mdr.wiredrive.com nginx: 192.168.0.226 - - [02/Jan/2013:18:25:45 -0800] "GET /ppd/token/a450ddc0bfff325a4a42b17db746f2eb HTTP/1.1" 404 1823 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.91 Safari/537.11"
+Kyle [root@atlassian /usr/home/kyle]#
+Kyle Kinda looks like http://fullsample.wiredrive.ci/ is acting weird anyways
+Kyle It's trying to grab the branding resources from /wd/host/cl0/wiredrive.ci/branding/images/clients/WD-B1ZE4 instead of /wd/host/cl0/wiredrive.ci/branding/images/clients/fullsample
+david I think that is in line with what I was seeing yesterday.  It was working during the earlier 1/2 of the day, then that presentation stopped working before I left.
+jason josh: DanielB: rzurad: I pushed out a new tag for the fixes I've been working on to support cross-domain postMessage as well as better conforming to moogaloop so we can get that vimeo embed page working with a few tweaks to the iframe html
+jason rzurad: for reference regarding postMessage https://developer.mozilla.org/en-US/docs/DOM/window.postMessage
+DanielB do you need it deployed?
+jason basically just making the second argument a "*" wildcard fixes the issue. But postMessage is what vimeo uses to communicate between the frame and page, so it doesn't support IE7 and older browsers
+jason yeah, it can go out to QA and I can show you what needs to change with the iframe code whenever you want to test that vimeo embed html page you have again
+DanielB int/embed-player.rc is on it's way to qa
+jason thanks
+rzurad jason: yeah I was looking into that after standup. soooo much better than CORS.
+jason it's so easy, built right in
+jason makes the code really concise, how it should be
+rzurad yeah. and you don't have to do anything... anywhere, really, except the browser. so nice
+david Hi Guys, what visual sql client would you recommend for osx?
+Kyle They used to have really good tools directly from MySQL for OS X :\ I think they EOL'd them though :[
+Kyle http://dev.mysql.com/downloads/gui-tools/5.0.html
+Kyle Looks like this is the new one: http://dev.mysql.com/downloads/workbench/
+Kyle Although I think that's actually windows only :\
+rzurad i thought workbench was for design, rather than live querying
+Kyle I think so too
+Kyle Kinda misleading that on the GUI tools page they put "http://dev.mysql.com/downloads/workbench/ has replaced the GUI Tools Bundle"
+rzurad lol
+rzurad unless they're calling "Workbench" the package of apps that includes one for design and one for live querying
+Kyle This looks dope: http://www.sequelpro.com/
+Kyle and free
+Kyle yeah I just downloaded that ^ it's pretty cool
+Kyle Has an SSH feature, so you can go through your developer instance to access db0 and whatnot
+david oracle and their signin and registration makes it feel like I'm signing over my soul to use their mysql client.
+Kyle use sequelpro
+Kyle tis pretty nice having only used it for 3 minutes lol
+DanielB what is the cmd in python for mkdir owned by a specific user ?
+Kyle How to make a dir, and specify a specific user as the owner of it? Or how to determine the owner of a dir?
+DanielB david: Mysql workbench can run queries as well
+DanielB I have it and it runs fine
+DanielB Kyle: we need the salt module (run as root) to make a dir owned by wd
+Kyle Why not do it in the states file like it's being done now?
+david Can I use the same DB settings on the ops config file for connecting to the DB on QA and CI
+david or are those only for localhost?  I can't seem to connect using those db strings
+Kyle let me see
+david any advice on db lib I should use for connecting to the db in python.
+rzurad eculver: ^
+DanielB Kyle: we are buiding a multi step module for deploying the code out to all the servers.   Too many vars involved for a state file
+Kyle Okay why not just do os.chown after os.mkdir
+david I'm thinking maybe it's better to go with an ORM in the event you switch out the DB in the future.  But it does add troubles in having to create all those object/table mappings
+josh DanielB: since there are no more hotfixes, billing is back onto wiredrive.IT for farah and frank to test
+DanielB ok.  thanks
+DanielB josh: one problem with billing I know will come up, there are " around all the numbers in the export, so ording is done alphbetica.
+josh DanielB: u'll need to convert the column to be numeric type since the quotes are standard in csv
+DanielB I fixed it in the csv
+DanielB it's all good
+rzurad is the export route for billing done? If so, let me know because last I checked the page itself redirects you to ?routekey=bogus when you click on the export button
+rzurad s/billing/usage
+josh rzurad: should be just 'billing-export'
+rzurad done. hooked up and the tag is updated
+josh rzurad: sweet, launching now
+Stefan Can you turn on 192.168.0.120?  Rob D is looking to test a few things?
+david I don't know which machine that one is?  what OS/browser does it have?
+david ok, that machine should be back up now
+Stefan thaks
+Stefan Can we also turn this machine on for Rob - 192.168.0.90
+Stefan Can we also turn this machine on for Rob - 192.168.0.90
+rzurad david: ^ can you do that or does somebody need to go get kyle?
+david if it's on the mac pro, I can do it.
+david I opened the 2 xp vms on the mac pro, neither has that ip
+david I'm wondering if the ip has changed or that is some other vm image
+david strange.  I have it running.. but I can't ping to it.
+Stefan I think Rob is looking for Win7/IE9
+Stefan oh, ok
+Stefan hmmm
+david the VM running win XP IE8 Ch14 seems to have that ip when I type ipconfig on that machine
+david but I can't ping it using my mac
+Stefan Hey guys, meeting running long.  We will have the stand-down aroun 5:50
+rzurad it's all eculver's fault. everybody knows he loves long meetings
+Stefan Rob is saying we have an issue with clients uploading via Windows
+Stefan 
+Stefan IE 9/ WIn7 combo gives Bad Server response upon upload
+Stefan 
+Stefan Getting the same thing on XP/ Ie8 combo
+Stefan 
+Stefan Trying to get more info
+rzurad looking into it now on the test box with kelvin
+Stefan Thanks
+josh rzurad: we didn't update the jumploader
+josh i don't know if the old upload url still works
+rzurad it's a problem with simple uploader
+rzurad it's not IE specific
+rzurad I can fool chrome into thinking it doesn't have html5 upload and simple is broken
+rzurad we get a 400 on simple upload file posts
+rzurad I didn't change anything in simple (on purpose, that is) when we did the new upload stuff because it wasn't supposed to use the new upload stuff. only html5 was
+rzurad josh: any way to see which parameter it's complaining about?
+rzurad on live?
+josh oh, simple is broken too?
+josh let me take a look, it's probably the route
+Stefan Rob said he got the error in JAVA
+rzurad none of the machines near me have java installed so I didn't test it
+rzurad but yeah, simple upload is broken, too
+josh how do u disable the html5 uploader?
+rzurad open up the page in a sane browser, and open up the app-global.js and look for isHTML5UploadAvailable
+rzurad put a breakpoint where the object that contains that gets assigned to the Y.WD namespace
+rzurad refresh the page
+rzurad in the console say `a.isHTML5UploadAvailable = false;`
+rzurad continue
+josh k
+rzurad and bob's your uncle
+rzurad i think simple and java use the same route?
+Stefan Do you guys need anything from me?  More info?  More details from Rob?
+rzurad not sure. don't think so
+rzurad got the error, josh
+josh rzurad: pushing the fix to wiredrive.it
+rzurad Invalid user requested in Wdl/Action/WdNode/Asset/UploadAction
+josh bad user id parameter
+rzurad cool
+josh old controller was looking for 'user', we changed it to 'user id' at some point
+josh thanks rich
+rzurad np
+rzurad and as far as I can tell, simple and java shared the same post url
+rzurad also... i have no idea if this will fix java
+josh i can't test java til it's on wiredrive.IT cuz I can't get the jumploader to load on my mac
+rzurad k
+josh java 7 is 64bit only and installing it screwed up the plugin
+josh k, it's on IT now
+rzurad yeah, that's why I don't have java on my mac
+josh cool, it fixed it for java too
+josh Stefan: you want to test on IT?
+josh btw, i gotta stop checking in
+rzurad josh: sal says you can take IT
+josh huh? no, i already deployed
+josh need his sign off
+david on my dev vm.. if I wanted to dump some files into a folder where the apache server can serve it up.. where should I copy the files to?
+david or where can I find the httpd.conf file?
+josh david: we use nginx so the main config is under /usr/local/etc/nginx/nginx.conf
+rzurad josh: sal's coming back. hes gonna check it now
+josh we have a wildcard for loading anything under /usr/<username>/projects/<wildcard>/www
+david cool
+josh you may need to ask scott/kelvin to show u
+david cool
+josh example: '/usr/david/projects/foobar/www/testfile.html' would be 'foobar.wiredrive.david/testfile.html'
+david I don't see /usr/david, do I need to create this..?
+david or is it just my normal  home directory, /projects/foobar/wwww
+josh yeah, it's just your home directory
+josh sorry, forgot the home part
+Stefan josh: it looks good
+josh woo! merging and tagging
+josh Stefan: tag pushed to wiredrive.IT for final review
+Stefan PSUH
+Stefan PUSH
+Stefan APPROVED!!!!!
+rzurad BOOM
+Stefan Thank you all for getting this done so quickly
+rzurad josh: i poured some beer on the ground for you
+rzurad toto cleaned it up
+josh don't waste beer like that
+josh oh, nm, good
+rzurad turned toto into boozer
+josh Stefan: k, it's live now
+josh rzurad: i thought he was already a boozer
+Stefan All good.  Test at 100%
+Stefan Thank you all again for this quick fix
+josh np
+rzurad ^
+josh remind me to talk to daniel on monday on how to handle single file uploader/java uploader
+Stefan Will do
+josh since now we have 2 ways to upload into the system
+josh i don't remember if that's what we wanted
+josh now go drink, it's friday
+Stefan You too
+Stefan Ad this is not a sick day
+Stefan Logged as work
+Stefan You still have them all for 2013
+josh neat, thanks
+josh i'll try not to get sick again
+josh by walking 2 miles in 40degree weather
+josh k, logging off, gnite gus
+josh *guys
+david I'm gonna make a stop to equinox to check out their gym, then grab Gelsons, anyone want me to grab something for them on my way back?
+rzurad david: no thanks, I'm good
+david heading out, be back in a bit
