@@ -84,32 +84,43 @@ alias 3-bottomright   corner bottom-right                               resize:s
 # 1 monitor
 layout 1monitor 'iTerm':REPEAT ${1-full}
 layout 1monitor 'Google Chrome':REPEAT ${1-full}
+layout 1monitor 'Safari':REPEAT ${1-full}
+layout 1monitor 'Firefox':REPEAT ${1-full}
 layout 1monitor 'Mail':REPEAT ${1-full}
 layout 1monitor 'Path Finder':REPEAT ${1-full}
 layout 1monitor 'iTunes':REPEAT ${full}
 layout 1monitor 'Adium':REPEAT ${rightquarter}
 layout 1monitor 'TorBrowser':REPEAT ${full}
 layout 1monitor 'Evernote':REPEAT ${full}
+layout 1monitor 'HipChat':REPEAT ${full}
 
 # 2 monitor
 layout 2monitor 'iTerm':REPEAT ${2-full}
 layout 2monitor 'Google Chrome':REPEAT ${1-full}
+layout 2monitor 'Safari':REPEAT ${1-full}
+layout 2monitor 'Firefox':REPEAT ${1-full}
 layout 2monitor 'Mail':REPEAT ${1-full}
 layout 2monitor 'Path Finder':REPEAT ${1-full}
 layout 2monitor 'iTunes':REPEAT ${1-full}
 layout 2monitor 'Adium':REPEAT ${2-rightless}
+layout 2monitor 'Messages':REPEAT ${2-rightless}
 layout 2monitor 'TorBrowser':REPEAT ${1-full}
 layout 2monitor 'Evernote':REPEAT ${1-full}
+layout 2monitor 'HipChat':REPEAT ${1-full}
 
 # 3 monitor
-layout 3monitor 'iTerm':REPEAT_LAST ${2-full} | ${3-lefthalf}
+layout 3monitor 'iTerm':SORT_TITLE ${2-full} | ${3-lefthalf}
 layout 3monitor 'Google Chrome':REPEAT ${1-full}
+layout 3monitor 'Safari':REPEAT ${1-full}
+layout 3monitor 'Firefox':REPEAT ${1-full}
 layout 3monitor 'Mail':REPEAT ${1-full}
 layout 3monitor 'Path Finder':REPEAT ${1-full}
 layout 3monitor 'iTunes':REPEAT ${1-full}
 layout 3monitor 'Adium':REPEAT ${3-righthalf}
+layout 3monitor 'Messages':REPEAT ${3-righthalf}
 layout 3monitor 'TorBrowser':REPEAT ${1-full}
 layout 3monitor 'Evernote':REPEAT ${3-full}
+layout 3monitor 'HipChat':REPEAT ${3-full}
 
 default 1monitor count:1
 default 2monitor count:2
