@@ -6,7 +6,8 @@
   default = current
 
 [branch]
-  autosetupmerge = true
+  autosetupmerge = always
+  autosetuprebase = always
 
 [branch "master"]
   remote = origin
