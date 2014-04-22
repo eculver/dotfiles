@@ -2,11 +2,11 @@
 # Bash conf common to all environments
 # ========================================================================
 
-# Add RVM to PATH for scripting
-PATH=$PATH:$HOME/.rvm/bin
+# Add rbenv to PATH for scripting
+PATH=$PATH:$HOME/.rbenv/bin
 
-# Load RVM function
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+# And enable rbenv shims and completion
+eval "$(rbenv init -)"
 
 # Load Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
