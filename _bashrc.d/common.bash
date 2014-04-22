@@ -14,6 +14,9 @@ eval "$(rbenv init -)"
 # Virtualenv wrapper functions
 source /usr/local/bin/virtualenvwrapper.sh
 
+# NVM
+[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
+
 
 # ------------------------------------------------------------------------
 # Aliases
