@@ -57,3 +57,8 @@
   password = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
 [rerere]
   enabled = true
+[credential]
+  helper = cache -- timeout=3600
+[url "git@github.com:"]
+  # Always use Github SSH protocol
+  insteadOf = https://github.com
