@@ -34,7 +34,6 @@ chatnets = {
     max_kicks = "4";
     max_msgs = "3";
     max_whois = "1";
-    autosendcmd = "/msg nickserv identify f00M4nCh00* ;wait 2000";
   };
   IRCnet = {
     type = "IRC";
