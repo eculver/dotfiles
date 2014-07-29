@@ -30,6 +30,10 @@ set smartcase               " unless uppercase letters are used in the regex.
 set hlsearch                " Highlight searches by default.
 set incsearch               " Incrementally search while typing a /regex
 
+""" More Natural Splits
+set splitbelow
+set splitright
+
 """ Insert completion
 " don't select first item, follow typing in autocomplete
 set completeopt=longest,menuone,preview
@@ -45,6 +49,7 @@ set nofoldenable            " Disable folding
 set number                  " Display line numbers
 set numberwidth=1           " using only 1 column (and 1 space) while possible
 set background=dark
+set cursorline              " Highlight current line
 
 if has("gui_running")
     set guioptions-=m           " remove menu bar
@@ -56,6 +61,7 @@ set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
 
 " show a line at column 79
 if exists("&colorcolumn")
+    execute "set colorcolumn=" . join(range(81,335), ',')
     set colorcolumn=79
 endif
 
@@ -74,11 +80,31 @@ set laststatus=2            " Always show statusline, even if only 1 window.
 "set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [LINE=%l:%c]\ [LEN=%L]
 
 """" Tabs/Indent Levels
-set tabstop=4               " <tab> inserts 4 spaces
-set shiftwidth=4            " but an indent level is 2 spaces wide.
-set softtabstop=4           " <BS> over an autoindent deletes both spaces.
-set expandtab               " Use spaces, not tabs, for autoindent/tab key.
-set shiftround              " rounds indent to a multiple of shiftwidth
+let g:tabsize = 2
+execute "set tabstop=".g:tabsize
+execute "set shiftwidth=".g:tabsize
+execute "set softtabstop=".g:tabsize
+
+function! UpdateTabSize()
+  " <tab> inserts <my_tab> spaces
+  execute "set tabstop=".g:tabsize
+
+  " but an indent level is <my_tab> spaces wide.
+  execute "set shiftwidth=".g:tabsize
+
+  "<BS> over an autoindent deletes both spaces.
+  execute "set softtabstop=".g:tabsize
+endfunction
+nnoremap <Leader>tz execute UpdateTabSize()<CR>
+
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set smartindent
+set autoindent
+
+set expandtab                 " Use spaces, not tabs, for autoindent/tab key.
+set shiftround                " rounds indent to a multiple of shiftwidth
 
 """" Tags
 " Tags can be in ./tags, ../tags, ..., /home/tags.
@@ -158,6 +184,7 @@ map <silent><S-t> :tabnew<CR>
 
 " Open new tab and toggle NERDTree
 nnoremap <Leader>tt :tablast<CR><Bar>:tabnew<CR><Bar>:NERDTreeToggle<CR><Bar><C-w><Right><Bar>:q<CR>
+let g:NERDTreeWinSize = 40
 
 " Easily move around long wrapped lines
 nnoremap k gk
@@ -166,8 +193,11 @@ nnoremap j gj
 " Execute selected script
 map <C-h> :py EvaluateCurrentRange()<CR>
 
-" Show Project Menu
-map <F5> :NERDTreeToggle<CR>
+" Show Project Tree
+map <LocalLeader>tt :NERDTreeToggle<CR>
+
+" Open Project Tree to current file
+map <LocalLeader>tf :NERDTreeFind<CR>
 
 " Toggle Paste Mode
 nnoremap <F2> :set invpaste paste?<CR>
@@ -192,6 +222,22 @@ nnoremap <Leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " Clear search highlight
 nnoremap <Leader>/ :noh<CR>
+
+" Rebind Command T
+map <Leader>F :CommandT<CR>
+
+" Buffer helpers
+
+" new empty buffer
+nmap <LocalLeader>T :enew<CR><Bar>:NERDTreeToggle<CR>
+" move to next buffer
+nmap <LocalLeader>l :bnext<CR>
+" move to previous buffer
+nmap <LocalLeader>h :bprevious<CR>
+" close current buffer and move to the previous one
+nmap <LocalLeader>bq :bp <BAR> bd #<CR>
+" show all open buffers and their status
+nmap <LocalLeader>bl :ls<CR>
 
 " Ignore .o, ~ and .pyc extensions
 set wildignore=*.o,*~,*.pyc
