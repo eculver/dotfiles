@@ -301,6 +301,8 @@ if version >= 700
   call s:X("PmenuSel","101010","eeeeee","","","")
 endif
 
+call s:X("ColorColumn","","1c1c1c","","","")
+
 call s:X("Visual","","404040","","","")
 call s:X("Cursor","","b0d0f0","","","")
 
