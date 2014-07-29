@@ -274,6 +274,12 @@ autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^
 " Go Highlighting
 set rtp+=~/$GOROOT/misc/vim
 
+" CoffeeScript Highlighting
+au! BufRead,BufNewFile *.coffee set filetype=coffee
+
+" Scala Highlighting
+au! BufRead,BufNewFile *.scala set filetype=scala
+
 """" Display
 colorscheme jellybeans
 
