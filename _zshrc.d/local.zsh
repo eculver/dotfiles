@@ -3,13 +3,15 @@
 # ========================================================================
 
 # rbenv
+export RBENV_ROOT=$HOME/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Add rbenv to PATH for scripting
-PATH=$PATH:$HOME/.rbenv/bin
+PATH=$PATH:$RBENV_ROOT/bin
 
-# And enable rbenv shims and completion
+# And enable rbenv shims, completion and local gems
 eval "$(rbenv init -)"
+eval "$(rbenv usergems-init -)"
 
 # Load Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
