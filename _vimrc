@@ -337,6 +337,10 @@ Bundle "JSON.vim"
 Bundle "nono/vim-handlebars"
 Bundle "lunaru/vim-less"
 Bundle "hail2u/vim-css3-syntax"
+Bundle "pangloss/vim-javascript"
+Bundle "jsx/jsx.vim"
+Bundle "kchmck/vim-coffee-script"
+Bundle "derekwyatt/vim-scala"
 
 " Git integration
 Bundle "mattn/gist-vim"
@@ -358,11 +362,12 @@ Bundle "YankRing.vim"
 Bundle "The-NERD-tree"
 Bundle "repeat.vim"
 Bundle "surround.vim"
-Bundle "SuperTab"
-"Bundle "WebAPI.vim"
 Bundle "benmills/vimux"
 Bundle "sudo.vim"
 Bundle "briandoll/change-inside-surroundings.vim"
+Bundle "jcorbin/vim-searchmatch"
+Bundle "command-t"
+
 
 " Lightline
 Bundle 'itchyny/lightline.vim'
@@ -417,7 +422,6 @@ function! MyFilename()
        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
        \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
-
 
 " Ack
 Bundle "ack.vim"
