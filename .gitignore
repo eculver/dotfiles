@@ -6,3 +6,9 @@ _vim/bundle
 !_vim/bundle/vundle
 
 _pip/cache
+
+_bashrc.d/*
+!_bashrc.d/*.bash
+
+_zshrc.d/*
+!_zshrc.d/*.zsh
