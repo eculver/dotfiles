@@ -5,7 +5,7 @@ HI="\[\033[0;37m\]" #change this for letter colors
 HII="\[\033[0;31m\]" #change this for letter colors
 SI="\[\033[0;33m\]" #this is for the current directory
 IN="\[\033[0m\]"
- 
+
 safe_term=${TERM//[^[:alnum:]]/?}   # sanitize TERM
 if [[ -f /etc/DIR_COLORS ]] ; then
         match_lhs=$(</etc/DIR_COLORS)
@@ -16,37 +16,72 @@ else
 fi
 [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
 
-if ${use_color} ; then
-        if [[ ${EUID} == 0 ]] ; then
-                PS1='\[\033[01;31m\]\H\[\033[01;34m\] \W \$\[\033[00m\] '
-        else
-                PS1='\[\033[01;32m\]\u@\H\[\033[01;34m\] \w \$\[\033[00m\] '
-        fi
 
-        alias grep='grep --colour=auto'
-else
-        if [[ ${EUID} == 0 ]] ; then
-                # show root@ when we don't have colors
-                PS1='\u@\h \W \$ '
-        else
-                PS1='\u@\h \w \$ '
-        fi
-fi
- 
-    export LS_OPTIONS='--color=always'
-        eval `dircolors ~/.dir_colors`
-         
+source ~/.bashrc.d/gitcompletion.bash
+
+function __git_prompt {
+ GIT_PS1_SHOWDIRTYSTATE=1
+  [ `git config user.pair` ] && GIT_PS1_PAIR="`git config user.pair`@"
+  __git_ps1 " $GIT_PS1_PAIR%s" | sed 's/ \([+*]\{1,\}\)$/\1/'
+}
+
+bash_prompt() {
+  # regular colors
+  local K="\[\033[0;30m\]"    # black
+  local R="\[\033[0;31m\]"    # red
+  local G="\[\033[0;32m\]"    # green
+  local Y="\[\033[0;33m\]"    # yellow
+  local B="\[\033[0;34m\]"    # blue
+  local M="\[\033[0;35m\]"    # magenta
+  local C="\[\033[0;36m\]"    # cyan
+  local W="\[\033[0;37m\]"    # white
+
+  # emphasized (bolded) colors
+  local BK="\[\033[1;30m\]"
+  local BR="\[\033[1;31m\]"
+  local BG="\[\033[1;32m\]"
+  local BY="\[\033[1;33m\]"
+  local BB="\[\033[1;34m\]"
+  local BM="\[\033[1;35m\]"
+  local BC="\[\033[1;36m\]"
+  local BW="\[\033[1;37m\]"
+
+  # reset
+  local RESET="\[\033[0;37m\]"
+
+  if ${use_color} ; then
+    if [[ ${EUID} == 0 ]] ; then
+      PS1='$BR\H$BB \W $(__git_ps1 " (%s) " )$RESET$ '
+    else
+      PS1='$BG\u@\H$BB \w $(__git_ps1 " (%s) ")$RESET$ '
+    fi
+  else
+    if [[ ${EUID} == 0 ]] ; then
+      # show root@ when we don't have colors
+      PS1='\u@\h \W \$ '
+    else
+      PS1='\u@\h \w \$ '
+    fi
+  fi
+}
+
+bash_prompt
+unset bash_prompt
+
+
+export LS_OPTIONS='--color=always'
+eval `dircolors ~/.dir_colors`
+
 # Useful aliases
-        
-	alias ls='ls $LS_OPTIONS -hF'
-        alias ll='ls $LS_OPTIONS -lhF'
-        alias l='ls $LS_OPTIONS -lAhF'
-        alias cd..="cd .."
-        alias c="clear"
-        alias e="exit"
-        alias ssh="ssh -X"
-        alias ..="cd .."
-	
+alias ls='ls $LS_OPTIONS -hF'
+alias ll='ls $LS_OPTIONS -lhF'
+alias l='ls $LS_OPTIONS -lAhF'
+alias cd..="cd .."
+alias c="clear"
+alias e="exit"
+alias ssh="ssh -X"
+alias ..="cd .."
+
 HISTFILESIZE=50000000
 HISTSIZE=500
 #export HISTTIMEFORMAT='%a, %d %b %Y %l:%M:%S%p %z '
