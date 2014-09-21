@@ -16,8 +16,15 @@ config checkDefaultsOnLoad true
 # Alias
 # ----------------------------------------------------------------------------
 
+# Monitors
+alias mon-laptop      1680x1050
+alias mon-dell        1920x1200
+alias mon-thunderbolt 2560x1440
+
+
 # Fullscreen
 alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
+
 
 # Halves, full vertical
 alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
@@ -81,20 +88,44 @@ alias 3-bottomright   corner bottom-right                               resize:s
 # Layouts
 # ----------------------------------------------------------------------------
 
-# 1 monitor
-layout 1monitor 'iTerm':REPEAT ${1-full}
-layout 1monitor 'Google Chrome':REPEAT ${1-full}
-layout 1monitor 'Safari':REPEAT ${1-full}
-layout 1monitor 'Firefox':REPEAT ${1-full}
-layout 1monitor 'Mail':REPEAT ${1-full}
-layout 1monitor 'Path Finder':REPEAT ${1-full}
-layout 1monitor 'iTunes':REPEAT ${full}
-layout 1monitor 'Adium':REPEAT ${rightquarter}
-layout 1monitor 'TorBrowser':REPEAT ${full}
-layout 1monitor 'Evernote':REPEAT ${full}
-layout 1monitor 'HipChat':REPEAT ${full}
+# laptop only
+layout laptop 'iTerm':REPEAT ${full}
+layout laptop 'Google Chrome':REPEAT ${full}
+layout laptop 'Safari':REPEAT ${full}
+layout laptop 'Firefox':REPEAT ${full}
+layout laptop 'Path Finder':REPEAT ${full}
+layout laptop 'iTunes':REPEAT ${full}
+layout laptop 'HipChat':REPEAT ${righthalf}
+layout laptop 'Adium':REPEAT ${righthalf}
+layout laptop 'Messages':REPEAT ${righthalf}
+layout laptop 'Evernote':REPEAT ${full}
 
-# 2 monitor
+# 2 cinema displays
+layout 2cinema 'iTerm':REPEAT ${2-full}
+layout 2cinema 'Google Chrome':REPEAT ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
+layout 2cinema 'Safari':REPEAT ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
+layout 2cinema 'Firefox':REPEAT ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
+layout 2cinema 'Path Finder':REPEAT ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
+layout 2cinema 'iTunes':REPEAT ${1-lefthalf}
+layout 2cinema 'HipChat':REPEAT ${2-rightless}
+layout 2cinema 'Adium':REPEAT ${2-rightless}
+layout 2cinema 'Messages':REPEAT ${2-rightless}
+layout 2cinema 'Evernote':REPEAT ${1-righthalf}
+
+# 2 monitor home
+layout 2home 'iTerm':REPEAT ${2-full}
+layout 2home 'Google Chrome':REPEAT ${1-full}
+layout 2home 'Safari':REPEAT ${1-full}
+layout 2home 'Firefox':REPEAT ${1-full}
+layout 2home 'Mail':REPEAT ${1-full}
+layout 2home 'Path Finder':REPEAT ${1-full}
+layout 2home 'iTunes':REPEAT ${1-full}
+layout 2home 'HipChat':REPEAT ${2-righthalf}
+layout 2home 'Adium':REPEAT ${2-righthalf}
+layout 2home 'Messages':REPEAT ${2-righthalf}
+layout 2home 'Evernote':REPEAT ${1-full}
+
+# 2 monitor (legacy, for reference)
 layout 2monitor 'iTerm':REPEAT ${2-full}
 layout 2monitor 'Google Chrome':REPEAT ${1-full}
 layout 2monitor 'Safari':REPEAT ${1-full}
@@ -102,13 +133,13 @@ layout 2monitor 'Firefox':REPEAT ${1-full}
 layout 2monitor 'Mail':REPEAT ${1-full}
 layout 2monitor 'Path Finder':REPEAT ${1-full}
 layout 2monitor 'iTunes':REPEAT ${1-full}
+layout 2monitor 'HipChat':REPEAT ${2-rightless}
 layout 2monitor 'Adium':REPEAT ${2-rightless}
 layout 2monitor 'Messages':REPEAT ${2-rightless}
 layout 2monitor 'TorBrowser':REPEAT ${1-full}
 layout 2monitor 'Evernote':REPEAT ${1-full}
-layout 2monitor 'HipChat':REPEAT ${1-full}
 
-# 3 monitor
+# 3 monitor (legacy, for reference)
 layout 3monitor 'iTerm':SORT_TITLE ${2-full} | ${3-lefthalf}
 layout 3monitor 'Google Chrome':REPEAT ${1-full}
 layout 3monitor 'Safari':REPEAT ${1-full}
@@ -122,9 +153,11 @@ layout 3monitor 'TorBrowser':REPEAT ${1-full}
 layout 3monitor 'Evernote':REPEAT ${3-full}
 layout 3monitor 'HipChat':REPEAT ${3-full}
 
-default 1monitor count:1
-default 2monitor count:2
-default 3monitor count:3
+# Default Layouts
+default 2cinema resolutions:${mon-thunderbolt};${mon-thunderbolt}
+default 2home   resolutions:${mon-laptop};${mon-dell}
+default laptop  resolutions:${mon-laptop}
+
 
 # ----------------------------------------------------------------------------
 # Binds
@@ -134,7 +167,7 @@ default 3monitor count:3
 bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN
 
 # CMD+Shift+1 for laptop layout
-bind 1:alt;shift layout 1monitor
+bind 1:alt;shift layout laptop
 
 # CMD+Shift+2 for dual monitor layout
 bind 2:alt;shift layout 2monitor
