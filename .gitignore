@@ -5,7 +5,8 @@
 _vim/bundle
 !_vim/bundle/vundle
 
-_pip/cache
+_pip/*
+!_pip/pip.conf
 
 _bashrc.d/*
 !_bashrc.d/*.bash
