@@ -2,6 +2,161 @@
 
 " Stop behaving like vi; vim enhancements are better
 set nocompatible
+filetype off
+
+" Vundle setup
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle
+Plugin 'gmarik/vundle'
+
+" Snippets
+Plugin 'honza/vim-snippets'
+Plugin 'Shougo/neocomplcache'
+Plugin 'Shougo/neosnippet'
+
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underscore completion.
+let g:neocomplcache_enable_underbar_completion = 1
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+" Syntax checking/highlight
+Plugin 'Syntastic'
+
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_less_options=""
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_javascript_checkers=['jshint', 'jscs']
+
+Plugin 'Markdown'
+Plugin 'Sass'
+Plugin 'less-syntax'
+Plugin 'JSON.vim'
+Plugin 'nono/vim-handlebars'
+Plugin 'lunaru/vim-less'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jsx/jsx.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'derekwyatt/vim-scala'
+
+" Git integration
+Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
+Plugin 'Git-Branch-Info'
+Plugin 'git.zip'
+Plugin 'gitignore'
+Plugin 'fugitive.vim'
+Plugin 'airblade/vim-gitgutter'
+
+" (HT|X)ml tool
+Plugin 'ragtag.vim'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+" Utility
+Plugin 'ScrollColors'
+Plugin 'openssl.vim'
+Plugin 'YankRing.vim'
+Plugin 'The-NERD-tree'
+Plugin 'repeat.vim'
+Plugin 'surround.vim'
+Plugin 'benmills/vimux'
+Plugin 'sudo.vim'
+Plugin 'briandoll/change-inside-surroundings.vim'
+Plugin 'jcorbin/vim-searchmatch'
+Plugin 'command-t'
+
+
+" Lightline
+Plugin 'itchyny/lightline.vim'
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \     'left': [ [ 'mode', 'paste' ],
+      \               [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'MyFugitive',
+      \   'readonly': 'MyReadonly',
+      \   'modified': 'MyModified',
+      \   'filename': 'MyFilename'
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+
+function! MyModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! MyReadonly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return "⭤"
+  else
+    return ""
+  endif
+endfunction
+
+function! MyFugitive()
+  if exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? '⭠ '._ : ''
+  endif
+  return ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+       \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+" Ack
+Plugin 'ack.vim'
+noremap <LocalLeader># "ayiw:Ack <C-r>a<CR>
+vnoremap <LocalLeader># "ay:Ack <C-r>a<CR>
+
+" tComment
+Plugin 'tComment'
+nnoremap // :TComment<CR>
+vnoremap // :TComment<CR>
+
+" Search/Navigation
+Plugin 'gmarik/vim-visual-star-search'
+
+" Required end of Vundl'ing
+call vundle#end()
+
 
 " Encoding
 if has("multi_byte")
@@ -285,153 +440,3 @@ colorscheme jellybeans
 
 """" Gist.vim
 let g:gist_open_browser_after_post=0
-
-"""" Bundles
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-Bundle "gmarik/vundle"
-
-" Snippets
-Bundle 'honza/vim-snippets'
-Bundle "Shougo/neocomplcache"
-Bundle "Shougo/neosnippet"
-
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underscore completion.
-let g:neocomplcache_enable_underbar_completion = 1
-
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-
-" Syntax checking/highlight
-Bundle "Syntastic"
-
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_less_options=""
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_javascript_checkers=['jshint', 'jscs']
-
-Bundle "Markdown"
-Bundle "Sass"
-Bundle "less-syntax"
-Bundle "JSON.vim"
-Bundle "nono/vim-handlebars"
-Bundle "lunaru/vim-less"
-Bundle "hail2u/vim-css3-syntax"
-Bundle "pangloss/vim-javascript"
-Bundle "jsx/jsx.vim"
-Bundle "kchmck/vim-coffee-script"
-Bundle "derekwyatt/vim-scala"
-
-" Git integration
-Bundle "mattn/gist-vim"
-Bundle "mattn/webapi-vim"
-Bundle "Git-Branch-Info"
-Bundle "git.zip"
-Bundle "gitignore"
-Bundle "fugitive.vim"
-Bundle "airblade/vim-gitgutter"
-
-" (HT|X)ml tool
-Bundle "ragtag.vim"
-Bundle "rstacruz/sparkup", {'rtp': 'vim/'}
-
-" Utility
-Bundle 'ScrollColors'
-Bundle 'openssl.vim'
-Bundle "YankRing.vim"
-Bundle "The-NERD-tree"
-Bundle "repeat.vim"
-Bundle "surround.vim"
-Bundle "benmills/vimux"
-Bundle "sudo.vim"
-Bundle "briandoll/change-inside-surroundings.vim"
-Bundle "jcorbin/vim-searchmatch"
-Bundle "command-t"
-
-
-" Lightline
-Bundle 'itchyny/lightline.vim'
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \     'left': [ [ 'mode', 'paste' ],
-      \               [ 'fugitive', 'filename' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \   'readonly': 'MyReadonly',
-      \   'modified': 'MyModified',
-      \   'filename': 'MyFilename'
-      \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-      \ }
-
-function! MyModified()
-  if &filetype == "help"
-    return ""
-  elseif &modified
-    return "+"
-  elseif &modifiable
-    return ""
-  else
-    return ""
-  endif
-endfunction
-
-function! MyReadonly()
-  if &filetype == "help"
-    return ""
-  elseif &readonly
-    return "⭤"
-  else
-    return ""
-  endif
-endfunction
-
-function! MyFugitive()
-  if exists("*fugitive#head")
-    let _ = fugitive#head()
-    return strlen(_) ? '⭠ '._ : ''
-  endif
-  return ''
-endfunction
-
-function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-       \ ('' != MyModified() ? ' ' . MyModified() : '')
-endfunction
-
-" Ack
-Bundle "ack.vim"
-noremap <LocalLeader># "ayiw:Ack <C-r>a<CR>
-vnoremap <LocalLeader># "ay:Ack <C-r>a<CR>
-
-" tComment
-Bundle "tComment"
-nnoremap // :TComment<CR>
-vnoremap // :TComment<CR>
-
-" Search/Navigation
-Bundle "gmarik/vim-visual-star-search"
