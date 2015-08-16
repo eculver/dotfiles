@@ -11,7 +11,7 @@
 bindkey -v
 
 # make reverse search work as though we're in emacs mode
-bindkey '\e[3~' delete-char
+# bindkey '\e[3~' delete-char
 bindkey '^R' history-incremental-search-backward
 
 

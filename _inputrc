@@ -17,6 +17,13 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
+set history-size 100000
+
+bind "\e[A":history-search-backward
+bind "\e[B":history-search-forward
+bind "\e[C": forward-char
+bind "\e[D": backward-char
+
 $if mode=vi
     set keymap vi-command
     "gg": beginning-of-history
