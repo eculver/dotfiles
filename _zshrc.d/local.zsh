@@ -41,7 +41,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 # NVM
 # ------------------------------------------------------------------------
 
-export NVM_DIR="/home/eculver/.nvm"
+export NVM_DIR=$HOME/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 #NVM_SOURCE=
 #NVM_DIR=
