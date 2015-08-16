@@ -154,4 +154,8 @@ source $CONFDIR/common.zsh
 # mylaptop.local -> local.zsh
 # some.host.with.fqdn.com -> my_server.zsh
 
+# override the hostname being reset by DHCP to something like eculver-2.local
+hostname | grep -q 'local'
+[[ $? -eq 0 ]] && HOSTNAME=eculver.local
+
 [[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
