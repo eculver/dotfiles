@@ -34,6 +34,9 @@ alias svnst='rmdotunder&&svn st'
 
 # just handy
 alias tsnow='date +%Y%m%d%H%M%S'
+alias tsnowutc='date -u +%Y%m%d%H%M%S'
+alias today='date +%Y%m%d'
+alias todayutc='date -u +%Y%m%d'
 
 # dev
 alias dbshell='./manage.py dbshell'
