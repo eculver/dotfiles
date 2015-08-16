@@ -4,12 +4,15 @@
 set nocompatible
 filetype off
 
+" Don't unload buffer when it's abandoned
+set hidden
+
 " Vundle setup
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle
-Plugin 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " Snippets
 Plugin 'honza/vim-snippets'
@@ -46,7 +49,8 @@ let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_less_options=""
 let g:syntastic_python_checkers=['flake8']
-let g:syntastic_javascript_checkers=['jshint', 'jscs']
+let g:syntastic_javascript_checkers=['standard']
+" let g:syntastic_javascript_checkers=['jshint']
 
 Plugin 'Markdown'
 Plugin 'Sass'
@@ -59,6 +63,11 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'jsx/jsx.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'zaiste/tmux.vim'
+
+" Go
+Plugin 'fatih/vim-go'
+let g:go_fmt_command = "goimports"
 
 " Git integration
 Plugin 'mattn/gist-vim'
@@ -74,7 +83,8 @@ Plugin 'ragtag.vim'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " Utility
-Plugin 'ScrollColors'
+" Plugin 'ScrollColors'
+" Plugin 'jlund3/colorschemer'
 Plugin 'openssl.vim'
 Plugin 'YankRing.vim'
 Plugin 'The-NERD-tree'
@@ -86,6 +96,8 @@ Plugin 'briandoll/change-inside-surroundings.vim'
 Plugin 'jcorbin/vim-searchmatch'
 Plugin 'command-t'
 
+" ctrlp
+Plugin 'kien/ctrlp.vim'
 
 " Lightline
 Plugin 'itchyny/lightline.vim'
@@ -141,10 +153,10 @@ function! MyFilename()
        \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
-" Ack
-Plugin 'ack.vim'
-noremap <LocalLeader># "ayiw:Ack <C-r>a<CR>
-vnoremap <LocalLeader># "ay:Ack <C-r>a<CR>
+" Ag
+Plugin 'rking/ag.vim'
+noremap <LocalLeader># "ayiw:Ag <C-r>a<CR>
+vnoremap <LocalLeader># "ay:Ag <C-r>a<CR>
 
 " tComment
 Plugin 'tComment'
@@ -152,7 +164,42 @@ nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
 " Search/Navigation
-Plugin 'gmarik/vim-visual-star-search'
+"Plugin 'dyng/ctrlsf.vim'
+"noremap   <C-F>f <Plug>CtrlSFVwordExec
+
+"Plugin 'gmarik/vim-visual-star-search'
+
+Plugin 'majutsushi/tagbar'
+
+" Tagbar
+let g:tagbar_autofocus = 1
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
 
 " Required end of Vundl'ing
 call vundle#end()
@@ -199,12 +246,18 @@ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 """" Folding
-set nofoldenable            " Disable folding
+" set nofoldenable            " Disable folding
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1
 
 set number                  " Display line numbers
 set numberwidth=1           " using only 1 column (and 1 space) while possible
 set background=dark
 set cursorline              " Highlight current line
+set cursorcolumn            " Highlight current column
 
 if has("gui_running")
     set guioptions-=m           " remove menu bar
@@ -329,8 +382,8 @@ syntax on                   " and turn on per-filetype syntax highlighting.
 let mapleader=","
 let maplocalleader="."
 
-map <silent><C-Left> <C-T>
-map <silent><C-Right> <C-]>
+" map <silent><C-Left> <C-T>
+" map <silent><C-Right> <C-]>
 
 " Tab management
 map <silent><S-n> :tabnext<CR>
@@ -375,11 +428,17 @@ vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
 nnoremap <Leader>ss :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 nnoremap <Leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
 
+" Apply title case to visual selection
+vmap <Leader>sT :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
+
 " Clear search highlight
 nnoremap <Leader>/ :noh<CR>
 
 " Rebind Command T
-map <Leader>F :CommandT<CR>
+" map <Leader>f :CommandT<CR>
+
+" Rebind CtrlP
+map <LocalLeader>f :CtrlP<CR>
 
 " Buffer helpers
 
@@ -394,8 +453,9 @@ nmap <LocalLeader>bq :bp <BAR> bd #<CR>
 " show all open buffers and their status
 nmap <LocalLeader>bl :ls<CR>
 
-" Ignore .o, ~ and .pyc extensions
-set wildignore=*.o,*~,*.pyc
+
+" Ignore extensions
+set wildignore=*.o,*~,*.pyc,*.so,*.swp,*.zip,*.gz
 
 let Tlist_GainFocus_On_ToggleOpen=1
 let g:skip_loading_mswin=1
@@ -437,6 +497,9 @@ au! BufRead,BufNewFile *.scala set filetype=scala
 
 """" Display
 colorscheme jellybeans
+" colorscheme lucid
+" colorscheme benlight
+" colorscheme void
 
 """" Gist.vim
 let g:gist_open_browser_after_post=0
