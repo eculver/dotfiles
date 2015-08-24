@@ -10,6 +10,8 @@ _pip/*
 
 _bashrc.d/*
 !_bashrc.d/*.bash
+_bashrc.d/uber.bash
 
 _zshrc.d/*
 !_zshrc.d/*.zsh
+_zshrc.d/uber.zsh
