@@ -466,6 +466,12 @@ nnoremap <Leader>/ :noh<CR>
 " Visual search for selection
 vnoremap // y/<C-R>"<CR>
 
+" Re-indent entire file and return to current mark
+" map to both Shift-i and <Leader>si to be consistent with other line
+" manipulations
+map <S-i> mzgg=G`z
+nnoremap <Leader>si mzgg=G`z<CR>
+
 " Rebind Command T
 " map <Leader>f :CommandT<CR>
 
