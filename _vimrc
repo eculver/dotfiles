@@ -453,6 +453,10 @@ vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
 nnoremap <Leader>ss :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 nnoremap <Leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
 
+" Mapping to insert a newline after line w/o entering insert mode
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+
 " Apply title case to visual selection
 vmap <Leader>sT :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
 
