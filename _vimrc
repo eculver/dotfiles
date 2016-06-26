@@ -309,7 +309,7 @@ if exists("&colorcolumn")
 endif
 
 " displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:>-,eol:$,trail:-,precedes:<,extends:>
+set listchars=tab:··,eol:$,trail:-,precedes:<,extends:>
 set list
 
 """" Messages, Info, Status
@@ -323,7 +323,7 @@ set laststatus=2            " Always show statusline, even if only 1 window.
 "set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [LINE=%l:%c]\ [LEN=%L]
 
 """" Tabs/Indent Levels
-let g:tabsize = 2
+let g:tabsize = 4
 execute "set tabstop=".g:tabsize
 execute "set shiftwidth=".g:tabsize
 execute "set softtabstop=".g:tabsize
@@ -340,9 +340,6 @@ function! UpdateTabSize()
 endfunction
 nnoremap <Leader>tz execute UpdateTabSize()<CR>
 
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
 set smartindent
 set autoindent
 
