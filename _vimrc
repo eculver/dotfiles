@@ -132,7 +132,7 @@ Plugin 'surround.vim'
 Plugin 'benmills/vimux'
 " Plugin 'sudo.vim'
 Plugin 'briandoll/change-inside-surroundings.vim'
-" Plugin 'wincent/command-t'
+Plugin 'wincent/command-t'
 " Plugin 'jcorbin/vim-searchmatch'
 
 " ctrlp
@@ -473,10 +473,12 @@ map <S-i> mzgg=G`z
 nnoremap <Leader>si mzgg=G`z<CR>
 
 " Rebind Command T
-" map <Leader>f :CommandT<CR>
+map <LocalLeader>t :CommandT<CR>
+map <LocalLeader>b :CommandTBuffer<CR>
+
 
 " Rebind CtrlP
-map <LocalLeader>f :CtrlP<CR>
+" map <LocalLeader>f :CtrlP<CR>
 
 " Buffer helpers
 
