@@ -463,6 +463,9 @@ vmap <Leader>sT :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
 " Clear search highlight
 nnoremap <Leader>/ :noh<CR>
 
+" Visual search for selection
+vnoremap // y/<C-R>"<CR>
+
 " Rebind Command T
 " map <Leader>f :CommandT<CR>
 
