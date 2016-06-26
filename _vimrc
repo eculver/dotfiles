@@ -12,12 +12,13 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " Snippets
 Plugin 'honza/vim-snippets'
 Plugin 'Shougo/neocomplcache'
 Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
 
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -27,7 +28,7 @@ let g:neocomplcache_enable_camel_case_completion = 1
 " Use underscore completion.
 let g:neocomplcache_enable_underbar_completion = 1
 
-" Plugin key-mappings.
+" Snippet Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
@@ -45,59 +46,97 @@ let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 " Syntax checking/highlight
 Plugin 'Syntastic'
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
 let g:syntastic_less_options=""
 let g:syntastic_python_checkers=['flake8']
+let g:syntastic_puppet_checkers=['puppetlint']
 let g:syntastic_javascript_checkers=['standard']
 " let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
+Plugin 'tGpg'
 Plugin 'Markdown'
-Plugin 'Sass'
-Plugin 'less-syntax'
-Plugin 'JSON.vim'
-Plugin 'nono/vim-handlebars'
-Plugin 'lunaru/vim-less'
-Plugin 'hail2u/vim-css3-syntax'
+" Plugin 'Sass'
+" Plugin 'less-syntax'
+" Plugin 'JSON.vim'
+Plugin 'elzr/vim-json'
+let g:vim_json_syntax_conceal = 0
+
+" Plugin 'nono/vim-handlebars'
+" Plugin 'lunaru/vim-less'
+" Plugin 'hail2u/vim-css3-syntax'
+Plugin 'rodjek/vim-puppet'
 Plugin 'pangloss/vim-javascript'
-Plugin 'jsx/jsx.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'derekwyatt/vim-scala'
+" Plugin 'jsx/jsx.vim'
+" Plugin 'kchmck/vim-coffee-script'
+" Plugin 'derekwyatt/vim-scala'
 Plugin 'zaiste/tmux.vim'
+Plugin 'solarnz/thrift.vim'
+Plugin 'elubow/cql-vim'
+Plugin 'digitaltoad/vim-jade'
 
 " Go
 Plugin 'fatih/vim-go'
 let g:go_fmt_command = "goimports"
+let g:go_list_type = "quickfix"
+" let g:go_highlight_methods = 1
+" let g:go_highlight_structs = 1
+" let g:go_highlight_interfaces = 1
+" let g:go_highlight_operators = 1
+
+" Go Plugin key-mappings
+
+" Open definition under cursor in new vertical, horizontal split or tab
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+" Run, build, test, coverage
+au FileType go nmap <Leader>r <Plug>(go-run)
+au FileType go nmap <Leader>b <Plug>(go-build)
+au FileType go nmap <Leader>t <Plug>(go-test)
+au FileType go nmap <Leader>c <Plug>(go-coverage)
+
 
 " Git integration
-Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
-Plugin 'Git-Branch-Info'
+" Plugin 'Git-Branch-Info'
 Plugin 'git.zip'
 Plugin 'gitignore'
 Plugin 'fugitive.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'mattn/gist-vim'
+let g:gist_open_browser_after_post=0
 
 " (HT|X)ml tool
-Plugin 'ragtag.vim'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Plugin 'ragtag.vim'
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " Utility
 " Plugin 'ScrollColors'
 " Plugin 'jlund3/colorschemer'
-Plugin 'openssl.vim'
-Plugin 'YankRing.vim'
+" Plugin 'openssl.vim'
+" Plugin 'YankRing.vim'
 Plugin 'The-NERD-tree'
 Plugin 'repeat.vim'
 Plugin 'surround.vim'
 Plugin 'benmills/vimux'
-Plugin 'sudo.vim'
+" Plugin 'sudo.vim'
 Plugin 'briandoll/change-inside-surroundings.vim'
-Plugin 'jcorbin/vim-searchmatch'
-Plugin 'command-t'
+" Plugin 'wincent/command-t'
+" Plugin 'jcorbin/vim-searchmatch'
 
 " ctrlp
-Plugin 'kien/ctrlp.vim'
+" Plugin 'kien/ctrlp.vim'
 
 " Lightline
 Plugin 'itchyny/lightline.vim'
@@ -105,19 +144,19 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \     'left': [ [ 'mode', 'paste' ],
-      \               [ 'fugitive', 'filename' ] ]
+      \               [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \   'readonly': 'MyReadonly',
-      \   'modified': 'MyModified',
-      \   'filename': 'MyFilename'
+      \   'fugitive': 'LightlineFugitive',
+      \   'readonly': 'LightlineReadonly',
+      \   'filename': 'LightlineFilename',
+      \   'modified': 'LightlineModified'
       \ },
       \ 'separator': { 'left': '⮀', 'right': '⮂' },
       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
       \ }
 
-function! MyModified()
+function! LightlineModified()
   if &filetype == "help"
     return ""
   elseif &modified
@@ -129,7 +168,7 @@ function! MyModified()
   endif
 endfunction
 
-function! MyReadonly()
+function! LightlineReadonly()
   if &filetype == "help"
     return ""
   elseif &readonly
@@ -139,18 +178,14 @@ function! MyReadonly()
   endif
 endfunction
 
-function! MyFugitive()
-  if exists("*fugitive#head")
-    let _ = fugitive#head()
-    return strlen(_) ? '⭠ '._ : ''
-  endif
-  return ''
+function! LightlineFugitive()
+  return exists('*fugitive#head') ? fugitive#head() : ''
 endfunction
 
-function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+function! LightlineFilename()
+  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-       \ ('' != MyModified() ? ' ' . MyModified() : '')
+       \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
 " Ag
