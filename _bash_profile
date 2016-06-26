@@ -109,3 +109,6 @@ export TERM=xterm-256color
 export EDITOR PATH CVSROOT CVS_RSH HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE PS1 PS2 LSCOLORS GREP_OPTIONS
 
 source ~/.bashrc
+source ~/.dockerrc
+
+[[ -s "/Users/eculver/.gvm/scripts/gvm" ]] && source "/Users/eculver/.gvm/scripts/gvm"
