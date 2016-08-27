@@ -7,6 +7,9 @@ filetype off
 " Don't unload buffer when it's abandoned
 set hidden
 
+" Ignore extensions
+set wildignore=*.o,*~,*.pyc,*.so,*.swp,*.zip,*.gz
+
 " Vundle setup
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -60,7 +63,7 @@ let g:syntastic_python_checkers=['flake8']
 let g:syntastic_puppet_checkers=['puppetlint']
 let g:syntastic_javascript_checkers=['standard']
 " let g:syntastic_javascript_checkers=['jshint']
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_go_checkers = ['goimports', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 Plugin 'tGpg'
@@ -105,14 +108,15 @@ au FileType go nmap <Leader>r <Plug>(go-run)
 au FileType go nmap <Leader>b <Plug>(go-build)
 au FileType go nmap <Leader>t <Plug>(go-test)
 au FileType go nmap <Leader>c <Plug>(go-coverage)
-
+au FileType go nmap <Leader>x <Plug>(go-coverage-clear)
+au FileType go nmap <Leader>e :GoErrCheck<CR>
 
 " Git integration
 Plugin 'mattn/webapi-vim'
 " Plugin 'Git-Branch-Info'
 Plugin 'git.zip'
-Plugin 'gitignore'
 Plugin 'fugitive.vim'
+Plugin 'gitignore'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/gist-vim'
 let g:gist_open_browser_after_post=0
@@ -126,7 +130,8 @@ let g:gist_open_browser_after_post=0
 " Plugin 'jlund3/colorschemer'
 " Plugin 'openssl.vim'
 " Plugin 'YankRing.vim'
-Plugin 'The-NERD-tree'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'repeat.vim'
 Plugin 'surround.vim'
 Plugin 'benmills/vimux'
@@ -493,10 +498,6 @@ nmap <LocalLeader>bq :bp <BAR> bd #<CR>
 " show all open buffers and their status
 nmap <LocalLeader>bl :ls<CR>
 
-
-" Ignore extensions
-set wildignore=*.o,*~,*.pyc,*.so,*.swp,*.zip,*.gz
-
 let Tlist_GainFocus_On_ToggleOpen=1
 let g:skip_loading_mswin=1
 
@@ -530,16 +531,17 @@ autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^
 set rtp+=~/$GOROOT/misc/vim
 
 " CoffeeScript Highlighting
-au! BufRead,BufNewFile *.coffee set filetype=coffee
+" au! BufRead,BufNewFile *.coffee set filetype=coffee
 
 " Scala Highlighting
-au! BufRead,BufNewFile *.scala set filetype=scala
+" au! BufRead,BufNewFile *.scala set filetype=scala
 
-"""" Display
+" CQL Highlighting
+au! BufRead,BufNewFile *.cql set filetype=cql
+
+" Display
 colorscheme jellybeans
 " colorscheme lucid
 " colorscheme benlight
 " colorscheme void
 
-"""" Gist.vim
-let g:gist_open_browser_after_post=0
