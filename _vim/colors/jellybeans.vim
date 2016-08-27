@@ -324,6 +324,7 @@ call s:X("Title","70b950","","bold","","")
 call s:X("Constant","cf6a4c","","","Red","")
 call s:X("Special","799d6a","","","Green","")
 call s:X("Delimiter","668799","","","Grey","")
+call s:X("Number","668799","","","Grey","")
 
 call s:X("String","99ad6a","","","Green","")
 call s:X("StringDelimiter","556633","","","DarkGreen","")
