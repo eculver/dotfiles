@@ -13,11 +13,12 @@ PATH=$PATH:$RBENV_ROOT/bin
 eval "$(rbenv init -)"
 eval "$(rbenv usergems-init -)"
 
+# Add GOPATH to path
+PATH=$PATH:$GOPATH/bin
+
 # Load Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
-# Load Resty
-source /usr/local/bin/resty
 
 # ------------------------------------------------------------------------
 # Z
@@ -116,13 +117,31 @@ alias torcurl='curl --socks4a localhost:9150'
 # ------------------------------------------------------------------------
 # Functions
 # ------------------------------------------------------------------------
+# gd () {
+#   git diff $@ | cdiff -s
+# }
 
 # kill all django runserver instances
 killmanage(){
     ps -ef | grep "manage\.py runserver" | awk '{print $2}' | xargs kill -9
 }
 
-beepwhenup () { echo 'Enter host you want to ping:'; read PHOST; if [[ "$PHOST" == "" ]]; then exit; fi; while true; do ping -c1 -W2 $PHOST 2>&1 >/dev/null; if [[ "$?" == "0" ]]; then for j in $(seq 1 4); do beep; done; ping -c1 $PHOST; break; fi; done; }
+beepwhenup () {
+    echo 'Enter host you want to ping:';
+    read PHOST;
+    [[ "$PHOST" == "" ]] && echo "must enter a host or IP" && return
+
+    while true; do
+        ping -c1 -W2 $PHOST 2>&1 >/dev/null
+        if [[ "$?" == "0" ]]; then
+            for j in $(seq 1 4); do
+                say "Host is up";
+            done
+            ping -c1 $PHOST
+            break
+        fi
+    done
+}
 
 
 # ------------------------------------------------------------------------
