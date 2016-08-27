@@ -90,12 +90,14 @@ alias 3-bottomright   corner bottom-right                               resize:s
 
 # laptop only
 layout laptop 'iTerm':REPEAT ${full}
+layout laptop 'Atom':REPEAT ${full}
 layout laptop 'Google Chrome':REPEAT ${full}
 layout laptop 'Safari':REPEAT ${full}
 layout laptop 'Firefox':REPEAT ${full}
 layout laptop 'iTunes':REPEAT ${full}
 layout laptop 'Spotify':REPEAT ${full}
 layout laptop 'HipChat':REPEAT ${righthalf}
+layout laptop 'Slack':REPEAT ${righthalf}
 layout laptop 'Adium':REPEAT ${righthalf}
 layout laptop 'Messages':REPEAT ${righthalf}
 layout laptop 'Evernote':REPEAT ${full}
@@ -103,19 +105,22 @@ layout laptop 'Path Finder':REPEAT ${1-lefthalf}
 
 # 2 cinema displays
 layout 2cinema 'iTerm':REPEAT                     ${2-full}
-layout 2cinema 'Google Chrome':REPEAT_LAST        ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
-layout 2cinema 'Safari':REPEAT_LAST               ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
-layout 2cinema 'Firefox':REPEAT_LAST              ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
-layout 2cinema 'Path Finder':REPEAT               ${1-lefthalf} | ${1-righthalf} | ${2-lefthalf} | ${2-righthalf}
+layout 2cinema 'Atom':REPEAT                      ${2-full}
+layout 2cinema 'Google Chrome':REPEAT             ${1-righthalf} | ${1-lefthalf}
+layout 2cinema 'Safari':REPEAT                    ${2-lefthalf} | ${2-righthalf}
+layout 2cinema 'Firefox':REPEAT                   ${2-lefthalf} | ${2-righthalf}
+layout 2cinema 'Path Finder':REPEAT               ${1-topleft} | ${1-bottomleft}
 layout 2cinema 'iTunes':REPEAT                    ${1-lefthalf}
 layout 2cinema 'Spotify':REPEAT                   ${1-lefthalf}
 layout 2cinema 'HipChat':REPEAT                   ${1-righthalf}
+layout 2cinema 'Slack':REPEAT                     ${1-righthalf}
 layout 2cinema 'Adium':REPEAT                     ${1-righthalf}
 layout 2cinema 'Messages':REPEAT                  ${1-righthalf}
-layout 2cinema 'Evernote':REPEAT                  ${2-lefthalf}
+layout 2cinema 'Evernote':REPEAT                  ${1-lefthalf}
 
 # 2 monitor home
 layout 2home 'iTerm':REPEAT                       ${2-full}
+layout 2home 'Atom':REPEAT                        ${2-full}
 layout 2home 'Google Chrome':REPEAT               ${1-full}
 layout 2home 'Safari':REPEAT                      ${1-full}
 layout 2home 'Firefox':REPEAT                     ${1-full}
@@ -123,26 +128,30 @@ layout 2home 'Path Finder':REPEAT                 ${1-full}
 layout 2home 'iTunes':REPEAT                      ${1-full}
 layout 2home 'Spotify':REPEAT                     ${1-full}
 layout 2home 'HipChat':REPEAT                     ${2-righthalf}
+layout 2home 'Slack':REPEAT                       ${2-righthalf}
 layout 2home 'Adium':REPEAT                       ${2-righthalf}
 layout 2home 'Messages':REPEAT                    ${2-righthalf}
 layout 2home 'Evernote':REPEAT                    ${1-full}
 
 # 2 monitor (legacy, for reference)
-layout 2monitor 'iTerm':REPEAT ${2-full}
-layout 2monitor 'Google Chrome':REPEAT ${1-full}
-layout 2monitor 'Safari':REPEAT ${1-full}
-layout 2monitor 'Firefox':REPEAT ${1-full}
-layout 2monitor 'Mail':REPEAT ${1-full}
-layout 2monitor 'Path Finder':REPEAT ${1-full}
-layout 2monitor 'iTunes':REPEAT ${1-full}
+layout 2monitor 'iTerm':REPEAT ${1-full}
+layout 2monitor 'Atom':REPEAT ${1-full}
+layout 2monitor 'Google Chrome':REPEAT ${2-full}
+layout 2monitor 'Safari':REPEAT ${2-full}
+layout 2monitor 'Firefox':REPEAT ${2-full}
+layout 2monitor 'Mail':REPEAT ${2-full}
+layout 2monitor 'Path Finder':REPEAT ${2-full}
+layout 2monitor 'iTunes':REPEAT ${2-full}
 layout 2monitor 'HipChat':REPEAT ${2-rightless}
+layout 2monitor 'Slack':REPEAT ${2-rightless}
 layout 2monitor 'Adium':REPEAT ${2-rightless}
 layout 2monitor 'Messages':REPEAT ${2-rightless}
-layout 2monitor 'TorBrowser':REPEAT ${1-full}
-layout 2monitor 'Evernote':REPEAT ${1-full}
+layout 2monitor 'TorBrowser':REPEAT ${2-full}
+layout 2monitor 'Evernote':REPEAT ${2-full}
 
 # 3 monitor (legacy, for reference)
 layout 3monitor 'iTerm':SORT_TITLE ${2-full} | ${3-lefthalf}
+layout 3monitor 'Atom':SORT_TITLE ${2-full} | ${3-lefthalf}
 layout 3monitor 'Google Chrome':REPEAT ${1-full}
 layout 3monitor 'Safari':REPEAT ${1-full}
 layout 3monitor 'Firefox':REPEAT ${1-full}
@@ -154,6 +163,7 @@ layout 3monitor 'Messages':REPEAT ${3-righthalf}
 layout 3monitor 'TorBrowser':REPEAT ${1-full}
 layout 3monitor 'Evernote':REPEAT ${3-full}
 layout 3monitor 'HipChat':REPEAT ${3-full}
+layout 3monitor 'Slack':REPEAT ${3-full}
 
 # Default Layouts
 default 2cinema resolutions:${mon-thunderbolt};${mon-thunderbolt}
@@ -172,7 +182,7 @@ bind tab:cmd switch
 bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN
 
 # CTRL+1 to show iTerm and Chrome
-bind 1:ctrl show 'iTerm','Google Chrome','HipChat'
+bind 1:ctrl show 'iTerm','Google Chrome','HipChat', 'Slack'
 
 # CMD+Shift+1 for laptop layout
 bind 1:alt;shift layout laptop
