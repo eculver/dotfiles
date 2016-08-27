@@ -1,6 +1,9 @@
+# shellcheck disable=SC2148
 # ========================================================================
 # Evan's ZSH config from hell (it's really simple and harmless actually)
 # ========================================================================
+
+# call me maybe? set -eo pipefail
 
 # Locale setup
 export LC_ALL=en_US.UTF-8
@@ -9,6 +12,8 @@ export LANG=en_US.UTF-8
 # ------------------------------------------------------------------------
 # Oh-My-ZSH!!
 # ------------------------------------------------------------------------
+
+export HOME=~
 
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/.oh-my-zsh
@@ -28,17 +33,25 @@ export ZSH_THEME="gozilla"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
+# shellcheck disable=SC2034
 plugins=(git git-flow brew github osx)
 
 # meat-and-potatoes
+# shellcheck disable=SC1090
 source $ZSH/oh-my-zsh.sh
 
 # modify prompt -- this is theme-specific
-PROMPT='%{$fg_bold[green]%}%n@%{$fg_bold[green]%}%m %{$fg_bold[red]%}➜ %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+# shellcheck disable=SC2016
+export PROMPT='%{$fg_bold[green]%}%n@%{$fg_bold[green]%}%m %{$fg_bold[red]%}➜ %{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 
 # funcs/completions
 fpath=($HOME/.zsh/func $fpath)
 typeset -U fpath
+
+# enable editing via v cmd
+autoload edit-command-line; zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 
 # ------------------------------------------------------------------------
 # Globals
@@ -46,7 +59,9 @@ typeset -U fpath
 
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 export CONFDIR=$HOME/.zshrc.d
-export HOSTNAME=$(hostname)
+export LIBDIR=$CONFDIR/lib
+export HOSTNAME
+HOSTNAME=$(hostname)
 
 
 # ------------------------------------------------------------------------
@@ -55,10 +70,10 @@ export HOSTNAME=$(hostname)
 
 # clean up the $PATH and remove the specified path
 function remove-path {
-  cleanpath=$(echo $PATH |
+  cleanpath=$(echo "${PATH}" |
               tr ':' '\n' |
               awk '{a[$0]++;if (a[$0]==1){b[max+1]=$0;max++}}END{for (x = 1; x <= max; x++) { print b[x] } }' |
-              grep -v $1 |
+              grep -v "${1}" |
               tr '\n' ':' |
               sed -e 's/:$//')
 
@@ -66,19 +81,18 @@ function remove-path {
 }
 
 function prepend-path {
-  remove-path $1
+  remove-path "${1}"
   export PATH=$1:$PATH
 }
 
 function append-path {
-  remove-path $1
+  remove-path "${1}"
   export PATH=$PATH:$1
 }
 
 function source-if-exists {
-  if [[ -s $1 ]] then
-    source $1
-  fi
+  # shellcheck disable=SC1090
+  [[ -s "${1}" ]] && source "${1}"
 }
 
 
@@ -86,9 +100,9 @@ function source-if-exists {
 # Tmuxinator
 # ------------------------------------------------------------------------
 
-if [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]]; then
-    source $HOME/.tmuxinator/scripts/tmuxinator
-    source $HOME/.tmuxinator/scripts/tmuxinator_completion
+if [[ -s ~/devel/tmuxinator/completion ]]; then
+    # shellcheck disable=SC1090
+    source ~/devel/tmuxinator/completion/tmuxinator.zsh
 fi
 
 
@@ -105,11 +119,11 @@ export EDITOR='vim'
 
 # reset path to make sure system-provided programs do not take precedence over
 # user-installed alternatives
-prepend-path $HOME/bin
-prepend-path /opt/local/bin
-prepend-path /usr/local/bin
-prepend-path /usr/local/sbin
 prepend-path /usr/local/share/npm/bin
+prepend-path /opt/local/bin
+prepend-path /usr/local/sbin
+prepend-path /usr/local/bin
+prepend-path "${HOME}"/bin
 
 
 # ------------------------------------------------------------------------
@@ -138,6 +152,7 @@ export JSTESTDRIVER_HOME=$HOME/bin/jstd
 # common settings
 # ------------------------------------------------------------------------
 
+# shellcheck disable=SC1090
 source $CONFDIR/common.zsh
 
 
@@ -158,4 +173,5 @@ source $CONFDIR/common.zsh
 hostname | grep -q 'local'
 [[ $? -eq 0 ]] && HOSTNAME=eculver.local
 
+# shellcheck disable=SC1090
 [[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
