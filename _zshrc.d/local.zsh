@@ -3,7 +3,7 @@
 # ========================================================================
 
 # rbenv
-export RBENV_ROOT=$HOME/.rbenv
+export RBENV_ROOT=~/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Add rbenv to PATH for scripting
@@ -11,7 +11,6 @@ PATH=$PATH:$RBENV_ROOT/bin
 
 # And enable rbenv shims, completion and local gems
 eval "$(rbenv init -)"
-eval "$(rbenv usergems-init -)"
 
 # Add GOPATH to path
 PATH=$PATH:$GOPATH/bin
