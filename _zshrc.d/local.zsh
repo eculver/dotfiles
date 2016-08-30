@@ -31,10 +31,9 @@ source-if-exists $HOME/src/z/z.sh
 # ------------------------------------------------------------------------
 
 export WORKON_HOME=~/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/Cellar/python/2.7.6_1/bin/python
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 export VIRTUALENVWRAPPER_LOG_DIR=$WORKON_HOME
 export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
-source /usr/local/bin/virtualenvwrapper.sh
 
 
 # ------------------------------------------------------------------------
