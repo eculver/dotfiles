@@ -42,9 +42,7 @@ export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 
 export NVM_DIR=$HOME/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-#NVM_SOURCE=
-#NVM_DIR=
-#NVM_PROFILE=
+
 
 # ------------------------------------------------------------------------
 # GVM
