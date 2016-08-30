@@ -25,7 +25,6 @@ alias mon-thunderbolt 2560x1440
 # Fullscreen
 alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
 
-
 # Halves, full vertical
 alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
 alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
@@ -172,32 +171,45 @@ default laptop  resolutions:${mon-laptop}
 
 
 # ----------------------------------------------------------------------------
-# Binds
+# Resizing/moving
 # ----------------------------------------------------------------------------
-
-# CMD+Tab for Better application switcher
-bind tab:cmd switch
 
 # CMD+e for hints
 bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN
 
-# CTRL+1 to show iTerm and Chrome
-bind 1:ctrl show 'iTerm','Google Chrome','HipChat', 'Slack'
+# CMD+Shift+1 to move window to screen 0
+bind 1:cmd;shift throw 0 resize
 
-# CMD+Shift+1 for laptop layout
-bind 1:alt;shift layout laptop
+# CMD+Shift+2 to move window to screen 1
+bind 2:cmd;shift throw 1 resize
 
-# CMD+Shift+2 for dual monitor layout
-bind 2:alt;shift layout 2monitor
+# CMD+Shift+3 to move window to screen 2
+bind 3:cmd;shift throw 2 resize
 
-# CMD+Shift+3 for triple monitor layout
-bind 3:alt;shift layout 3monitor
+# CTRL+Shift+f to fullscreen window
+bind f:ctrl;shift corner top-left resize:screenSizeX;screenSizeY
 
-# CTRL+ALT+NUMPAD1 to move window to screen 0
-bind pad1:alt,ctrl throw 0 resize
+# CTRL+Shift+1 to move and resize window to left half
+bind 1:ctrl;shift corner top-left resize:screenSizeX/2;screenSizeY
 
-# CTRL+ALT+NUMPAD2 to move window to screen 1
-bind pad2:alt,ctrl throw 1 resize
+# CTRL+Shift+2 to move and resize window to right half
+bind 2:ctrl;shift corner top-right resize:screenSizeX/2;screenSizeY
 
-# CTRL+ALT+NUMPAD3 to move window to screen 2
-bind pad3:alt,ctrl throw 2 resize
+# CTRL+Shift+q to move and resize window to top left
+bind q:ctrl;shift corner top-left resize:screenSizeX/2;screenSizeY/2
+
+# CTRL+Shift+w to move and resize window to top half
+bind w:ctrl;shift corner top-left resize:screenSizeX;screenSizeY/2
+
+# CTRL+Shift+e to move and resize window to top right
+bind e:ctrl;shift corner top-right resize:screenSizeX/2;screenSizeY/2
+
+# CTRL+Shift+z to move and resize window to bottom left
+bind z:ctrl;shift corner bottom-left resize:screenSizeX/2;screenSizeY/2
+
+# CTRL+Shift+x to move and resize window to bottom half
+bind x:ctrl;shift corner bottom-left resize:screenSizeX;screenSizeY/2
+
+# CTRL+Shift+c to move and resize window to bottom right
+bind c:ctrl;shift corner bottom-right resize:screenSizeX/2;screenSizeY/2
+
