@@ -79,18 +79,19 @@ alias dbshell='./manage.py dbshell'
 alias shell='./manage.py shell_plus'
 alias buildr='watchr static.watchr'
 
+
 # ------------------------------------------------------------------------
 # Functions
 # ------------------------------------------------------------------------
 
 zle-line-init () {
-    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+    RPS1="${${KEYMAP/vicmd/N}/(main|viins)/I}"
     RPS2=$RPS1
     zle reset-prompt
 }
 
 zle-keymap-select () {
-    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+    RPS1="${${KEYMAP/vicmd/N}/(main|viins)/I}"
     RPS2=$RPS1
     zle reset-prompt
 }
