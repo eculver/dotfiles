@@ -17,27 +17,36 @@ call vundle#begin()
 " let Vundle manage Vundle
 Plugin 'VundleVim/Vundle.vim'
 
-" Snippets
+" Snippets / Auto-complete
 Plugin 'honza/vim-snippets'
-Plugin 'Shougo/neocomplcache'
-Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet.vim'
 
-let g:neocomplcache_enable_at_startup = 1
+" Enable on startup
+let g:neocomplete#enable_at_startup = 1
+
 " Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underscore completion.
-let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplete#enable_smart_case = 1
 
-" Snippet Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" Keymapping
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " For snippet_complete marker.
 if has('conceal')
@@ -62,26 +71,16 @@ let g:syntastic_less_options=""
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_puppet_checkers=['puppetlint']
 let g:syntastic_javascript_checkers=['standard']
-" let g:syntastic_javascript_checkers=['jshint']
 let g:syntastic_go_checkers = ['goimports', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 Plugin 'tGpg'
 Plugin 'Markdown'
-" Plugin 'Sass'
-" Plugin 'less-syntax'
-" Plugin 'JSON.vim'
 Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
-" Plugin 'nono/vim-handlebars'
-" Plugin 'lunaru/vim-less'
-" Plugin 'hail2u/vim-css3-syntax'
 Plugin 'rodjek/vim-puppet'
 Plugin 'pangloss/vim-javascript'
-" Plugin 'jsx/jsx.vim'
-" Plugin 'kchmck/vim-coffee-script'
-" Plugin 'derekwyatt/vim-scala'
 Plugin 'zaiste/tmux.vim'
 Plugin 'solarnz/thrift.vim'
 Plugin 'elubow/cql-vim'
@@ -103,7 +102,8 @@ au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 
-" Run, build, test, coverage
+" Info, run, build, test, coverage
+au FileType go nmap <Leader>i <Plug>(go-info)
 au FileType go nmap <Leader>r <Plug>(go-run)
 au FileType go nmap <Leader>b <Plug>(go-build)
 au FileType go nmap <Leader>t <Plug>(go-test)
@@ -111,9 +111,8 @@ au FileType go nmap <Leader>c <Plug>(go-coverage)
 au FileType go nmap <Leader>x <Plug>(go-coverage-clear)
 au FileType go nmap <Leader>e :GoErrCheck<CR>
 
-" Git integration
+" Git(hub) integration
 Plugin 'mattn/webapi-vim'
-" Plugin 'Git-Branch-Info'
 Plugin 'git.zip'
 Plugin 'fugitive.vim'
 Plugin 'gitignore'
@@ -121,24 +120,14 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/gist-vim'
 let g:gist_open_browser_after_post=0
 
-" (HT|X)ml tool
-" Plugin 'ragtag.vim'
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-
 " Utility
-" Plugin 'ScrollColors'
-" Plugin 'jlund3/colorschemer'
-" Plugin 'openssl.vim'
-" Plugin 'YankRing.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'repeat.vim'
 Plugin 'surround.vim'
 Plugin 'benmills/vimux'
-" Plugin 'sudo.vim'
 Plugin 'briandoll/change-inside-surroundings.vim'
 Plugin 'wincent/command-t'
-" Plugin 'jcorbin/vim-searchmatch'
 
 " ctrlp
 " Plugin 'kien/ctrlp.vim'
@@ -199,19 +188,15 @@ noremap <LocalLeader># "ayiw:Ag <C-r>a<CR>
 vnoremap <LocalLeader># "ay:Ag <C-r>a<CR>
 
 " tComment
-Plugin 'tComment'
+Plugin 'tomtom/tcomment_vim'
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
 " Search/Navigation
-"Plugin 'dyng/ctrlsf.vim'
-"noremap   <C-F>f <Plug>CtrlSFVwordExec
-
-"Plugin 'gmarik/vim-visual-star-search'
-
-Plugin 'majutsushi/tagbar'
+Plugin 'gmarik/vim-visual-star-search' " Use <leader>* or * # in visual mode
 
 " Tagbar
+Plugin 'majutsushi/tagbar'
 let g:tagbar_autofocus = 1
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
@@ -285,7 +270,7 @@ set pumheight=6             " Keep a small completion window
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-"""" Folding
+""" Folding
 " set nofoldenable            " Disable folding
 "folding settings
 set foldmethod=indent   "fold based on indent
@@ -307,17 +292,14 @@ endif
 
 set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
 
-" show a line at column 79
+" show a gray line at column 79
 if exists("&colorcolumn")
     execute "set colorcolumn=" . join(range(81,335), ',')
     set colorcolumn=79
 endif
 
-" displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:··,eol:$,trail:-,precedes:<,extends:>
-set list
-
 """" Messages, Info, Status
+set title                   " Terminal title
 set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
 set confirm                 " Y-N-C prompt if closing with unsaved changes.
 set showcmd                 " Show incomplete normal mode commands as I type.
@@ -347,9 +329,8 @@ nnoremap <Leader>tz execute UpdateTabSize()<CR>
 
 set smartindent
 set autoindent
-
-set expandtab                 " Use spaces, not tabs, for autoindent/tab key.
-set shiftround                " rounds indent to a multiple of shiftwidth
+set expandtab               " Use spaces, not tabs, for autoindent/tab key.
+set shiftround              " rounds indent to a multiple of shiftwidth
 
 """" Tags
 " Tags can be in ./tags, ../tags, ..., /home/tags.
@@ -458,18 +439,15 @@ vmap <LocalLeader>vs "vy :call RunVimTmuxCommand(@v)<CR>
 nnoremap <Leader>ss :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 nnoremap <Leader>st :let _s=@/<Bar>:%s/\t/    /ge<Bar>:let @/=_s<Bar>:nohl<CR>
 
+" Apply title case to visual selection
+vmap <Leader>sT :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
+
 " Mapping to insert a newline after line w/o entering insert mode
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
-" Apply title case to visual selection
-vmap <Leader>sT :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
-
 " Clear search highlight
 nnoremap <Leader>/ :noh<CR>
-
-" Visual search for selection
-vnoremap // y/<C-R>"<CR>
 
 " Re-indent entire file and return to current mark
 " map to both Shift-i and <Leader>si to be consistent with other line
@@ -477,16 +455,11 @@ vnoremap // y/<C-R>"<CR>
 map <S-i> mzgg=G`z
 nnoremap <Leader>si mzgg=G`z<CR>
 
-" Rebind Command T
+" Rebind Command-T
 map <LocalLeader>t :CommandT<CR>
 map <LocalLeader>b :CommandTBuffer<CR>
 
-
-" Rebind CtrlP
-" map <LocalLeader>f :CtrlP<CR>
-
 " Buffer helpers
-
 " new empty buffer
 nmap <LocalLeader>T :enew<CR><Bar>:NERDTreeToggle<CR>
 " move to next buffer
@@ -501,13 +474,11 @@ nmap <LocalLeader>bl :ls<CR>
 let Tlist_GainFocus_On_ToggleOpen=1
 let g:skip_loading_mswin=1
 
-" Set terminal title
-set title
 
 " treat html files as django templates
 autocmd BufRead *.html set filetype=htmldjango
 
-" treat json files as JavaScript
+" JSON Highlighting
 autocmd BufRead *.json set filetype=json
 
 " YAML Highlighting
@@ -530,12 +501,6 @@ autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^
 " Go Highlighting
 set rtp+=~/$GOROOT/misc/vim
 
-" CoffeeScript Highlighting
-" au! BufRead,BufNewFile *.coffee set filetype=coffee
-
-" Scala Highlighting
-" au! BufRead,BufNewFile *.scala set filetype=scala
-
 " CQL Highlighting
 au! BufRead,BufNewFile *.cql set filetype=cql
 
@@ -545,3 +510,37 @@ colorscheme jellybeans
 " colorscheme benlight
 " colorscheme void
 
+" Tabs / Whitespace / Highlights (*after* colorscheme to override)
+"
+" Previous preference:
+" ------------------------------
+" preceeding/trailing tabs: '··'
+" trailing whitespace:      '-'
+" line-endings:             '$'
+" ------------------------------
+" set listchars=tab:··,eol:$,trail:-,precedes:<,extends:>
+" set list
+"
+" OR
+"
+" Yet another option:
+" ------------------------------
+" preceeding/trailing tabs: '··'
+" trailing whitespace:      '·'
+" line-endings:             NONE
+" ------------------------------
+" set listchars=trail:·,tab:··
+" set list
+
+" Current preference (autocmds):
+" ------------------------------
+" preceeding/trailing tabs: NONE
+" trailing whitespace:      highlight: green
+" line-endings:             NONE
+" ------------------------------
+highlight ExtraWhitespace ctermbg=darkgreen
+match ExtraWhitespace /\s\+$/
+au BufWinEnter * match ExtraWhitespace /\s\+$/
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+au BufWinLeave * call clearmatches()
