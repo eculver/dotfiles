@@ -2,6 +2,9 @@
 # ZSH conf specific to local environment
 # ========================================================================
 
+# For building CPython libraries
+export LIBRARY_PATH=/usr/local/lib
+
 # rbenv
 export RBENV_ROOT=~/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
