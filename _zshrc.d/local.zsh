@@ -5,6 +5,10 @@
 # For building CPython libraries
 export LIBRARY_PATH=/usr/local/lib
 
+# For building things that depend on readline
+export LDFLAGS=-L/usr/local/opt/readline/lib
+export CPPFLAGS=-I/usr/local/opt/readline/include
+
 # rbenv
 export RBENV_ROOT=~/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
