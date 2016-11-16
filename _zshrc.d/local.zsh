@@ -146,6 +146,24 @@ beepwhenup () {
     done
 }
 
+# reminder of how I setup WeeChat to work with Matrix
+weechat-matrix-install () {
+    echo "git clone git@github.com:torhve/weechat-matrix-protocol-script ~/src/weechat-matrix-protocol-script"
+    echo "mkdir ~/.weechat/lua"
+    echo "ln -s ~/src/weechat-matrix-protocol-script/matrix.lua ~/.weechat/lua/matrix.lua"
+    echo "ln -s ~/.weechat/lua/matrix.lua ~/.weechat/lua/autoload"
+
+    echo "then, to install lua deps..."
+    echo "sudo luarocks install lua-cjson"
+
+    echo "then fire up weechat"
+    echo "weechat"
+    echo "/lua load matrix.lua"
+    echo "/set plugins.var.lua.matrix.user @eculver:matrix.org"
+    echo "/set plugins.var.lua.matrix.password ******"
+    echo "/matrix connect"
+    echo "/join #<remote address>"
+}
 
 # ------------------------------------------------------------------------
 # Completions
