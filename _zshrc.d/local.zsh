@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # ========================================================================
 # ZSH conf specific to local environment
 # ========================================================================
@@ -117,18 +119,17 @@ alias espresso='/Users/evanculver/Downloads/The-M-Project_v1.0.0/Espresso/bin/es
 # cURL via Tor
 alias torcurl='curl --socks4a localhost:9150'
 
+
 # ------------------------------------------------------------------------
 # Functions
 # ------------------------------------------------------------------------
-# gd () {
-#   git diff $@ | cdiff -s
-# }
 
 # kill all django runserver instances
 killmanage(){
     ps -ef | grep "manage\.py runserver" | awk '{print $2}' | xargs kill -9
 }
 
+# ping a host, beeping when it comes up
 beepwhenup () {
     echo 'Enter host you want to ping:';
     read PHOST;
@@ -164,6 +165,144 @@ weechat-matrix-install () {
     echo "/matrix connect"
     echo "/join #<remote address>"
 }
+
+# migrate project to different version of Go, works both ways
+gvmmigrate() {
+    local usage='usage: gvmmigrate <pkg> <current_version> <new_version> [pkgset]'
+    local example='gvm migrate go.uber.org/dosa go1.7.1 go1.7.4 dosa2'
+
+    local pkg=$1
+    [[ -z "$pkg" ]] && echo "${usage}" && return
+
+    local current_version=$2
+    [[ -z "$current_version" ]] && echo "${usage}" && return
+
+    local new_version=$3
+    [[ -z "$new_version" ]] && echo "${usage}" && return
+
+    local pkgset=$4
+    [[ -z "$pkgset" ]] && pkgset=$(echo "${pkg%\.git}" | rev | cut -d '/' -f1 | rev)
+
+    local current_home="${GVM_ROOT}/pkgsets/${current_version}/${pkgset}"
+    local new_home="${GVM_ROOT}/pkgsets/${new_version}/${pkgset}"
+
+    # debug
+    echo "pkg: ${pkg}"
+    echo "current_version: ${current_version}"
+    echo "new_version: ${new_version}"
+    echo "pkgset: ${pkgset}"
+    echo "current_home: ${current_home}"
+    echo "new_home: ${new_home}"
+
+    # validate package exists where it should
+    if [ ! -d  "${current_home}" ]; then
+        echo "${RED}[ERROR]${RESET} Could not find existing project at ${current_home}"
+        return
+    fi
+
+    # remove symlink if exists
+    if [ -h "$UBER_HOME/${pkgset}" ]; then
+        echo "${GREEN}[INFO]${RESET} Found symlink at $UBER_HOME/${pkgset}, removing"
+        rm "$UBER_HOME/${pkgset}"
+    fi
+
+    # install new version if not exists
+    if [ ! $(gvm listall | grep "${new_version}") ]; then
+        echo "${RED}[ERROR]${RESET} ${new_version} is not a valid go version. Try \`gvm listall\` for a list of valid versions"
+        return
+    fi
+
+    if [ ! -d "$GVM_ROOT/pkgsets/${new_version}" ]; then
+        echo "${RED}[ERROR]${RESET} ${new_version} is not installed. Installing now..."
+        if ! gvm install "${new_version}"; then
+            echo "${RED}[ERROR]${RESET} Install failed"
+            return
+        fi
+    fi
+
+    export GOVERSION=${new_version#go}
+
+    # switch to new version
+    gvm use "${new_version}" || (echo "${RED}[ERROR]${RESET} Could not use new version ${new_version}" && return)
+
+    # create new pkgset
+    gvm pkgset create "${pkgset}" || (echo "${RED}[ERROR]${RESET} Could not create new pkgset ${pkgset}" && return)
+
+    # setup new pkgset
+    # echo "go-use ${pkgset}"
+    go-use "${pkgset}"
+
+    # echo "mkdir -p ${new_home}/src"
+    mkdir -p "${new_home}/src"
+
+    # echo "mv ${current_home}/src/* ${new_home}/src/"
+    mv ${current_home}/src/* ${new_home}/src/
+
+    echo "${GREEN}[INFO]${RESET} Successfully moved all source code in ${current_home}/src to ${new_home}/src"
+
+    if [ -d "$current_home/bin" ] && [ $(ls "${current_home}/bin" | wc -l) -gt "0" ]; then
+        echo "${WHITE}[INFO]${RESET} These binaries will need to be re-built using ${new_version}:"
+        ls -l "${current_home}/bin"
+    fi
+
+    local create_symlink
+    echo -n "${BOLD_WHITE}Create ${pkgset} symlink in $UBER_HOME? (Y/n) ${RESET}"
+    read -r create_symlink
+    if [ "${create_symlink}" == "Y" ]; then
+        ln -s "${new_home}/src/${pkg}" "$UBER_HOME/${pkgset}"
+        echo "${GREEN}[INFO]${RESET} Created symlink"
+    fi
+
+    echo "${GREEN}[INFO]${RESET} DONE"
+}
+
+# Helper for Github cloning
+ghclone () {
+  local repo=$1
+  local dst=$2
+
+  [[ -z "${repo}" ]] && echo "usage: ghclone <repo_pat> [dest]" && return
+  [[ -z "${dst}" ]] && dst=$(echo "${repo}" | rev | cut -d '/' -f1 | rev)
+
+  echo "Cloning github.com/${repo} to ${dst}"
+  git clone git@github.com:"${repo}" "${dst}"
+}
+
+_goget() {
+    local pkg=$1
+    [[ -z "${pkg}" ]] && return # programmer error
+    echo "${GREEN}[INFO]${RESET} Installing ${pkg}"
+    go get -u $pkg
+}
+
+# Helper to install all Go dev tools
+gogettools () {
+    local confirm
+    echo -n "${BOLD_WHITE}Install tools into $GOPATH? (Y/n) ${RESET}"
+    read -r confirm
+    if [ "${confirm}" == "Y" ]; then
+        _goget github.com/nsf/gocode
+        _goget github.com/alecthomas/gometalinter
+        _goget golang.org/x/tools/cmd/goimports
+        _goget golang.org/x/tools/cmd/guru
+        _goget golang.org/x/tools/cmd/gorename
+        _goget github.com/golang/lint/golint
+        _goget github.com/rogpeppe/godef
+        _goget github.com/kisielk/errcheck
+        _goget github.com/klauspost/asmfmt/cmd/asmfmt
+        _goget github.com/fatih/motion
+        _goget github.com/zmb3/gogetdoc
+        _goget github.com/josharian/impl
+    fi
+    echo "${GREEN}[INFO]${RESET} DONE"
+}
+
+# ------------------------------------------------------------------------
+# zfz Helpers
+# ------------------------------------------------------------------------
+
+
+
 
 # ------------------------------------------------------------------------
 # Completions
