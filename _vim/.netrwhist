@@ -1,3 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =2
 let g:netrw_dirhist_1='/Users/evanculver/dropbox/work/dev/ufogrid'
+let g:netrw_dirhist_2='/Users/eculver/.gvm/pkgsets/go1.7.1/dosa/src/code.uber.internal/app_platform/dosa.git'

@@ -37,16 +37,12 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
   return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " For snippet_complete marker.
 if has('conceal')
@@ -198,6 +194,7 @@ Plugin 'gmarik/vim-visual-star-search' " Use <leader>* or * # in visual mode
 " Tagbar
 Plugin 'majutsushi/tagbar'
 let g:tagbar_autofocus = 1
+let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -222,7 +219,7 @@ let g:tagbar_type_go = {
         \ 'ctype' : 't',
         \ 'ntype' : 'n'
     \ },
-    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsbin'  : '/usr/local/bin/gotags',
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
@@ -534,7 +531,7 @@ colorscheme jellybeans
 
 " Current preference (autocmds):
 " ------------------------------
-" preceeding/trailing tabs: NONE
+" preceeding/trailing tabs: highlight: gray
 " trailing whitespace:      highlight: green
 " line-endings:             NONE
 " ------------------------------
@@ -544,3 +541,15 @@ au BufWinEnter * match ExtraWhitespace /\s\+$/
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhitespace /\s\+$/
 au BufWinLeave * call clearmatches()
+
+" ignore tab highlights for go files
+let tabftexclude = ['go', 'c']
+highlight PreceedingTabs ctermbg=darkgray
+match PreceedingTabs /^\t\+/
+au BufWinEnter * if index(tabftexclude, &ft) < 0 | match PreceedingTabs /^\t\+/
+au InsertEnter * if index(tabftexclude, &ft) < 0 | match PreceedingTabs /^\t\+\%#\@<!/
+au InsertLeave * if index(tabftexclude, &ft) < 0 | match PreceedingTabs /^\t\+/
+au BufWinLeave * call clearmatches()
+
+
+
