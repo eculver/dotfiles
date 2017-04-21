@@ -119,11 +119,14 @@ export EDITOR='vim'
 
 # reset path to make sure system-provided programs do not take precedence over
 # user-installed alternatives
-prepend-path /usr/local/share/npm/bin
-prepend-path /opt/local/bin
-prepend-path /usr/local/sbin
-prepend-path /usr/local/bin
-prepend-path "${HOME}"/bin
+# prepend-path /usr/local/share/npm/bin
+# prepend-path /opt/local/bin
+# prepend-path /usr/local/sbin
+# prepend-path /usr/local/bin
+# prepend-path "${HOME}"/bin
+
+export PATH=/usr/local/sbin:/usr/local/bin:$HOME/bin:$PATH
+
 
 
 # ------------------------------------------------------------------------
@@ -175,3 +178,5 @@ hostname | grep -q 'local'
 
 # shellcheck disable=SC1090
 [[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
