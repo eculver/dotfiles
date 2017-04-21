@@ -74,6 +74,8 @@ alias epochtodayutcms='date -u -j -f "%Y%m%d%H%M%S" "`todayutc`000000" +%s000' #
 
 alias confdir='cd $CONFDIR'
 
+alias uuidgen='/usr/bin/uuidgen | tr "[:upper:]" "[:lower:]"'
+
 # dev
 alias dbshell='./manage.py dbshell'
 alias shell='./manage.py shell_plus'
@@ -84,14 +86,14 @@ alias buildr='watchr static.watchr'
 # Functions
 # ------------------------------------------------------------------------
 
-zle-line-init () {
-    RPS1="${${KEYMAP/vicmd/N}/(main|viins)/I}"
+zle-line-init() {
+    RPS1="${${KEYMAP/vicmd/N}/(main|viins)/ }"
     RPS2=$RPS1
     zle reset-prompt
 }
 
-zle-keymap-select () {
-    RPS1="${${KEYMAP/vicmd/N}/(main|viins)/I}"
+zle-keymap-select() {
+    RPS1="${${KEYMAP/vicmd/N}/(main|viins)/ }"
     RPS2=$RPS1
     zle reset-prompt
 }
@@ -100,23 +102,8 @@ zle-keymap-select () {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-# django devserver helper
-# `devserver <port>` - defaults to 8000
-# devserver () {
-    # port=8000
-    # if  (( $# > 0 )); then
-        # port=$1;
-    # fi
-
-    # if [[ -e manage.py ]] then
-        # ./manage.py runserver 0.0.0.0:$port
-    # else
-        # echo "No manage.py found in current directory. Change to project home first."
-    # fi
-# }
-
 # generate a random character string
-random () {
+random() {
     len=32
     if (( $# > 0 )) then
         len=$1;
@@ -126,17 +113,56 @@ random () {
 }
 
 # get pids listening on a specific port
-port-pids () {
+port-pids() {
   local port=$1
   [ "$port" == "" ] && echo "usage: port-pids <port>" && return
   lsof -n -i4TCP:$port | grep LISTEN
 }
 
-portsopen () {
+portsopen() {
   local port=$1
   sudo netstat -plant --extend | grep $port | grep EST
 }
 
+# helper for doing a string join on all args
+function join { local IFS="$1"; shift; echo "$*"; }
+
+# convert integers to ip address strings
+int2ip() {
+    num="$1"
+    [[ -z "${num}" ]] && echo "usage: int2ip <integer>" && return
+    (( pt1 = ($num & 255) ))
+    (( pt2 = (($num >> 8) & 255) ))
+    (( pt3 = (($num >> 16) & 255) ))
+    (( pt4 = (($num >> 24) & 255) ))
+    echo "${pt4}.${pt3}.${pt2}.${pt1}";
+}
+
+# convert base64 encoded UUIDs to valid UUID strings
+b64uuid() {
+    encoded="$1"
+    [[ -z "${encoded}" ]] && echo "usage: base64uuid <b64string>" && return
+    echo "${encoded}" | base64 -d | od -t x1 | cut -d ' ' -f2- | head -n1 | awk '{print $1$2$3$4"-"$5$6"-"$7$8"-"$9$10"-"$11$12$13$14$15$16}'
+}
+
+# convert an .rtf file to .txt and remove common, non-web-friendly characters along the way
+rtf2txt() {
+    f="$1"
+    [[ -z "${f}" ]] && echo "usage: rtf2txt <filename>" && return
+
+    # convert to plaintext, write to tmpfs
+    ftmp="/tmp/.rtf2txt.$(tsnow).txt"
+    textutil -convert txt -output "${ftmp}" "${f}"
+    [[ $? -ne "0" ]] && echo "could not convert ${f} to plain-text" && return
+
+    # .txt filename, use same basename
+    ftxt="$(echo "${f}" | cut -d "." -f1).txt"
+
+    # replace junk chars
+    cat "${ftmp}" | sed "s/’/'/g" | sed "s/‘/'/g" | sed 's/”/"/g' | sed 's/“/"/g' | sed 's/-/-/g' | sed 's/•//g' > "${ftxt}"
+    rm "${ftmp}"
+    echo "Wrote ${ftxt}"
+}
 
 # ------------------------------------------------------------------------
 # C* Helpers
@@ -144,7 +170,7 @@ portsopen () {
 
 alias ifup-cassandra='for i in {2..10}; do sudo ifconfig lo0 alias 127.0.0.$i up; done'
 
-function jc {
+jc() {
     host=$1
     proxy_port=${2:-9999}
     jconsole_host=localhost
@@ -154,11 +180,11 @@ function jc {
     kill $ssh_pid
 }
 
-cassie-keyspaces () {
+cassie-keyspaces() {
     for cf in $(ccm node1 nodetool cfstats | grep Keyspace | grep -v system | cut -d ' ' -f2); do echo $cf; done
 }
 
-cassie-tables () {
+cassie-tables() {
     cfs=$(cassie-keyspaces)
     for cf in $cfs; do
         for t in $(ccm node1 nodetool cfstats $cf | grep -E 'Table:' | cut -d ' ' -f2); do
