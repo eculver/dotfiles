@@ -29,6 +29,11 @@ alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
 alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
 alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
 
+# Thirds, full horizontal
+alias topthird      move screenOriginX;screenOriginY                        screenSizeX;screenSizeY/3
+alias middlethird   move screenOriginX;screenOriginY+(screenSizeY/3)        screenSizeX;screenSizeY/3
+alias bottomthird   move screenOriginX;screenOriginY+(2*(screenSizeY/3))    screenSizeX;screenSizeY/3
+
 # Relative 60/40
 alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY
 alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY
@@ -213,3 +218,11 @@ bind x:ctrl;shift corner bottom-left resize:screenSizeX;screenSizeY/2
 # CTRL+Shift+c to move and resize window to bottom right
 bind c:ctrl;shift corner bottom-right resize:screenSizeX/2;screenSizeY/2
 
+# CTRL+Shift+u to move and resize window to top third
+bind u:ctrl;shift ${topthird}
+
+# CTRL+Shift+j to move and resize window to middle third
+bind j:ctrl;shift ${middlethird}
+
+# CTRL+Shift+m to move and resize window to bottom third
+bind m:ctrl;shift ${bottomthird}
