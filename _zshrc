@@ -173,10 +173,14 @@ source $CONFDIR/common.zsh
 # some.host.with.fqdn.com -> my_server.zsh
 
 # override the hostname being reset by DHCP to something like eculver-2.local
-hostname | grep -q 'local'
+hostname | grep -q -E 'local|lan'
 [[ $? -eq 0 ]] && HOSTNAME=eculver.local
 
 # shellcheck disable=SC1090
 [[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -s "/Users/eculver/.gvm/scripts/gvm" ]] && source "/Users/eculver/.gvm/scripts/gvm"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

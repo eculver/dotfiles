@@ -45,9 +45,9 @@ nvm() {
 }
 
 # ------------------------------------------------------------------------
-# GVM
+# Go/GVM
 # ------------------------------------------------------------------------
-#
+
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 # ------------------------------------------------------------------------
@@ -292,7 +292,7 @@ gogettools () {
     local confirm
     echo -n "${BOLD_WHITE}Install tools into $GOPATH? (Y/n) ${RESET}"
     read -r confirm
-    if [ "${confirm}" == "Y" ]; then
+    if [[ "${confirm}" == "Y" ]]; then
         _goget github.com/nsf/gocode
         _goget github.com/alecthomas/gometalinter
         _goget golang.org/x/tools/cmd/goimports
@@ -308,6 +308,8 @@ gogettools () {
     fi
     echo "${GREEN}[INFO]${RESET} DONE"
 }
+
+
 
 # ------------------------------------------------------------------------
 # zfz Helpers
