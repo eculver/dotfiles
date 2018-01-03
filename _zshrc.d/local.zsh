@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/local/bin/zsh
 
 # ========================================================================
 # ZSH conf specific to local environment
