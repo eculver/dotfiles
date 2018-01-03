@@ -142,7 +142,7 @@ int2ip() {
 b64uuid() {
     encoded="$1"
     [[ -z "${encoded}" ]] && echo "usage: base64uuid <b64string>" && return
-    echo "${encoded}" | base64 -d | od -t x1 | cut -d ' ' -f2- | head -n1 | awk '{print $1$2$3$4"-"$5$6"-"$7$8"-"$9$10"-"$11$12$13$14$15$16}'
+    echo "${encoded}" | base64 -D | od -t x1 | cut -d ' ' -f2- | head -n1 | awk '{print $1$2$3$4"-"$5$6"-"$7$8"-"$9$10"-"$11$12$13$14$15$16}'
 }
 
 # convert an .rtf file to .txt and remove common, non-web-friendly characters along the way
