@@ -64,6 +64,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
 let g:syntastic_less_options=""
+let g:syntastic_zsh_checkers=['zsh']
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_puppet_checkers=['puppetlint']
 let g:syntastic_javascript_checkers=['standard']
