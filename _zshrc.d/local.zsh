@@ -11,6 +11,8 @@ export LIBRARY_PATH=/usr/local/lib
 export LDFLAGS=-L/usr/local/opt/readline/lib
 export CPPFLAGS=-I/usr/local/opt/readline/include
 
+export GOVERSION=1.9.2
+
 # Load Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
@@ -86,6 +88,27 @@ alias goeio='mux start eio'
 alias goculvers='mux start culvers'
 alias golsm='mux start lsm'
 alias gotdt='mux start tdt'
+
+# Lazy-use $GOVERSION
+_gvm_use() {
+    [[ -z "$gvm_go_name" ]] && gvm use $GOVERSION 2>&1 > /dev/null
+}
+
+# Golang + Github projects
+# TODO(idiot): make better
+gogods() {
+    _gvm_use
+    gvm pkgset use gods
+    cd $GOPATH/src/github.com/emirpasic/gods || return
+}
+
+goplay() {
+    _gvm_use
+    gvm pkgset use play
+    export GOPATH=$GVM_ROOT/pkgsets/go$GOVERSION/play
+    cd $HOME/src/go-play
+
+}
 
 # turn off correction for these
 alias npm='nocorrect npm'
