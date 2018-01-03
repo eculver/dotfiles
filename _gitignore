@@ -1,9 +1,11 @@
+# custom files
+custom/
+!custom/plugins/example
+!custom/example.zsh
+
+# temp files directories
+cache/
+log/
+
+# OS meta junk
 .DS_Store
-
-# Thumbnails
-._*
-
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
