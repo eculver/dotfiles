@@ -11,19 +11,6 @@ export LIBRARY_PATH=/usr/local/lib
 export LDFLAGS=-L/usr/local/opt/readline/lib
 export CPPFLAGS=-I/usr/local/opt/readline/include
 
-# rbenv
-export RBENV_ROOT=~/.rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# Add rbenv to PATH for scripting
-PATH=$PATH:$RBENV_ROOT/bin
-
-# And enable rbenv shims, completion and local gems
-eval "$(rbenv init -)"
-
-# Add GOPATH to path
-PATH=$PATH:$GOPATH/bin
-
 # Load Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
