@@ -18,10 +18,16 @@ export GOVERSION=1.9.2
 
 
 # ------------------------------------------------------------------------
-# Z
+# fasd
 # ------------------------------------------------------------------------
 
-source-if-exists $HOME/src/z/z.sh
+fasd_cache="$HOME/.fasd-init-zsh"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  echo "fasd cache..."
+  fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
 
 
 # ------------------------------------------------------------------------
@@ -131,6 +137,8 @@ alias espresso='/Users/evanculver/Downloads/The-M-Project_v1.0.0/Espresso/bin/es
 # cURL via Tor
 alias torcurl='curl --socks4a localhost:9150'
 
+# fasd
+alias v='f -e vim' # quick opening files with vim
 
 # ------------------------------------------------------------------------
 # Functions
@@ -308,17 +316,3 @@ gogettools () {
     fi
     echo "${GREEN}[INFO]${RESET} DONE"
 }
-
-
-
-# ------------------------------------------------------------------------
-# zfz Helpers
-# ------------------------------------------------------------------------
-
-
-
-
-# ------------------------------------------------------------------------
-# Completions
-# ------------------------------------------------------------------------
-
