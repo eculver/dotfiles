@@ -56,6 +56,20 @@ nvm() {
 
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
+
+# ------------------------------------------------------------------------
+# chruby (greedy for Vim)
+# ------------------------------------------------------------------------
+
+export CHRUBY_HOME=/usr/local/share/chruby
+if [ -s "$CHRUBY_HOME" ]; then
+    local latest_ruby
+    source "$CHRUBY_HOME/chruby.sh"
+    source "$CHRUBY_HOME/auto.sh"
+    chruby "ruby-$(find "$HOME/.rubies" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+')"
+fi
+
+
 # ------------------------------------------------------------------------
 # Postgres (Mac)
 # ------------------------------------------------------------------------
