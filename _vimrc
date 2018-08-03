@@ -482,6 +482,14 @@ nmap <LocalLeader>bl :ls<CR>
 let Tlist_GainFocus_On_ToggleOpen=1
 let g:skip_loading_mswin=1
 
+" Quickfix shortcuts
+nmap <LocalLeader>n :cn<CR>
+
+" wrap long lines in quickfix
+augroup quickfix
+    autocmd!
+    autocmd FileType qf setlocal wrap
+augroup END
 
 " treat html files as django templates
 autocmd BufRead *.html set filetype=htmldjango
