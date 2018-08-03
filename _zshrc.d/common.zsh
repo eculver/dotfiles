@@ -192,3 +192,9 @@ cassie-tables() {
         done
     done
 }
+
+_join() {
+    local IFS=$1
+    shift
+    echo "${*}"
+}
