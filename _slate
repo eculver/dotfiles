@@ -12,22 +12,17 @@ config resizePercentOf screenSize
 config secondsBetweenRepeat 0.1
 config checkDefaultsOnLoad true
 
+
 # ----------------------------------------------------------------------------
 # Alias
 # ----------------------------------------------------------------------------
-
-# Monitors
-alias mon-laptop      1680x1050
-alias mon-dell        1920x1200
-alias mon-thunderbolt 2560x1440
-
 
 # Fullscreen
 alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
 
 # Halves, full vertical
-alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
-alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
+alias lefthalf      move screenOriginX;screenOriginY                        screenSizeX/2;screenSizeY
+alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY          screenSizeX/2;screenSizeY
 
 # Thirds, full horizontal
 alias topthird      move screenOriginX;screenOriginY                        screenSizeX;screenSizeY/3
@@ -35,14 +30,14 @@ alias middlethird   move screenOriginX;screenOriginY+(screenSizeY/3)        scre
 alias bottomthird   move screenOriginX;screenOriginY+(2*(screenSizeY/3))    screenSizeX;screenSizeY/3
 
 # Relative 60/40
-alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY
-alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY
-alias leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY
-alias leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY
+alias rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY        screenSizeX*0.6;screenSizeY
+alias rightless     move screenOriginX+screenSizeX*0.6;screenOriginY        screenSizeX*0.4;screenSizeY
+alias leftmost      move screenOriginX;screenOriginY                        screenSizeX*0.6;screenSizeY
+alias leftless      move screenOriginX;screenOriginY                        screenSizeX*0.4;screenSizeY
 
 # Quarters, full vertical
-alias leftquarter   move screenOriginX;screenOriginY                     screenSizeX/4;screenSizeY
-alias rightquarter  move screenOriginX+(3*(screenSizeX/4));screenOriginY screenSizeX/4;screenSizeY
+alias leftquarter   move screenOriginX;screenOriginY                        screenSizeX/4;screenSizeY
+alias rightquarter  move screenOriginX+(3*(screenSizeX/4));screenOriginY    screenSizeX/4;screenSizeY
 
 # Corners
 alias topleft           corner top-left     resize:screenSizeX/2;screenSizeY/2
@@ -55,46 +50,62 @@ alias bottomright       corner bottom-right resize:screenSizeX/2;screenSizeY/2
 alias bottomrightmost   corner bottom-right resize:screenSizeX*0.7;screenSizeY*0.8
 
 # Concrete w/ monitor
-alias 1-full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY     0
-alias 1-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY   0
-alias 1-lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY   0
-alias 1-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY 0
-alias 1-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY 0
-alias 1-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY 0
-alias 1-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY 0
+alias 1-full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY            0
+alias 1-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY          0
+alias 1-lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY          0
+alias 1-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY        0
+alias 1-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY        0
+alias 1-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY        0
+alias 1-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY        0
 alias 1-topleft       corner top-left                                   resize:screenSizeX/2;screenSizeY/2 0
 alias 1-topright      corner top-right                                  resize:screenSizeX/2;screenSizeY/2 0
+alias 1-tophalf       corner top-left                                   resize:screenSizeX;screenSizeY/2   0
 alias 1-bottomleft    corner bottom-left                                resize:screenSizeX/2;screenSizeY/2 0
 alias 1-bottomright   corner bottom-right                               resize:screenSizeX/2;screenSizeY/2 0
+alias 1-bottomhalf    corner bottom-left                                resize:screenSizeX;screenSizeY/2   0
 
-alias 2-full          move screenOriginX;screenOriginY screenSizeX;screenSizeY                      1
-alias 2-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY   1
-alias 2-lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY                    1
-alias 2-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY 1
-alias 2-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY 1
-alias 2-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY 1
-alias 2-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY 1
+alias 2-full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY            1
+alias 2-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY          1
+alias 2-lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY          1
+alias 2-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY        1
+alias 2-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY        1
+alias 2-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY        1
+alias 2-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY        1
 alias 2-topleft       corner top-left                                   resize:screenSizeX/2;screenSizeY/2 1
 alias 2-topright      corner top-right                                  resize:screenSizeX/2;screenSizeY/2 1
+alias 2-tophalf       corner top-left                                   resize:screenSizeX;screenSizeY/2   1
 alias 2-bottomleft    corner bottom-left                                resize:screenSizeX/2;screenSizeY/2 1
 alias 2-bottomright   corner bottom-right                               resize:screenSizeX/2;screenSizeY/2 1
+alias 2-bottomhalf    corner bottom-left                                resize:screenSizeX;screenSizeY/2   1
 
-alias 3-full          move screenOriginX;screenOriginY screenSizeX;screenSizeY                      2
-alias 3-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY   2
-alias 3-lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY                    2
-alias 3-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY 2
-alias 3-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY 2
-alias 3-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY 2
-alias 3-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY 2
+alias 3-full          move screenOriginX;screenOriginY                  screenSizeX;screenSizeY            2
+alias 3-righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY          2
+alias 3-lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY          2
+alias 3-rightmost     move screenOriginX+screenSizeX*0.4;screenOriginY  screenSizeX*0.6;screenSizeY        2
+alias 3-rightless     move screenOriginX+screenSizeX*0.6;screenOriginY  screenSizeX*0.4;screenSizeY        2
+alias 3-leftmost      move screenOriginX;screenOriginY                  screenSizeX*0.6;screenSizeY        2
+alias 3-leftless      move screenOriginX;screenOriginY                  screenSizeX*0.4;screenSizeY        2
 alias 3-topleft       corner top-left                                   resize:screenSizeX/2;screenSizeY/2 2
 alias 3-topright      corner top-right                                  resize:screenSizeX/2;screenSizeY/2 2
 alias 3-bottomleft    corner bottom-left                                resize:screenSizeX/2;screenSizeY/2 2
 alias 3-bottomright   corner bottom-right                               resize:screenSizeX/2;screenSizeY/2 2
 
+# Monitors
+alias mon-laptop    1680x1050
+alias mon-cinema    2560x1440
+alias mon-dell      1920x1200
+alias mon-dell-vert 1920x1080
+
 
 # ----------------------------------------------------------------------------
 # Layouts
 # ----------------------------------------------------------------------------
+
+# Default Layouts
+default 2cinema resolutions:${mon-cinema};${mon-cinema}
+default 2home   resolutions:${mon-laptop};${mon-dell}
+default laptop  resolutions:${mon-laptop}
+default work    resolutions:${mon-dell};${mon-dell-vert}
 
 # laptop only
 layout laptop 'iTerm':REPEAT ${full}
@@ -111,72 +122,12 @@ layout laptop 'Messages':REPEAT ${righthalf}
 layout laptop 'Evernote':REPEAT ${full}
 layout laptop 'Path Finder':REPEAT ${1-lefthalf}
 
-# 2 cinema displays
-layout 2cinema 'iTerm':REPEAT                     ${2-full}
-layout 2cinema 'Atom':REPEAT                      ${2-full}
-layout 2cinema 'Google Chrome':REPEAT             ${1-righthalf} | ${1-lefthalf}
-layout 2cinema 'Safari':REPEAT                    ${2-lefthalf} | ${2-righthalf}
-layout 2cinema 'Firefox':REPEAT                   ${2-lefthalf} | ${2-righthalf}
-layout 2cinema 'Path Finder':REPEAT               ${1-topleft} | ${1-bottomleft}
-layout 2cinema 'iTunes':REPEAT                    ${1-lefthalf}
-layout 2cinema 'Spotify':REPEAT                   ${1-lefthalf}
-layout 2cinema 'HipChat':REPEAT                   ${1-righthalf}
-layout 2cinema 'Slack':REPEAT                     ${1-righthalf}
-layout 2cinema 'Adium':REPEAT                     ${1-righthalf}
-layout 2cinema 'Messages':REPEAT                  ${1-righthalf}
-layout 2cinema 'Evernote':REPEAT                  ${1-lefthalf}
-
-# 2 monitor home
-layout 2home 'iTerm':REPEAT                       ${2-full}
-layout 2home 'Atom':REPEAT                        ${2-full}
-layout 2home 'Google Chrome':REPEAT               ${1-full}
-layout 2home 'Safari':REPEAT                      ${1-full}
-layout 2home 'Firefox':REPEAT                     ${1-full}
-layout 2home 'Path Finder':REPEAT                 ${1-full}
-layout 2home 'iTunes':REPEAT                      ${1-full}
-layout 2home 'Spotify':REPEAT                     ${1-full}
-layout 2home 'HipChat':REPEAT                     ${2-righthalf}
-layout 2home 'Slack':REPEAT                       ${2-righthalf}
-layout 2home 'Adium':REPEAT                       ${2-righthalf}
-layout 2home 'Messages':REPEAT                    ${2-righthalf}
-layout 2home 'Evernote':REPEAT                    ${1-full}
-
-# 2 monitor (legacy, for reference)
-layout 2monitor 'iTerm':REPEAT ${1-full}
-layout 2monitor 'Atom':REPEAT ${1-full}
-layout 2monitor 'Google Chrome':REPEAT ${2-full}
-layout 2monitor 'Safari':REPEAT ${2-full}
-layout 2monitor 'Firefox':REPEAT ${2-full}
-layout 2monitor 'Mail':REPEAT ${2-full}
-layout 2monitor 'Path Finder':REPEAT ${2-full}
-layout 2monitor 'iTunes':REPEAT ${2-full}
-layout 2monitor 'HipChat':REPEAT ${2-rightless}
-layout 2monitor 'Slack':REPEAT ${2-rightless}
-layout 2monitor 'Adium':REPEAT ${2-rightless}
-layout 2monitor 'Messages':REPEAT ${2-rightless}
-layout 2monitor 'TorBrowser':REPEAT ${2-full}
-layout 2monitor 'Evernote':REPEAT ${2-full}
-
-# 3 monitor (legacy, for reference)
-layout 3monitor 'iTerm':SORT_TITLE ${2-full} | ${3-lefthalf}
-layout 3monitor 'Atom':SORT_TITLE ${2-full} | ${3-lefthalf}
-layout 3monitor 'Google Chrome':REPEAT ${1-full}
-layout 3monitor 'Safari':REPEAT ${1-full}
-layout 3monitor 'Firefox':REPEAT ${1-full}
-layout 3monitor 'Mail':REPEAT ${1-full}
-layout 3monitor 'Path Finder':REPEAT ${1-full}
-layout 3monitor 'iTunes':REPEAT ${1-full}
-layout 3monitor 'Adium':REPEAT ${3-righthalf}
-layout 3monitor 'Messages':REPEAT ${3-righthalf}
-layout 3monitor 'TorBrowser':REPEAT ${1-full}
-layout 3monitor 'Evernote':REPEAT ${3-full}
-layout 3monitor 'HipChat':REPEAT ${3-full}
-layout 3monitor 'Slack':REPEAT ${3-full}
-
-# Default Layouts
-default 2cinema resolutions:${mon-thunderbolt};${mon-thunderbolt}
-default 2home   resolutions:${mon-laptop};${mon-dell}
-default laptop  resolutions:${mon-laptop}
+# work
+layout work 'iTerm':REPEAT              ${2-full}
+layout work 'Google Chrome':REPEAT      ${1-righthalf} | ${1-lefthalf}
+layout work 'Microsoft Outlook':REPEAT  ${1-rightmost}
+layout work 'Slack':REPEAT              ${2-bottomhalf}
+layout work 'Messages':REPEAT           ${1-bottomright}
 
 
 # ----------------------------------------------------------------------------
@@ -186,6 +137,8 @@ default laptop  resolutions:${mon-laptop}
 # CMD+e for hints
 bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN
 
+# Throws
+#
 # CMD+Shift+1 to move window to screen 0
 bind 1:cmd;shift throw 0 resize
 
@@ -195,38 +148,89 @@ bind 2:cmd;shift throw 1 resize
 # CMD+Shift+3 to move window to screen 2
 bind 3:cmd;shift throw 2 resize
 
+# Sides
+#
+# +----------+----------+  +----------------+----+  +----+----------------+
+# |          |          |  |                |    |  |    |                |
+# |          |          |  |                |    |  |    |                |
+# |          |          |  |                |    |  |    |                |
+# |    1     |    2     |  |       3        |    |  |    |       4        |
+# |          |          |  |                |    |  |    |                |
+# |          |          |  |                |    |  |    |                |
+# |          |          |  |                |    |  |    |                |
+# +----------+----------+  +----------------+----+  +----+----------------+
+
 # CTRL+Shift+f to fullscreen window
 bind f:ctrl;shift corner top-left resize:screenSizeX;screenSizeY
 
-# CTRL+Shift+1 to move and resize window to top left @ 60%
-bind 1:ctrl;shift ${topleftmost}
+# CTRL+Shift+1 to move and resize window to left half
+bind 1:ctrl;shift ${lefthalf}
 
-# CTRL+Shift+2 to move and resize window to top right @ 60%
-bind 2:ctrl;shift ${toprightmost}
+# CTRL+Shift+2 to move and resize window to right half
+bind 2:ctrl;shift ${righthalf}
 
-# CTRL+Shift+3 to move and resize window to right half
-bind 3:ctrl;shift ${bottomleftmost}
+# CTRL+Shift+3 to move and resize window to left 2/3
+bind 3:ctrl;shift ${leftmost}
 
-# CTRL+Shift+4 to move and resize window to right half
-bind 4:ctrl;shift ${bottomrightmost}
+# CTRL+Shift+4 to move and resize window to right 2/3
+bind 4:ctrl;shift ${rightmost}
 
+
+# Corners
+#
+# +----------+----------+
+# |          |          |
+# |    q     |    e     |
+# |          |          |
+# +----------+----------|
+# |          |          |
+# |    z     |    c     |
+# |          |          |
+# +----------+----------+
+#
 # CTRL+Shift+q to move and resize window to top left
-bind q:ctrl;shift corner top-left resize:screenSizeX/2;screenSizeY/2
-
-# CTRL+Shift+w to move and resize window to top half
-bind w:ctrl;shift corner top-left resize:screenSizeX;screenSizeY/2
+bind q:ctrl;shift ${topleft} 
 
 # CTRL+Shift+e to move and resize window to top right
-bind e:ctrl;shift corner top-right resize:screenSizeX/2;screenSizeY/2
+bind e:ctrl;shift ${topright}
 
 # CTRL+Shift+z to move and resize window to bottom left
 bind z:ctrl;shift corner bottom-left resize:screenSizeX/2;screenSizeY/2
 
-# CTRL+Shift+x to move and resize window to bottom half
-bind x:ctrl;shift corner bottom-left resize:screenSizeX;screenSizeY/2
-
 # CTRL+Shift+c to move and resize window to bottom right
 bind c:ctrl;shift corner bottom-right resize:screenSizeX/2;screenSizeY/2
+
+
+# CTRL+Shift+5 to move and resize window to top left @ size larger than 1/4 (optimal for ACR)
+bind 5:ctrl;shift ${topleftmost}
+
+# CTRL+Shift+6 to move and resize window to top right @ size larger than 1/4 (optimal for ACR)
+bind 6:ctrl;shift ${toprightmost}
+
+# CTRL+Shift+7 to move and resize window to bottom left @ size larger than 1/4 (optimal for ACR)
+bind 7:ctrl;shift ${bottomleftmost}
+
+# CTRL+Shift+8 to move and resize window to bottom right @ size larger than 1/4 (optimal for ACR)
+bind 8:ctrl;shift ${bottomrightmost}
+
+
+# Top/middle/bottom
+#
+# +----------+----------+
+# |                     |  +----------+
+# |          w          |  |    u     |
+# |                     |  +----------|
+# +----------+----------|  |    j     |
+# |                     |  +----------+
+# |          x          |  |    m     |
+# |                     |  +----------+
+# +----------+----------+ 
+
+# CTRL+Shift+w to move and resize window to top half
+bind w:ctrl;shift corner top-left resize:screenSizeX;screenSizeY/2
+
+# CTRL+Shift+x to move and resize window to bottom half
+bind x:ctrl;shift corner bottom-left resize:screenSizeX;screenSizeY/2
 
 # CTRL+Shift+u to move and resize window to top third
 bind u:ctrl;shift ${topthird}
