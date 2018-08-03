@@ -395,6 +395,9 @@ syntax on                   " and turn on per-filetype syntax highlighting.
 let mapleader=","
 let maplocalleader="."
 
+" Reload config
+nnoremap <Leader>r :source $MYVIMRC<CR>
+
 " map <silent><C-Left> <C-T>
 " map <silent><C-Right> <C-]>
 
