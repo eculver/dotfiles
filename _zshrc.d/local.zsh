@@ -56,6 +56,7 @@ nvm() {
 # ------------------------------------------------------------------------
 
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+export PATH="$GOPATH/bin:$PATH"
 
 
 # ------------------------------------------------------------------------
@@ -126,11 +127,7 @@ gogods() {
 }
 
 goplay() {
-    _gvm_use
-    gvm pkgset use play
-    export GOPATH=$GVM_ROOT/pkgsets/go$GOVERSION/play
-    cd $HOME/src/go-play
-
+    cd $GOPATH/src/github.com/eculver/go-play
 }
 
 # turn off correction for these
