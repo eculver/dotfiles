@@ -71,7 +71,7 @@ let g:syntastic_less_options=""
 let g:syntastic_zsh_checkers=['zsh']
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_puppet_checkers=['puppetlint']
-let g:syntastic_javascript_checkers=['standard']
+let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_go_checkers = ['goimports', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
