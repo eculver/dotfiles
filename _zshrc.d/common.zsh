@@ -165,6 +165,22 @@ rtf2txt() {
 }
 
 # ------------------------------------------------------------------------
+# Git Helpers
+# ------------------------------------------------------------------------
+
+gitco() {
+    local branch="$1"
+    if [ -z "${branch}" ]; then
+        echo "gitco: checkout a branch and set upstream to origin/master"
+        echo
+        echo "usage: gitco <branch>"
+        return
+    fi
+    git checkout -b "${branch}" origin/master
+}
+
+
+# ------------------------------------------------------------------------
 # C* Helpers
 # ------------------------------------------------------------------------
 
