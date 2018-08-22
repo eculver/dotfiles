@@ -406,8 +406,7 @@ map <silent><S-n> :tabnext<CR>
 map <silent><S-p> :tabprevious<CR>
 map <silent><S-t> :tabnew<CR>
 
-" Open new tab and toggle NERDTree
-nnoremap <Leader>tt :tablast<CR><Bar>:tabnew<CR><Bar>:NERDTreeToggle<CR><Bar><C-w><Right><Bar>:q<CR>
+" NERDTree
 let g:NERDTreeWinSize = 40
 
 " Easily move around long wrapped lines
@@ -417,7 +416,7 @@ nnoremap j gj
 " Execute selected script
 map <C-h> :py EvaluateCurrentRange()<CR>
 
-" Show Project Tree
+" Toggle Project Tree
 map <LocalLeader>tt :NERDTreeToggle<CR>
 
 " Open Project Tree to current file
@@ -490,6 +489,9 @@ augroup quickfix
     autocmd!
     autocmd FileType qf setlocal wrap
 augroup END
+
+" Toggle Sytastic
+map <Leader>sy :SyntasticToggleMode<CR>
 
 " treat html files as django templates
 autocmd BufRead *.html set filetype=htmldjango
@@ -569,6 +571,3 @@ au BufWinEnter * if index(tabftexclude, &ft) < 0 | match PreceedingTabs /^\t\+/
 au InsertEnter * if index(tabftexclude, &ft) < 0 | match PreceedingTabs /^\t\+\%#\@<!/
 au InsertLeave * if index(tabftexclude, &ft) < 0 | match PreceedingTabs /^\t\+/
 au BufWinLeave * call clearmatches()
-
-
-
