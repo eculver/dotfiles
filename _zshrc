@@ -34,7 +34,7 @@ export ZSH_THEME="gozilla"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # shellcheck disable=SC2034
-plugins=(git git-flow brew github osx)
+plugins=(git github osx)
 
 # meat-and-potatoes
 # shellcheck disable=SC1090
