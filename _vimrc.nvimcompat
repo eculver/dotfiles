@@ -2,8 +2,11 @@
 " great home repo: https://github.com/jcorbin/home/blob/master/.vimrc
 
 " for debugging
-set verbose=9
-set verbosefile=~/vim.log
+" set verbose=9
+" set verbosefile=~/vim.log
+
+" for testing/reloading plugins
+" nvim +PlugInstall +UpdateRemotePlugins +qa
 
 " Define $VIMHOME:
 " - for NeoVim it's the directory that contains $MYVIMRC, usually
@@ -55,9 +58,6 @@ Plug 'sheerun/vim-polyglot', {'commit':'d9b11ed'} " pinned due to conflict: http
 Plug 'fatih/vim-go'
 Plug 'zaiste/tmux.vim'
 
-" make JS 'prettier'
-Plug 'prettier/vim-prettier'
-
 " tmux integration, mostly for running commands in a separate pane from vim
 Plug 'benmills/vimux'
 
@@ -83,10 +83,11 @@ Plug 'honza/vim-snippets'
 if has("nvim")
   " TODO: re-consider https://github.com/tjdevries/nvim-langserver-shim, since
   " it looks to be trying for upstream
-  Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-go'
+  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
   Plug 'Shougo/echodoc.vim'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+  Plug 'zchee/deoplete-go', { 'do': 'make' }
 else
   Plug 'Shougo/neocomplete.vim'
   let g:neosnippet#snippets_directory="$HOME/.config/nvim/snippets,$HOME/.config/nvim/plugged/vim-snippets/snippets,$HOME/.vim/bundle/vim-snippets/snippets"
@@ -208,7 +209,6 @@ let g:ale_sign_warning='⚠'
 " deoplete
 if has("nvim")
   let g:deoplete#enable_at_startup = 1
-  let g:deoplete#disable_auto_complete = 1
   set completeopt=menu,preview,longest,noselect
   set infercase
 
@@ -394,7 +394,8 @@ vnoremap <LocalLeader># "ay:Ag <C-r>a<CR>
 
 set mouse=a         " enable mousing around
 set nocompatible    " Stop behaving like vi; vim enhancements are better
-" set lazyredraw
+set lazyredraw
+
 if has("nvim")
   set inccommand=nosplit
 endif
@@ -436,7 +437,7 @@ augroup hlsearch
 augroup END
 
 " Spelling {{{
-set spell
+" set spell
 
 " ... except for some filetypes
 augroup nospell
@@ -613,9 +614,6 @@ au BufRead,BufNewFile *.handlebars,*.hbs set ft=html syntax=handlebars
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-
-" Go Highlighting
-set rtp+=~/$GOROOT/misc/vim
 
 " CQL Highlighting
 au! BufRead,BufNewFile *.cql set filetype=cql
