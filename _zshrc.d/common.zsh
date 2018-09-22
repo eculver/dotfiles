@@ -164,6 +164,12 @@ rtf2txt() {
     echo "Wrote ${ftxt}"
 }
 
+# validate YAML
+validate-yaml() {
+    local p=$1
+    ruby -e "require 'yaml';puts YAML.load_file('${p}')" > /dev/null 2>&1; [[ $? -eq 0 ]] && echo "valid" || echo "not valid"
+}
+
 # ------------------------------------------------------------------------
 # Git Helpers
 # ------------------------------------------------------------------------
