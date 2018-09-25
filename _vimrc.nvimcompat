@@ -30,13 +30,10 @@ endif
 
 call plug#begin($VIMHOME.'/plugged')
 
-" plugins {{{
+" Plugins {{{
 
 " better defaults out of the box
 Plug 'tpope/vim-sensible'
-
-" complements builtin NetRW mode for easier file navigation
-Plug 'tpope/vim-vinegar'
 
 " simplify surround/repeat tasks
 Plug 'tpope/vim-repeat'
@@ -46,10 +43,10 @@ Plug 'briandoll/change-inside-surroundings.vim'
 " git integration
 Plug 'tpope/vim-fugitive'
 
-" commenting 
+" commenting
 Plug 'tomtom/tcomment_vim'
 
-" better statusline 
+" better statusline
 Plug 'itchyny/lightline.vim'
 
 " better support for certain languages
@@ -69,6 +66,9 @@ Plug 'w0rp/ale'
 
 " find things w/ the silver searcher
 Plug 'rking/ag.vim'
+
+" fuzzy file finder
+Plug 'kien/ctrlp.vim'
 
 " autodetect indent level (stop running `:set ts=X sw=X` all the time when
 " crossing tribe lines)
@@ -175,10 +175,12 @@ let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
 
+let g:go_auto_sameids = 1
 let g:go_auto_type_info = 0
 let g:go_jump_to_error = 1
 
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_methods = 1
@@ -189,6 +191,7 @@ let g:go_highlight_generate_tags = 1
 
 let g:go_snippet_engine = "neosnippet"
 let g:go_template_autocreate = 0
+let g:go_template_use_pkg = 1
 
 let g:go_term_mode = "split"
 let g:go_term_enabled = 1
@@ -249,11 +252,6 @@ map <LocalLeader>tt :NERDTreeToggle<CR>
 " Open Project Tree to current file
 map <LocalLeader>tf :NERDTreeFind<CR>
 
-" Toggle Paste Mode
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-set showmode
-
 " Prompt for a command to run
 map <Leader>rp :VimuxPromptCommand<CR>
 
@@ -289,9 +287,9 @@ nnoremap <Leader>/ :noh<CR>
 map <S-i> mzgg=G`z
 nnoremap <Leader>si mzgg=G`z<CR>
 
-" Rebind Command-T
-map <LocalLeader>t :CommandT<CR>
-map <LocalLeader>b :CommandTBuffer<CR>
+" CtrlP
+map <LocalLeader>t :CtrlP<CR>
+map <LocalLeader>b :CtrlPBuffer<CR>
 
 " Buffer helpers
 " new empty buffer
@@ -315,7 +313,7 @@ nmap <LocalLeader>n :cn<CR>
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
-" vim-go
+" Go {{{
 
 " Open definition under cursor in new vertical, horizontal split or tab
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
@@ -331,37 +329,18 @@ au FileType go nmap <Leader>c <Plug>(go-coverage)
 au FileType go nmap <Leader>x <Plug>(go-coverage-clear)
 au FileType go nmap <Leader>e :GoErrCheck<CR>
 
-" snippets 
-if !has("nvim")
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-    endfunction
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-endif
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=1 concealcursor=niv
-endif
+" }}}
 
 " Ag
 noremap <LocalLeader># "ayiw:Ag <C-r>a<CR>
 vnoremap <LocalLeader># "ay:Ag <C-r>a<CR>
 
-" misc options {{{
+" Misc {{{
 
 set mouse=a         " enable mousing around
 set nocompatible    " Stop behaving like vi; vim enhancements are better
 set lazyredraw
+set noshowmode
 
 if has("nvim")
   set inccommand=nosplit
@@ -404,25 +383,9 @@ augroup hlsearch
 augroup END
 
 " Spelling {{{
-" set spell
 
-" ... except for some filetypes
-augroup nospell
-  autocmd FileType help setlocal nospell
-  autocmd FileType man setlocal nospell
-  autocmd FileType startify setlocal nospell
-  autocmd FileType gedoc setlocal nospell
-  autocmd FileType godoc setlocal nospell
-  autocmd FileType qf setlocal nospell
-  autocmd FileType netrw setlocal nospell
-  autocmd FileType vim-plug setlocal nospell
-  autocmd FileType fugitiveblame setlocal nospell
-  autocmd FileType goterm setlocal nospell
-augroup END
-
-" spell check in git mode
 augroup git
-autocmd Filetype gitcommit setlocal spell textwidth=72
+  autocmd Filetype gitcommit setlocal spell textwidth=72
 augroup END
 
 " }}}
@@ -447,7 +410,6 @@ set foldlevel=1
 
 set number                  " Display line numbers
 set numberwidth=1           " using only 1 column (and 1 space) while possible
-set background=dark
 set cursorline              " Highlight current line
 set cursorcolumn            " Highlight current column
 
@@ -457,9 +419,10 @@ if has("gui_running")
     set guioptions-=r           " remove right-hand scroll bar
 endif
 
-set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
+" Explicitly tell vim that the terminal has 256 colors
+set t_Co=256
 
-" show a gray line at column 79
+" Show a gray line at column 79
 if exists("&colorcolumn")
     execute "set colorcolumn=" . join(range(81,335), ',')
     set colorcolumn=79
@@ -522,18 +485,7 @@ set history=1000            " Keep a very long command-line history.
 set wildmenu                " Menu completion in command mode on <Tab>
 set wildmode=full           " <Tab> cycles between all matching choices.
 set wcm=<C-Z>               " Ctrl-Z in a mapping acts like <Tab> on cmdline
-" set cmdheight=1
-source $VIMRUNTIME/menu.vim " Load menus (this would be done anyway in gvim)
-" <F4> triggers the menus, even in terminal vim.
-map <F4> :emenu <C-Z>
-
-"""" Language Server Clients
-let g:LanguageClient_serverCommands = {
-    \ 'go': [$GOPATH.'/bin/go-langserver', '-pprof', ':26060'],
-    \ }
-
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
+set cmdheight=1
 
 """" Per-Filetype Scripts
 " NOTE: These define autocmds, so they should come before any other autocmds.
@@ -584,6 +536,7 @@ autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^
 au! BufRead,BufNewFile *.cql set filetype=cql
 
 " Display
+set background=dark
 colorscheme jellybeans
 " colorscheme lucid
 " colorscheme benlight
