@@ -55,8 +55,11 @@ Plug 'itchyny/lightline.vim'
 " better support for certain languages
 let g:polyglot_disabled = ['go', 'markdown']
 Plug 'sheerun/vim-polyglot', {'commit':'d9b11ed'} " pinned due to conflict: https://github.com/sheerun/vim-polyglot/issues/309
-Plug 'fatih/vim-go'
 Plug 'zaiste/tmux.vim'
+Plug 'fatih/vim-go'
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '$HOME/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '$HOME/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+Plug 'Shougo/echodoc.vim'
 
 " tmux integration, mostly for running commands in a separate pane from vim
 Plug 'benmills/vimux'
@@ -75,23 +78,16 @@ Plug 'tpope/vim-sleuth'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
+" insert or delete brackets, parens, quotes, etc.
+Plug 'jiangmiao/auto-pairs'
+
 " snippets
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 Plug 'honza/vim-snippets'
 
-if has("nvim")
-  " TODO: re-consider https://github.com/tjdevries/nvim-langserver-shim, since
-  " it looks to be trying for upstream
-  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-  Plug 'Shougo/echodoc.vim'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
-  Plug 'zchee/deoplete-go', { 'do': 'make' }
-else
-  Plug 'Shougo/neocomplete.vim'
-  let g:neosnippet#snippets_directory="$HOME/.config/nvim/snippets,$HOME/.config/nvim/plugged/vim-snippets/snippets,$HOME/.vim/bundle/vim-snippets/snippets"
-endif
+" completions that Just Work
+Plug 'valloric/youcompleteme'
 
 call plug#end()
 
@@ -202,36 +198,19 @@ augroup nolistgo
 augroup END
 
 " Ale
-
 let g:ale_sign_error='⊘'
 let g:ale_sign_warning='⚠'
 
-" deoplete
-if has("nvim")
-  let g:deoplete#enable_at_startup = 1
-  set completeopt=menu,preview,longest,noselect
-  set infercase
+" echodoc
+let g:echodoc_enable_at_startup=1
 
-  " echodoc
-  let g:echodoc_enable_at_startup=1
-endif
-
-" snippets
-" Enable on startup
-let g:neocomplete#enable_at_startup = 1
-
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-
-" key mappings {{{
+" Key mappings {{{
 
 let mapleader=","
 let maplocalleader="."
 
-" map <silent><C-Left> <C-T>
-" map <silent><C-Right> <C-]>
+" Neosnippet {{{
 
-" neosnippet {{{
 imap <C-e>     <Plug>(neosnippet_expand_or_jump)
 smap <C-e>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-e>     <Plug>(neosnippet_expand_target)
@@ -242,25 +221,11 @@ smap <C-f>     <Plug>(neosnippet_jump)
 let g:neosnippet#snippets_directory="$HOME/.config/nvim/snippets,$HOME/.config/nvim/plugged/vim-snippets/snippets"
 
 " For conceal markers.
-set conceallevel=1
-set concealcursor=niv
+set conceallevel=1 concealcursor=niv
 
 " }}}
 
-" Tab key {{{
-
-" Invokes deoplete in insert mode.
-imap <silent> <expr><Tab> deoplete#mappings#manual_complete()
-
-" Try to expand or jump in normal mode.
-snoremap <expr><Tab>
-\ neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" :
-\ "\<Tab>"
-
-" }}}
-
-" Tab management
+" Tab management {{{
 map <silent><S-n> :tabnext<CR>
 map <silent><S-p> :tabprevious<CR>
 map <silent><S-t> :tabnew<CR>
@@ -268,6 +233,8 @@ map <silent><S-t> :tabnew<CR>
 " Open new tab and toggle NERDTree
 nnoremap <Leader>tt :tablast<CR><Bar>:tabnew<CR><Bar>:NERDTreeToggle<CR><Bar><C-w><Right><Bar>:q<CR>
 let g:NERDTreeWinSize = 40
+
+" }}}
 
 " Easily move around long wrapped lines
 nnoremap k gk
@@ -465,8 +432,6 @@ set splitbelow
 set splitright
 
 """ Insert completion
-" don't select first item, follow typing in autocomplete
-set completeopt=longest,menuone,preview
 set pumheight=6             " Keep a small completion window
 
 " close preview window automatically
