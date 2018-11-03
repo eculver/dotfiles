@@ -11,6 +11,10 @@ export LIBRARY_PATH=/usr/local/lib
 export LDFLAGS=-L/usr/local/opt/readline/lib
 export CPPFLAGS=-I/usr/local/opt/readline/include
 
+# For JABA
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+# For Go and lazy-loading GVM
 export GOVERSION=1.9.2
 
 # Load Tmuxinator
@@ -126,11 +130,13 @@ gogods() {
 }
 
 goplay() {
-    _gvm_use
-    gvm pkgset use play
-    export GOPATH=$GVM_ROOT/pkgsets/go$GOVERSION/play
-    cd $HOME/src/go-play
+    # _gvm_use
+    # gvm pkgset use play
+    # export GOPATH=$GVM_ROOT/pkgsets/go$GOVERSION/play
+    # cd $HOME/src/go-play
 
+    export GOPATH=$HOME/sync/src/gocode
+    cd $GOPATH/src/github.com/eculver/go-play
 }
 
 # turn off correction for these
