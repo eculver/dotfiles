@@ -60,6 +60,7 @@ nvm() {
 # ------------------------------------------------------------------------
 
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+export PATH="$GOPATH/bin:$PATH"
 
 
 # ------------------------------------------------------------------------
@@ -336,4 +337,39 @@ gogettools () {
         _goget github.com/josharian/impl
     fi
     echo "${GREEN}[INFO]${RESET} DONE"
+}
+
+# Notes, worklog etc.
+export NOTES_HOME=$HOME/sync/txt/notes
+
+worklog() {
+    local worklog_file=$1
+    local today=$(date +%Y-%m-%d)
+    local today_file="${today}_worklog.md"
+
+    [[ -z "${worklog_file}" ]] && worklog_file="${today_file}"
+
+    if [ ! -f  "${worklog_file}" ]; then
+        touch "${worklog_file}"
+        (cat <<EOF
+# Worklog for ${today}
+
+## Stand-up
+
+### Yesterday
+-
+
+### Today
+-
+
+## Log
+
+
+## References
+
+EOF
+) > "${worklog_file}"
+    fi
+
+    $EDITOR "${worklog_file}"
 }

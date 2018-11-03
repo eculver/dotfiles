@@ -14,6 +14,8 @@ bindkey -v
 # bindkey '\e[3~' delete-char
 bindkey '^R' history-incremental-search-backward
 
+# make CTRL+SPACE accept completion
+bindkey '^ ' autosuggest-accept
 
 # ------------------------------------------------------------------------
 # Formatting Escape Sequences
@@ -42,6 +44,9 @@ alias mux='tmuxinator'
 
 # use GNU gawk extension in place of awk
 alias awk='gawk'
+
+# use NeoVIM instead of vim
+alias vim='nvim'
 
 # services
 alias memcached-stat='echo stats | nc 127.0.0.1 11211'
@@ -164,6 +169,28 @@ rtf2txt() {
     echo "Wrote ${ftxt}"
 }
 
+# validate YAML
+validate-yaml() {
+    local p=$1
+    ruby -e "require 'yaml';puts YAML.load_file('${p}')" > /dev/null 2>&1; [[ $? -eq 0 ]] && echo "valid" || echo "not valid"
+}
+
+# ------------------------------------------------------------------------
+# Git Helpers
+# ------------------------------------------------------------------------
+
+gitco() {
+    local branch="$1"
+    if [ -z "${branch}" ]; then
+        echo "gitco: checkout a branch and set upstream to origin/master"
+        echo
+        echo "usage: gitco <branch>"
+        return
+    fi
+    git checkout -b "${branch}" origin/master
+}
+
+
 # ------------------------------------------------------------------------
 # C* Helpers
 # ------------------------------------------------------------------------
@@ -191,4 +218,10 @@ cassie-tables() {
             echo "$cf.$t"
         done
     done
+}
+
+_join() {
+    local IFS=$1
+    shift
+    echo "${*}"
 }

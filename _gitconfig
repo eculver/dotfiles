@@ -43,6 +43,7 @@
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
+  rc = !"git rebase --continue"
   pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
   pullm = !"git fetch origin -v; git fetch mirror -v; git merge mirror/master"
   pushm = !"git push; git push mirror"
