@@ -14,6 +14,8 @@ bindkey -v
 # bindkey '\e[3~' delete-char
 bindkey '^R' history-incremental-search-backward
 
+# make CTRL+SPACE accept completion
+bindkey '^ ' autosuggest-accept
 
 # ------------------------------------------------------------------------
 # Formatting Escape Sequences
@@ -42,6 +44,9 @@ alias mux='tmuxinator'
 
 # use GNU gawk extension in place of awk
 alias awk='gawk'
+
+# use NeoVIM instead of vim
+alias vim='nvim'
 
 # services
 alias memcached-stat='echo stats | nc 127.0.0.1 11211'
