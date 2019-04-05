@@ -23,6 +23,10 @@ export GOPATH=$HOME/sync
 # Load Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
+# Add Cmake to PATH
+export CMAKE_HOME=/Applications/CMake.app/Contents
+[[ -s "$CMAKE_HOME" ]]
+export PATH="$CMAKE_HOME/bin":"$PATH"
 
 # ------------------------------------------------------------------------
 # fasd
