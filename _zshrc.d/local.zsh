@@ -353,6 +353,9 @@ worklog() {
     local worklog_file=$1
     local today=$(date +%Y-%m-%d)
     local today_file="${today}_worklog.md"
+    local last=$(ls $NOTES_HOME | sort -r | head -n1)
+    local last_file="$NOTES_HOME/${last}"
+    local last_log=$(awk '/## Log/,/^$/' ${last_file} | tail -n+2)
 
     [[ -z "${worklog_file}" ]] && worklog_file="${today_file}"
 
@@ -364,19 +367,15 @@ worklog() {
 ## Stand-up
 
 ### Yesterday
--
+${last_log}
 
 ### Today
 -
 
 ## Log
-
-
-## References
+- 
 
 EOF
 ) > "${worklog_file}"
     fi
-
-    $EDITOR "${worklog_file}"
 }
