@@ -1,6 +1,7 @@
 [user]
   name = Evan Culver
-  email = e@eculver.io
+  email = eculver@hashicorp.com
+  signingkey = C95315C7
 
 [push]
   default = current
