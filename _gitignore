@@ -4,7 +4,6 @@ custom/
 !custom/example.zsh
 
 # temp files directories
-cache/
 log/
 
 # OS meta junk
