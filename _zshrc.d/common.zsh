@@ -96,6 +96,10 @@ alias buildr='watchr static.watchr'
 # Functions
 # ------------------------------------------------------------------------
 
+source $HOME/.zshrc.d/utils.zsh
+
+# TODO: move these to utils.zsh
+
 zle-line-init() {
     RPS1="${${KEYMAP/vicmd/N}/(main|viins)/ }"
     RPS2=$RPS1
@@ -166,12 +170,13 @@ rtf2txt() {
     [[ $? -ne "0" ]] && echo "could not convert ${f} to plain-text" && return
 
     # .txt filename, use same basename
-    ftxt="$(echo "${f}" | cut -d "." -f1).txt"
+    dname="$(dirname ${f})"
+    fname="${dname}/$(cut -d "." -f1 <<< $(basename ${f})).txt"
 
     # replace junk chars
-    cat "${ftmp}" | sed "s/’/'/g" | sed "s/‘/'/g" | sed 's/”/"/g' | sed 's/“/"/g' | sed 's/-/-/g' | sed 's/•//g' > "${ftxt}"
+    cat "${ftmp}" | sed "s/’/'/g" | sed "s/‘/'/g" | sed 's/”/"/g' | sed 's/“/"/g' | sed 's/-/-/g' | sed 's/•//g' > "${fname}"
     rm "${ftmp}"
-    echo "Wrote ${ftxt}"
+    echo "Wrote ${fname}"
 }
 
 # validate YAML

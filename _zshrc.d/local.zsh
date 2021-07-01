@@ -1,7 +1,7 @@
 #!/usr/local/bin/zsh
 
 # ========================================================================
-# ZSH conf specific to local environment
+# ZSH conf specific to local/laptop environment
 # ========================================================================
 
 # For building CPython libraries
@@ -11,22 +11,18 @@ export LIBRARY_PATH=/usr/local/lib
 export LDFLAGS=-L/usr/local/opt/readline/lib
 export CPPFLAGS=-I/usr/local/opt/readline/include
 
-# For JABA
+# For JABA (sic)
 export JAVA_HOME=$(/usr/libexec/java_home)
 
 # For Go and lazy-loading GVM
 export GOVERSION=1.9.2
 
 # For Go when not using GVM
-export GOPATH=$HOME/sync
-
-# Load Tmuxinator
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+export GOPATH=$HOME/dev
 
 # Add Cmake to PATH
 export CMAKE_HOME=/Applications/CMake.app/Contents
-[[ -s "$CMAKE_HOME" ]]
-export PATH="$CMAKE_HOME/bin":"$PATH"
+[[ -s "$CMAKE_HOME" ]] && export PATH="$CMAKE_HOME/bin":"$PATH"
 
 # ------------------------------------------------------------------------
 # fasd
@@ -39,6 +35,18 @@ if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
 fi
 source "$fasd_cache"
 unset fasd_cache
+
+
+# ------------------------------------------------------------------------
+# fzf
+# ------------------------------------------------------------------------
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+
+# ------------------------------------------------------------------------
+# Python
+# ------------------------------------------------------------------------
+[[ -s "$HOME/.pythonrc.py" ]] && export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 
 # ------------------------------------------------------------------------
@@ -56,18 +64,34 @@ export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 # ------------------------------------------------------------------------
 
 nvm() {
-    export NVM_DIR=$HOME/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    # nvm ${@:2}
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+  # initialze autoloading,
+  autoload -U add-zsh-hook
+  add-zsh-hook chpwd nvm-load-nvmrc
+
+  nvm ${@:2}
 }
 
+# this will trigger an `nvm use` when entering a directory with an .nvmrc
+nvm-load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
 
-# ------------------------------------------------------------------------
-# Go/GVM (sourced but lazily loaded)
-# ------------------------------------------------------------------------
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-export PATH="$GOPATH/bin:$PATH"
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
 
 
 # ------------------------------------------------------------------------
@@ -79,21 +103,25 @@ if [ -s "$CHRUBY_HOME" ]; then
     local latest_ruby
     source "$CHRUBY_HOME/chruby.sh"
     source "$CHRUBY_HOME/auto.sh"
+    RUBIES+=($HOME/.rbenv/versions/*)
     chruby "ruby-$(find "$HOME/.rubies" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+')"
 fi
 
 
 # ------------------------------------------------------------------------
-# Postgres (Mac)
+# Tmuxinator
 # ------------------------------------------------------------------------
 
-export PGHOST=/tmp
-export PATH="/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH"
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+[[ -s $HOME/.tmuxinator/completion ]] && source $HOME/.tmuxinator/completion/tmuxinator.zsh
 
 
 # ------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------
+
+# vim == neovim
+alias vim='nvim'
 
 alias mdr='ssh -t mdr tmux -u -2 att'
 alias nero='ssh -t nero tmux -u -2 at -t base'
@@ -176,24 +204,6 @@ alias v='f -e vim' # quick opening files with vim
 # kill all django runserver instances
 killmanage(){
     ps -ef | grep "manage\.py runserver" | awk '{print $2}' | xargs kill -9
-}
-
-# ping a host, beeping when it comes up
-beepwhenup () {
-    echo 'Enter host you want to ping:';
-    read PHOST;
-    [[ "$PHOST" == "" ]] && echo "must enter a host or IP" && return
-
-    while true; do
-        ping -c1 -W2 $PHOST 2>&1 >/dev/null
-        if [[ "$?" == "0" ]]; then
-            for j in $(seq 1 4); do
-                say "Host is up";
-            done
-            ping -c1 $PHOST
-            break
-        fi
-    done
 }
 
 # reminder of how I setup WeeChat to work with Matrix
@@ -303,79 +313,4 @@ gvmmigrate() {
     fi
 
     echo "${GREEN}[INFO]${RESET} DONE"
-}
-
-# Helper for Github cloning
-ghclone () {
-  local repo=$1
-  local dst=$2
-
-  [[ -z "${repo}" ]] && echo "usage: ghclone <repo_pat> [dest]" && return
-  [[ -z "${dst}" ]] && dst=$(echo "${repo}" | rev | cut -d '/' -f1 | rev)
-
-  echo "Cloning github.com/${repo} to ${dst}"
-  git clone git@github.com:"${repo}" "${dst}"
-}
-
-_goget() {
-    local pkg=$1
-    [[ -z "${pkg}" ]] && return # programmer error
-    echo "${GREEN}[INFO]${RESET} Installing ${pkg}"
-    go get -u $pkg
-}
-
-# Helper to install all Go dev tools
-gogettools () {
-    local confirm
-    echo -n "${BOLD_WHITE}Install tools into $GOPATH? (Y/n) ${RESET}"
-    read -r confirm
-    if [[ "${confirm}" == "Y" ]]; then
-        _goget github.com/nsf/gocode
-        _goget github.com/alecthomas/gometalinter
-        _goget golang.org/x/tools/cmd/goimports
-        _goget golang.org/x/tools/cmd/guru
-        _goget golang.org/x/tools/cmd/gorename
-        _goget github.com/golang/lint/golint
-        _goget github.com/rogpeppe/godef
-        _goget github.com/kisielk/errcheck
-        _goget github.com/klauspost/asmfmt/cmd/asmfmt
-        _goget github.com/fatih/motion
-        _goget github.com/zmb3/gogetdoc
-        _goget github.com/josharian/impl
-    fi
-    echo "${GREEN}[INFO]${RESET} DONE"
-}
-
-# Notes, worklog etc.
-export NOTES_HOME=$HOME/sync/txt/notes
-
-worklog() {
-    local worklog_file=$1
-    local today=$(date +%Y-%m-%d)
-    local today_file="${today}_worklog.md"
-    local last=$(ls $NOTES_HOME | sort -r | head -n1)
-    local last_file="$NOTES_HOME/${last}"
-    local last_log=$(awk '/## Log/,/^$/' ${last_file} | tail -n+2)
-
-    [[ -z "${worklog_file}" ]] && worklog_file="${today_file}"
-
-    if [ ! -f  "${worklog_file}" ]; then
-        touch "${worklog_file}"
-        (cat <<EOF
-# Worklog for ${today}
-
-## Stand-up
-
-### Yesterday
-${last_log}
-
-### Today
--
-
-## Log
-- 
-
-EOF
-) > "${worklog_file}"
-    fi
 }
