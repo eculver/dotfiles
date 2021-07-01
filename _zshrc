@@ -1,4 +1,5 @@
 # shellcheck disable=SC2148
+
 # ========================================================================
 # Evan's ZSH config from hell (it's really simple and harmless actually)
 # ========================================================================
@@ -31,10 +32,13 @@ export ZSH_THEME="gozilla"
 # Uncomment following line if you want to disable colors in ls
 # export DISABLE_LS_COLORS="true"
 
+# Source any plugins that have been installed by Homebrew
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # shellcheck disable=SC2034
-plugins=(git github osx zsh-autosuggestions)
+plugins=(git github osx)
 
 # meat-and-potatoes
 # shellcheck disable=SC1090
@@ -97,23 +101,6 @@ function source-if-exists {
 
 
 # ------------------------------------------------------------------------
-# Tmuxinator
-# ------------------------------------------------------------------------
-
-if [[ -s ~/devel/tmuxinator/completion ]]; then
-    # shellcheck disable=SC1090
-    source ~/devel/tmuxinator/completion/tmuxinator.zsh
-fi
-
-
-# ------------------------------------------------------------------------
-# VIM!
-# ------------------------------------------------------------------------
-
-export EDITOR='nvim'
-
-
-# ------------------------------------------------------------------------
 # Path
 # ------------------------------------------------------------------------
 
@@ -128,36 +115,12 @@ export EDITOR='nvim'
 export PATH=/usr/local/sbin:/usr/local/bin:$HOME/bin:$PATH
 
 
-
-# ------------------------------------------------------------------------
-# Python
-# ------------------------------------------------------------------------
-#
-export PYTHONSTARTUP=$HOME/.pythonrc.py
-
-
-# ------------------------------------------------------------------------
-# jstdutil
-# ------------------------------------------------------------------------
-
-export JSTESTDRIVER_HOME=$HOME/bin/jstd
-
-
-# ------------------------------------------------------------------------
-# NPM completion
-# ------------------------------------------------------------------------
-
-# this is a weird path, but we want this so bark if it doens't exist
-#source ~/local/node/lib/node_modules/npm/lib/utils/completion.sh
-
-
 # ------------------------------------------------------------------------
 # common settings
 # ------------------------------------------------------------------------
 
 # shellcheck disable=SC1090
 source $CONFDIR/common.zsh
-
 
 # ------------------------------------------------------------------------
 # environment-specific settings
