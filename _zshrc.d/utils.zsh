@@ -4,8 +4,10 @@
 # Misc utility functions
 # ========================================================================
 
+export GO_DEFAULT=hashicorp
+
 # Ping a host, beeping when it comes up
-beepwhenup () {
+function beepwhenup {
     echo 'Enter host you want to ping:';
     read PHOST;
     [[ "$PHOST" == "" ]] && echo "must enter a host or IP" && return
@@ -24,7 +26,7 @@ beepwhenup () {
 
 # Helper for Github cloning
 # deprecated: use goto()
-ghclone () {
+function ghclone {
   local repo=$1
   local dst=$2
 
@@ -36,13 +38,11 @@ ghclone () {
 }
 
 # Print information about a host:port's SSL cert
-sslinfo () {
+function sslinfo {
   local domain=$1
   [[ -z "${domain}" ]] && echo "usage: sslinfo <domain>" && return
   echo | openssl s_client -showcerts -servername "${domain}" -connect "${domain}":443 2>/dev/null | openssl x509 -inform pem -noout -text
 }
-
-export GO_DEFAULT=hashicorp
 
 # Go to a <repo> in ~/dev
 function goto {
@@ -72,6 +72,44 @@ function nav {
   cd ~/dev/src/github.com/$1 &> /dev/null ||
   clone $1 2> /dev/null ||
   echo "repo @ $1 does not exist"
+}
+
+# Checkout <pull-request>
+function gcopr {
+  git fetch origin pull/$1/head:pr-$1
+  git checkout pr-$1
+}
+
+# Open the repo in the current directory on github
+function gho {
+  repo=$(git remote -v)
+  re="github.com/([^/]+/[^[:space:]]+)(.git)"
+  if [[ $repo =~ $re ]]; then open "https://github.com/${BASH_REMATCH[1]}"; fi
+}
+
+# Clone a <repo ...> by "owner/name" into ~/dev
+function clone {
+  for repo in $@; do
+    if [[ "$repo" == */* ]]; then
+      local dir=$GOPATH/src/github.com/$repo
+      git clone ssh://git@github.com/$repo.git $dir
+      cd $dir
+    else
+      local dir=$GOPATH/src/github.com/$USER_DEFAULT/$repo
+      git clone ssh://git@github.com/$USER_DEFAULT/$repo.git $dir
+      cd $dir
+    fi
+  done
+}
+
+# Print the current branch name.
+function gbn {
+  local branch_name="$(                                        \
+       git symbolic-ref --quiet --short HEAD 2> /dev/null      \
+    || git rev-parse --short HEAD 2> /dev/null                 \
+    || echo '(unknown)'                                        \
+  )";
+  echo $branch_name
 }
 
 # Bash completion for goto()
@@ -106,7 +144,7 @@ export TXT_HOME=$HOME/sync/txt
 export WORKLOG_HOME=$TXT_HOME/worklog
 export SUPPORTLOG_HOME=$TXT_HOME/support
 
-worklog() {
+function worklog {
     local worklog_file=$1
     local today=$(date +%Y-%m-%d)
     local today_file="$WORKLOG_HOME/${today}_worklog.md"
@@ -139,7 +177,7 @@ EOF
     fi
 }
 
-supportlog() {
+function supportlog {
     local supportlog_file=$1
     local today=$(date +%Y-%m-%d)
     local today_file="$SUPPORTLOG_HOME/${today}_support.md"
@@ -170,5 +208,3 @@ EOF
 ) > "${supportlog_file}"
     fi
 }
-
-
