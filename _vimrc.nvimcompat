@@ -74,7 +74,7 @@ Plug 'w0rp/ale'
 Plug 'rking/ag.vim'
 
 " fuzzy file finder
-Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " autodetect indent level (stop running `:set ts=X sw=X` all the time when
 " crossing tribe lines)
@@ -475,9 +475,28 @@ nnoremap <Leader>/ :noh<CR>
 map <S-i> mzgg=G`z
 nnoremap <Leader>si mzgg=G`z<CR>
 
-" CtrlP
-map <LocalLeader>t :CtrlP<CR>
-map <LocalLeader>b :CtrlPBuffer<CR>
+" fzf
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-s': 'split',
+    \ 'ctrl-v': 'vsplit'
+    \ }
+let g:fzf_preview_window = 'right:60%'
+nnoremap <c-p> :FZF<CR>
+map <LocalLeader>t :FZF<CR>
+
+augroup fzf
+  autocmd!
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+augroup END
 
 " Buffer helpers
 " new empty buffer
