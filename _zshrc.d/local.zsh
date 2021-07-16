@@ -19,6 +19,7 @@ export GOVERSION=1.9.2
 
 # For Go when not using GVM
 export GOPATH=$HOME/dev
+export PATH=$PATH:$GOPATH/bin
 
 # Add Cmake to PATH
 export CMAKE_HOME=/Applications/CMake.app/Contents
