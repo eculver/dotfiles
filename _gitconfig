@@ -31,7 +31,7 @@
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore
   autocrlf = false
-  editor = vim
+  editor = nvim
 
 [alias]
   st = status
