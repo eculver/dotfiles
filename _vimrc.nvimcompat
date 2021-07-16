@@ -737,9 +737,6 @@ autocmd BufRead *.html set filetype=htmldjango
 " JSON Highlighting
 autocmd BufRead *.json set filetype=json
 
-" YAML Highlighting
-au! BufRead,BufNewFile *.yaml,*.yml so ~/.vim/syntax/yaml.vim
-
 " LESS Highlighting
 au! BufRead,BufNewFile *.less set filetype=less
 
