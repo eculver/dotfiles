@@ -103,8 +103,9 @@ let g:terraform_fmt_on_save=1
 Plug 'hashivim/vim-terraform'
 
 " completions that REALLY Just Work
-" note: must run :CocInstall coc-go coc-json coc-tsserver for things to really
-" come alive since we're not including a pre-baked coc-settings.json
+" note: must run :CocInstall coc-$lang for things to really
+" come alive since we're not including a pre-baked coc-settings.json, these
+" are what I've been using so far: coc-{go,json,yaml,tsserver,sh}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
