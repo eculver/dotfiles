@@ -3,6 +3,10 @@
 # ========================================================================
 # Evan's ZSH config from hell (it's really simple and harmless actually)
 # ========================================================================
+# TODO: if I'm going to be using oh-my-zsh, I might as well take advantage
+# of its conventions by putting functions and completions in the right places
+# for them to be auto-loaded rather than inventing my own bespoke way that is
+# seen below.
 
 # call me maybe? set -eo pipefail
 
