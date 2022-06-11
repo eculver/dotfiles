@@ -42,7 +42,7 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # shellcheck disable=SC2034
-plugins=(git github macos dotenv kubectl)
+plugins=(git github macos dotenv)
 
 # meat-and-potatoes
 # shellcheck disable=SC1090
