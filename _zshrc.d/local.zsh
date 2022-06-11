@@ -25,6 +25,25 @@ export PATH=$PATH:$GOPATH/bin
 export CMAKE_HOME=/Applications/CMake.app/Contents
 [[ -s "$CMAKE_HOME" ]] && export PATH="$CMAKE_HOME/bin":"$PATH"
 
+# Set SSH_AUTH_SOCK rather than a randomly generated one, for shells to share an agent
+export SSH_AUTH_SOCK=$HOME/.ssh/ssh-agent.$HOSTNAME.sock
+
+
+# -------------------------------------------------------------------------
+# ssh-agent - ensure running and identities are loaded
+# -------------------------------------------------------------------------
+# not running so start it
+if ! pgrep -x "ssh-agent" > /dev/null; then
+  echo "Starting ssh-agent"
+  eval `ssh-agent -a $SSH_AUTH_SOCK`
+fi
+
+ssh-add -l > /dev/null 2>&1
+# running but no identities, add them
+if [ $? -ge 1 ]; then
+  ssh-add --apple-load-keychain
+fi
+
 # ------------------------------------------------------------------------
 # fasd
 # ------------------------------------------------------------------------
