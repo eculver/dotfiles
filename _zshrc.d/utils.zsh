@@ -140,19 +140,26 @@ fi
 
 
 # Notes, worklog etc.
-export TXT_HOME=$HOME/sync/txt
+export TXT_HOME=$HOME/txt
 export WORKLOG_HOME=$TXT_HOME/worklog
 export SUPPORTLOG_HOME=$TXT_HOME/support
 
 function worklog {
     local worklog_file=$1
     local today=$(date +%Y-%m-%d)
-    local today_file="$WORKLOG_HOME/${today}_worklog.md"
-    local last=$(ls $WORKLOG_HOME | sort -r | head -n1)
-    local last_file="$WORKLOG_HOME/${last}"
+    local today_ym=$(date +%Y-%m)
+    local today_d=$(date +%d)
+    local today_file="$WORKLOG_HOME/${today_ym}/${today_d}_worklog.md"
+    local last_file=$(find $WORKLOG_HOME -name '*_worklog.md' | sort -r | head -n1)
+    local last_ym=$(dirname ${last_file} | rev | cut -d / -f1 | rev)
+    local last_d=$(basename ${last_file} | cut -d _ -f1)
     local last_log=$(awk '/## Log/,/^$/' ${last_file} | tail -n+2)
-    local last_date=$(echo $last | cut -d '_' -f1)
-    local last_dow=$(date -j -f %Y-%m-%d $last_date +%A)
+    local last_dow=$(date -j -f %Y-%m-%d "${last_ym}-${last_d}" +%A)
+
+    # create the new month directory if necessary
+    if [ ! -d $WORKLOG_HOME/${today_ym} ]; then
+      mkdir $WORKLOG_HOME/${today_ym}
+    fi
 
     [[ -z "${worklog_file}" ]] && worklog_file="${today_file}"
 
@@ -174,13 +181,18 @@ ${last_log}
 
 EOF
 ) > "${worklog_file}"
+    echo "created ${worklog_file}"
     fi
+
+  #vim "${worklog_file}"
 }
 
 function supportlog {
     local supportlog_file=$1
     local today=$(date +%Y-%m-%d)
-    local today_file="$SUPPORTLOG_HOME/${today}_support.md"
+    local today_ym=$(date +%Y-%m)
+    local today_d=$(date +%d)
+    local today_file="$SUPPORTLOG_HOME/${today_ym}/${today_d}_support.md"
 
     [[ -z "${supportlog_file}" ]] && supportlog_file="${today_file}"
 
