@@ -45,6 +45,28 @@ for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
 done
 eval RESET='$reset_color'
 
+# ------------------------------------------------------------------------
+# Common color formatting aliases
+# ------------------------------------------------------------------------
+export INFO_COLOR="${bg[white]}${fg[black]}"
+export WARNING_COLOR="${bg[yellow]}${fg[black]}"
+export ERROR_COLOR="${bg[red]}${fg[black]}"
+
+# wraps color code in appropriate escape sequence
+function color { printf "\033[${1}m"; }
+
+function log-info {
+  echo -e "${INFO_COLOR}[INFO]${RESET} ${1}"
+}
+
+function log-warning {
+  echo -e "${WARNING_COLOR}[WARN]${RESET} ${1}"
+}
+
+function log-error {
+  echo -e "${ERROR_COLOR}[ERROR]${RESET} ${1}"
+}
+
 
 # ------------------------------------------------------------------------
 # Aliases
