@@ -227,6 +227,28 @@ validate-yaml() {
     ruby -e "require 'yaml';puts YAML.load_file('${p}')" > /dev/null 2>&1; [[ $? -eq 0 ]] && echo "valid" || echo "not valid"
 }
 
+# validate HCL using hclfmt
+validate-hcl() {
+    local p=$1
+    if ! command -v hclfmt > /dev/null 2>&1; then
+      echo "hclfmt command not found, please build and install github.com/hashicorp/hcl/cmd/hclfmt first"
+      exit 1
+    fi
+
+    hclfmt "${p}" > /dev/null 2>&1
+
+    [[ $? -eq 0 ]] && echo "valid" || echo "not valid"
+}
+
+
+# print SSH host key signatures for GitHub -- this has the side-effect of updating ~/.ssh/known_hosts with the correct keys
+# which *should* fix errors like "Host key verification failed."
+ssh-keyscan-print() {
+    local host="$1"
+    [[ -z "${host}" ]] && echo "usage: ssh-keyscan-print <hostname>" && return
+    ssh-keyscan "${host}" | ssh-keygen -l -f -
+}
+
 # ------------------------------------------------------------------------
 # Git Helpers
 # ------------------------------------------------------------------------
