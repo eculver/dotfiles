@@ -62,7 +62,8 @@ Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '$HOME/.config/nvim/plugged/gocod
 Plug 'Shougo/echodoc.vim'
 
 " LSP client
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+Plug 'neovim/nvim-lspconfig'
 
 " tmux integration, mostly for running commands in a separate pane from vim
 Plug 'benmills/vimux'
