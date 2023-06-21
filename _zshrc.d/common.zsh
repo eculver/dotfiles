@@ -221,7 +221,7 @@ rtf2txt() {
     echo "Wrote ${fname}"
 }
 
-# validate YAML
+# validate YAML using Ruby interpreter
 validate-yaml() {
     local p=$1
     ruby -e "require 'yaml';puts YAML.load_file('${p}')" > /dev/null 2>&1; [[ $? -eq 0 ]] && echo "valid" || echo "not valid"
