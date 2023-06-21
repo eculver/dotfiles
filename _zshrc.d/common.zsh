@@ -264,6 +264,14 @@ gitco() {
     git checkout -b "${branch}" origin/master
 }
 
+gitsha() {
+    local ref="${1:-HEAD}"
+    git rev-parse "${ref}"
+}
+
+gitshacp() {
+    gitsha | tr -d '\n' | pbcopy 
+}
 
 # ------------------------------------------------------------------------
 # C* Helpers
