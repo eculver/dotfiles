@@ -72,12 +72,14 @@ unset fasd_cache
 # ------------------------------------------------------------------------
 # fzf
 # ------------------------------------------------------------------------
+
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 
 # ------------------------------------------------------------------------
 # Python
 # ------------------------------------------------------------------------
+
 [[ -s "$HOME/.pythonrc.py" ]] && export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 
@@ -97,7 +99,7 @@ export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 
 nvm() {
   export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
 
   # initialze autoloading,
   autoload -U add-zsh-hook
@@ -135,7 +137,6 @@ if [ -s "$CHRUBY_HOME" ]; then
     local latest_ruby
     source "$CHRUBY_HOME/chruby.sh"
     source "$CHRUBY_HOME/auto.sh"
-    RUBIES+=($HOME/.rbenv/versions/*)
     chruby "ruby-$(find "$HOME/.rubies" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+')"
 fi
 
@@ -147,6 +148,12 @@ fi
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 [[ -s $HOME/.tmuxinator/completion ]] && source $HOME/.tmuxinator/completion/tmuxinator.zsh
 
+
+# ------------------------------------------------------------------------
+# Arkade
+# ------------------------------------------------------------------------
+
+export PATH=$HOME/.arkade/bin/:$PATH
 
 # ------------------------------------------------------------------------
 # Aliases
@@ -184,28 +191,20 @@ alias goculvers='mux start culvers'
 alias golsm='mux start lsm'
 alias gotdt='mux start tdt'
 
-# Lazy-use $GOVERSION
-_gvm_use() {
-    [[ -z "$gvm_go_name" ]] && gvm use $GOVERSION 2>&1 > /dev/null
-}
+# Kubernetes
+alias kc=kubectl
+alias kctx=kubectx
+alias kns=kubens
+alias ktail=kubetail
+# dump all resources
+alias kc-dump-all='for i in $(kc api-resources | tail -n +2 | cut -f 1 -d ' ') ; do kc get $i -A ; done'
 
-# Golang + Github projects
-# TODO(idiot): make better
-gogods() {
-    _gvm_use
-    gvm pkgset use gods
-    cd $GOPATH/src/github.com/emirpasic/gods || return
-}
+# kubectl completions
+# source <(kubectl completion zsh)
+# complete -F __start_kubectl kc
 
-goplay() {
-    # _gvm_use
-    # gvm pkgset use play
-    # export GOPATH=$GVM_ROOT/pkgsets/go$GOVERSION/play
-    # cd $HOME/src/go-play
-
-    export GOPATH=$HOME/sync/src/gocode
-    cd $GOPATH/src/github.com/eculver/go-play
-}
+# switch to my Go "playground" repo
+alias goplay='goto eculver/go-play'
 
 # turn off correction for these
 alias npm='nocorrect npm'
