@@ -246,6 +246,9 @@ let g:echodoc_enable_at_startup=1
 let mapleader=","
 let maplocalleader="."
 
+" Quickfix: opens items in a new tab
+autocmd FileType qf nnoremap <buffer> <Enter> <C-W><Enter><C-W>T
+
 " Neosnippet {{{
 
 imap <C-e>     <Plug>(neosnippet_expand_or_jump)
