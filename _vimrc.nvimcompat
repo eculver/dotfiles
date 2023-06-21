@@ -112,6 +112,9 @@ Plug 'hashivim/vim-terraform'
 " are what I've been using so far: coc-{go,json,yaml,tsserver,sh}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" co-pilot!
+Plug 'github/copilot.vim'
+
 call plug#end()
 
 " }}}
