@@ -263,6 +263,9 @@ let g:neosnippet#snippets_directory="$HOME/.config/nvim/snippets,$HOME/.config/n
 " For conceal markers.
 set conceallevel=1 concealcursor=niv
 
+" copilot
+let g:copilot_node_command = '$HOME/.nvm/versions/node/v16.19.1/bin/node'
+
 " }}}
 
 " -------------------------------------------------------------------------------------------------
