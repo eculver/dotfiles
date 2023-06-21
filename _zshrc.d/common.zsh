@@ -161,16 +161,23 @@ random() {
     python -c "import md5; from datetime import datetime; print md5.new(datetime.now().strftime(\"%s\")).hexdigest()[:$len]"
 }
 
-# get pids listening on a specific port
-port-pids() {
+# list pids of processes listening on a specific port
+lsportpids() {
   local port=$1
   [ "$port" == "" ] && echo "usage: port-pids <port>" && return
   lsof -n -i4TCP:$port | grep LISTEN
 }
 
-portsopen() {
-  local port=$1
-  sudo netstat -plant --extend | grep $port | grep EST
+lsports() {
+  local uname cmd
+  unamestr=$(uname)
+  if [[ "${unamestr}" == "Darwin" ]]; then
+    cmd="netstat -Watnlv"
+  else
+    cmd="sudo netstat -plant --extend"
+  fi
+
+  $cmd | grep LISTEN | awk '{"ps -o comm= -p " $9 | getline procname;colred="\033[01;31m";colclr="\033[0m"; print colred "proto: " colclr $1 colred " | addr.port: " colclr $4 colred " | pid: " colclr $9 colred " | name: " colclr procname;  }' | column -t -s "|"
 }
 
 # helper for doing a string join on all args
