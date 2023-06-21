@@ -2,3 +2,6 @@ Godeps
 build
 node_modules
 vendor
+dist
+*.svg
+*.hbs

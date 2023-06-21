@@ -3,11 +3,79 @@
   email = eculver@hashicorp.com
   signingkey = C95315C7
 
+[core]
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  excludesfile = /Users/eculver/.gitignore
+  autocrlf = false
+  editor = nvim
+  pager = delta
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = false
+
 [push]
   default = current
 
 [branch]
   autosetupmerge = always
+
+[merge]
+  conflictstyle = diff3
+
+[commit]
+  gpgsign = true
+
+[diff]
+  colorMoved = default
+
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+
+[rerere]
+  enabled = true
+
+[delta]
+  navigate = true
+  features = custom-theme
+
+[delta "custom-theme"]
+  dark = true
+  navigate = true
+  keep-plus-minus-markers = true
+  file-added-label = [+]
+  file-copied-label = [==]
+  file-modified-label = [*]
+  file-removed-label = [-]
+  file-renamed-label = [->]
+  file-style = omit
+  zero-style = syntax
+  syntax-theme = Monokai Extended
+  commit-decoration-style = green box
+  commit-style = yellow bold italic
+  hunk-header-decoration-style = blue box ul
+  hunk-header-file-style = purple ul bold
+  hunk-header-line-number-style = yellow box bold
+  hunk-header-style = file line-number syntax bold italic
+  line-numbers = true
+  line-numbers-left-format = "{nm:>1}|"
+  line-numbers-left-style = blue
+  line-numbers-minus-style = red bold
+  line-numbers-plus-style = green bold
+  line-numbers-right-format = "{np:>1}|"
+  line-numbers-right-style = blue
+  line-numbers-zero-style = white italic
+  minus-emph-style = syntax bold red
+  plus-emph-style = syntax bold green
+  whitespace-error-style = purple bold
+
+[gpg]
+  program = gpg2
+
+[credential]
+  helper = cache -- timeout=3600
 
 [color]
   ui = auto
@@ -27,15 +95,13 @@
     changed = green
     untracked = cyan
 
-[core]
-  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  excludesfile = ~/.gitignore
-  autocrlf = false
-  editor = nvim
-
 [alias]
   st = status
   ci = commit
+  comit = commit
+  commmit = commit
+  pul = pull
+  pulll = pull
   br = branch
   co = checkout
   df = diff
@@ -50,13 +116,7 @@
   pullm = !"git fetch origin -v; git fetch mirror -v; git merge mirror/$(git symbolic-ref --short HEAD)"
   pushm = !"git push; git push mirror"
   contribs = !"git shortlog -s -n"
-  rmbr = "!f() { \
-    br=$(git rev-parse --abbrev-ref HEAD); \
-    git co $(git symbolic-ref --short HEAD); \
-    git pull ; \
-    git br -D $br; \
-    git rpo; \
-  }; f"
+  oldest-ancestor = !zsh -c 'diff -u <(git rev-list --first-parent "${1:-main}") <(git rev-list --first-parent "${2:-HEAD}") | sed -ne \"s/^ //p\" | head -1' -
 
 [github]
   # look for credentials in cli keychain, or prompt for them
@@ -64,24 +124,12 @@
   token = !security 2>&1 >/dev/null find-generic-password -gs github.token | ruby -e 'print $1 if STDIN.gets =~ /^token: \\\"(.*)\\\"$/'
   password = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
 
-[rerere]
-  enabled = true
-
-[credential]
-  helper = cache -- timeout=3600
-
 [url "git@github.com:"]
   # Always use Github SSH protocol
   insteadOf = https://github.com
-
-[commit]
-  gpgsign = true
-
-[gpg]
-  program = gpg2
-
-[pull]
-  rebase = false
-
-[init]
-  defaultBranch = main
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
+[mergetool "sourcetree"]
+  cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
