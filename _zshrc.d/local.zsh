@@ -41,8 +41,11 @@ export OPENAI_APIKEY="op://Private/OpenAI/api key"
 # -------------------------------------------------------------------------
 # ssh-agent - ensure running and identities are loaded
 # -------------------------------------------------------------------------
-# not running so start it
+# if not running, start it
 if ! pgrep -x "ssh-agent" > /dev/null; then
+  if [[ -f $SSH_AUTH_SOCK ]]; then
+    rm $SSH_AUTH_SOCK
+  fi
   echo "Starting ssh-agent"
   eval `ssh-agent -a $SSH_AUTH_SOCK`
 fi
