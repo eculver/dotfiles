@@ -128,6 +128,9 @@ alias buildr='watchr static.watchr'
 # Functions
 # ------------------------------------------------------------------------
 
+# from external packages
+source /usr/local/share/zsh/site-functions
+# mine
 source $HOME/.zshrc.d/utils.zsh
 
 # TODO: move these to utils.zsh
