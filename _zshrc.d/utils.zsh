@@ -116,7 +116,7 @@ function gbn {
 function _goto {
   cur=${COMP_WORDS[COMP_CWORD]}
   if [[ "$cur" =~ ^([^/]+)/(.+)$ ]]; then
-    use=`tree -f -L 1 ~/dev/src/github.com/segmentio/ | grep ${BASH_REMATCH[2]} | tr / '\t' | awk '{print $(NF-1),$NF}' | tr ' ' /`
+    use=`tree -f -L 1 ~/dev/src/github.com/$GO_DEFAULT/ | grep ${BASH_REMATCH[2]} | tr / '\t' | awk '{print $(NF-1),$NF}' | tr ' ' /`
   else
     use=`ls ~/dev/src/github.com/$GO_DEFAULT/ | grep $cur`
   fi
