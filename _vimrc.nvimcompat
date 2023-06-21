@@ -99,6 +99,9 @@ Plug 'aliou/bats.vim'
 " graphql syntax
 Plug 'jparise/vim-graphql'
 
+" hcl syntax
+Plug 'jvirtanen/vim-hcl'
+
 " terraform++
 let g:terraform_fmt_on_save=1
 Plug 'hashivim/vim-terraform'
