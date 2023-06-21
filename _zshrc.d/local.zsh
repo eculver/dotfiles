@@ -345,3 +345,17 @@ gvmmigrate() {
 
     echo "${GREEN}[INFO]${RESET} DONE"
 }
+
+# cleanup all exited and dangling docker images
+docker_rm_dead_images() {
+    docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+    docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+
+# cleanup all docker resources except built images
+docker_rm_dead_resources() {
+    docker ps -a --format "{{.ID}}" | xargs docker stop
+    docker ps -a --format "{{.ID}}" | xargs docker rm
+    docker volume ls --format "{{.Name}}" | xargs docker volume rm
+    docker network prune -f
+}
