@@ -475,6 +475,10 @@ vmap <Leader>sT :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
 " 'Listify' all lines starting with 4 blank lines
 nnoremap <Leader>ll :g/^   /norm wys$<li><CR>
 
+" Replace selection with markdown link - this one just wraps the selection
+" with link structure
+map <Leader>ml S]f]a(<ESC>"*pa)<ESC>P
+
 " Mapping to insert a newline after line w/o entering insert mode
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
