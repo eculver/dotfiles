@@ -14,12 +14,9 @@ export CPPFLAGS=-I/usr/local/opt/readline/include
 # For JABA (sic)
 export JAVA_HOME=$(/usr/libexec/java_home)
 
-# For Go and lazy-loading GVM
-export GOVERSION=1.9.2
-
 # For Go when not using GVM
 export GOPATH=$HOME/dev
-export PATH=$PATH:$GOPATH/bin
+export PATH=$GOPATH/bin:$PATH
 
 # Add Cmake to PATH
 export CMAKE_HOME=/Applications/CMake.app/Contents
