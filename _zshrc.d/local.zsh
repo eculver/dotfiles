@@ -137,6 +137,7 @@ if [ -s "$CHRUBY_HOME" ]; then
     local latest_ruby
     source "$CHRUBY_HOME/chruby.sh"
     source "$CHRUBY_HOME/auto.sh"
+    [[ -f $HOME/.rbenv/versions ]] && RUBIES+=($HOME/.rbenv/versions/*)
     chruby "ruby-$(find "$HOME/.rubies" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+')"
 fi
 
