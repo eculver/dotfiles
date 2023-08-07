@@ -69,7 +69,7 @@ function goto {
 
 # The brains behind goto
 function nav {
-  cd ~/dev/src/github.com/$1 &> /dev/null ||
+  cd $GOPATH/src/github.com/$1 &> /dev/null ||
   clone $1 2> /dev/null ||
   echo "repo @ $1 does not exist"
 }
@@ -116,9 +116,9 @@ function gbn {
 function _goto {
   cur=${COMP_WORDS[COMP_CWORD]}
   if [[ "$cur" =~ ^([^/]+)/(.+)$ ]]; then
-    use=`tree -f -L 1 ~/dev/src/github.com/$GO_DEFAULT/ | grep ${BASH_REMATCH[2]} | tr / '\t' | awk '{print $(NF-1),$NF}' | tr ' ' /`
+    use=`tree -f -L 1 $GOPATH/src/github.com/$GO_DEFAULT/ | grep ${BASH_REMATCH[2]} | tr / '\t' | awk '{print $(NF-1),$NF}' | tr ' ' /`
   else
-    use=`ls ~/dev/src/github.com/$GO_DEFAULT/ | grep $cur`
+    use=`ls $GOPATH/src/github.com/$GO_DEFAULT/ | grep $cur`
   fi
   COMPREPLY=(`compgen -W "$use" -- $cur`)
 }
