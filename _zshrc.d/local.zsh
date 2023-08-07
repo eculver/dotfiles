@@ -94,19 +94,10 @@ export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 
 
 # ------------------------------------------------------------------------
-# NVM (lazy)
+# NVM - lazy loading of .nvmrc loading
+# note: this overrides the other lazy-loading of NVM which is why it's
+# deferred by a function call
 # ------------------------------------------------------------------------
-
-nvm() {
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-
-  # initialze autoloading,
-  autoload -U add-zsh-hook
-  add-zsh-hook chpwd nvm-load-nvmrc
-
-  nvm ${@:2}
-}
 
 # this will trigger an `nvm use` when entering a directory with an .nvmrc
 nvm-load-nvmrc() {

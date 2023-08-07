@@ -39,10 +39,15 @@ export ZSH_THEME="gozilla"
 # Source any plugins that have been installed by Homebrew
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Settings required prior to sourcing oh-my-zsh:
+#  lazy nvm
+zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:plugins:nvm' lazy-cmd eslint prettier typescript # these commands will also trigger loading nvm
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # shellcheck disable=SC2034
-plugins=(git github macos dotenv)
+plugins=(git github macos dotenv nvm)
 
 # meat-and-potatoes
 # shellcheck disable=SC1090
