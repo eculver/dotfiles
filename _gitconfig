@@ -1,7 +1,13 @@
 [user]
   name = Evan Culver
+
+  # default, for non-work projects
   email = e@eculver.io
   signingkey = 4F81D4D4
+
+# for work-related (aka yobilabs repos)
+[includeIf "gitdir:~/dev/src/github.com/yobilabs/"]
+  path = .gitconfig-yobi
 
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
