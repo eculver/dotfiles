@@ -146,7 +146,7 @@ source $CONFDIR/common.zsh
 
 # override the hostname being reset by DHCP to something like eculver-2.local
 hostname | grep -q -E 'local|lan'
-[[ $? -eq 0 ]] && HOSTNAME=eculver.local
+[[ $? -eq 0 ]] && HOSTNAME=$(hostname)
 
 # shellcheck disable=SC1090
 [[ -d $CONFDIR ]] && [[ -s $CONFDIR/$HOSTNAME ]] && source $CONFDIR/$HOSTNAME
