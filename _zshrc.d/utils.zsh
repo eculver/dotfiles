@@ -4,7 +4,7 @@
 # Misc utility functions
 # ========================================================================
 
-export GO_DEFAULT=hashicorp
+export GO_DEFAULT=eculver
 
 # Ping a host, beeping when it comes up
 function beepwhenup {
