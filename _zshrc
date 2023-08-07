@@ -37,7 +37,7 @@ export ZSH_THEME="gozilla"
 # export DISABLE_LS_COLORS="true"
 
 # Source any plugins that have been installed by Homebrew
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Settings required prior to sourcing oh-my-zsh:
 #  lazy nvm
