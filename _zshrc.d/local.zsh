@@ -43,6 +43,7 @@ export OPENAI_APIKEY="op://Private/OpenAI/api key"
 # -------------------------------------------------------------------------
 # if not running, start it
 if ! pgrep -x "ssh-agent" > /dev/null; then
+  # make sure there isn't a sock file left around
   if [[ -f $SSH_AUTH_SOCK ]]; then
     rm $SSH_AUTH_SOCK
   fi
@@ -53,13 +54,13 @@ fi
 ssh-add -l > /dev/null 2>&1
 # running but no identities, add them
 if [ $? -ge 1 ]; then
+  echo "Adding SSH identities from Keychain"
   ssh-add --apple-load-keychain
 fi
 
 # ------------------------------------------------------------------------
 # fasd
 # ------------------------------------------------------------------------
-
 fasd_cache="$HOME/.fasd-init-zsh"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
   echo "fasd cache..."
