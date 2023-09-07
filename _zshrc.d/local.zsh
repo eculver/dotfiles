@@ -61,9 +61,9 @@ fi
 # ------------------------------------------------------------------------
 # fasd
 # ------------------------------------------------------------------------
+
 fasd_cache="$HOME/.fasd-init-zsh"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  echo "fasd cache..."
   fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
 fi
 source "$fasd_cache"
@@ -148,6 +148,7 @@ fi
 
 export PATH=$HOME/.arkade/bin/:$PATH
 
+
 # ------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------
@@ -220,6 +221,7 @@ alias torcurl='curl --socks4a localhost:9150'
 
 # fasd
 alias v='f -e vim' # quick opening files with vim
+
 
 # ------------------------------------------------------------------------
 # Functions
