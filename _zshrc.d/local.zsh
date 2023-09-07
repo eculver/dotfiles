@@ -45,22 +45,6 @@ export OPENAI_APIKEY="op://Private/OpenAI/api key"
 # ssh-agent - ensure running and identities are loaded
 # -------------------------------------------------------------------------
 
-# if not running, start it
-if ! pgrep -x "ssh-agent" > /dev/null; then
-  # make sure there isn't a sock file left around
-  if [[ -f $SSH_AUTH_SOCK ]]; then
-    rm $SSH_AUTH_SOCK
-  fi
-  echo "Starting ssh-agent"
-  eval `ssh-agent -a $SSH_AUTH_SOCK`
-fi
-
-ssh-add -l > /dev/null 2>&1
-# running but no identities, add them
-if [ $? -ge 1 ]; then
-  echo "Adding SSH identities from Keychain"
-  ssh-add --apple-load-keychain
-fi
 
 # ------------------------------------------------------------------------
 # fasd
@@ -105,7 +89,7 @@ export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
 # ------------------------------------------------------------------------
 
 # this will trigger an `nvm use` when entering a directory with an .nvmrc
-nvm-load-nvmrc() {
+function nvm-load-nvmrc() {
   local node_version="$(nvm version)"
   local nvmrc_path="$(nvm_find_nvmrc)"
 
@@ -136,14 +120,6 @@ if [ -s "$CHRUBY_HOME" ]; then
     [[ -f $HOME/.rbenv/versions ]] && RUBIES+=($HOME/.rbenv/versions/*)
     chruby "ruby-$(find "$HOME/.rubies" -maxdepth 1 -name 'ruby-*' | tail -n1 | egrep -o '\d+\.\d+\.\d+')"
 fi
-
-
-# ------------------------------------------------------------------------
-# Tmuxinator
-# ------------------------------------------------------------------------
-
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-[[ -s $HOME/.tmuxinator/completion ]] && source $HOME/.tmuxinator/completion/tmuxinator.zsh
 
 
 # ------------------------------------------------------------------------
@@ -180,15 +156,6 @@ alias app1.ca='ssh -t app1.ca tmux -u -2 at -t base'
 alias db1.ca='ssh -t db1.ca tmux -u -2 at -t base'
 alias util01-linode='ssh -t util01-linode tmux -u -2 at -t base'
 
-# tmuxinator/project aliases
-alias gousc='mux start usc'
-alias goufogrid='mux start ufogrid'
-alias godio='mux start dio'
-alias goeio='mux start eio'
-alias goculvers='mux start culvers'
-alias golsm='mux start lsm'
-alias gotdt='mux start tdt'
-
 # Kubernetes
 alias kc=kubectl
 alias kctx=kubectx
@@ -214,12 +181,6 @@ alias task='nocorrect task'
 alias pwgen='nocorrect pwgen'
 alias leeroy='nocorrect leeroy'
 
-# bower: noglob
-alias bower='noglob bower'
-
-# aliases for executables that aren't in $PATH
-alias espresso='/Users/evanculver/Downloads/The-M-Project_v1.0.0/Espresso/bin/espresso.js'
-
 # cURL via Tor
 alias torcurl='curl --socks4a localhost:9150'
 
@@ -231,13 +192,35 @@ alias v='f -e vim' # quick opening files with vim
 # Functions
 # ------------------------------------------------------------------------
 
-# kill all django runserver instances
-killmanage(){
-    ps -ef | grep "manage\.py runserver" | awk '{print $2}' | xargs kill -9
+# start SSH agent if it's not running
+function ensure-ssh-agent() {
+    # if not running, start it
+    if  ! pgrep -x "ssh-agent" > /dev/null; then
+        # make sure there isn't a sock file left around
+        if [[ -f $SSH_AUTH_SOCK ]]; then
+            rm $SSH_AUTH_SOCK
+        fi
+        echo "Starting ssh-agent"
+        eval `ssh-agent -a $SSH_AUTH_SOCK`
+    fi
+
+    ssh-add -l > /dev/null 2>&1
+
+    # running but no identities, add them
+    if [ $? -eq 1 ]; then
+        echo "Adding SSH identities from Keychain"
+        ssh-add --apple-load-keychain
+    fi
+
+    # Our SSH_AUTH_SOCK is probably messed up, cleanup and be done
+    if [[ $? -eq 2 ]]; then
+        echo "Could not list identities for sock at $SSH_AUTH_SOCK, killing existing processes and bailing. Try starting agent manually with start-ssh-agent-apple"
+        pkill "ssh-agent"
+    fi
 }
 
 # reminder of how I setup WeeChat to work with Matrix
-weechat-matrix-install () {
+function weechat-matrix-install() {
     echo "git clone git@github.com:torhve/weechat-matrix-protocol-script ~/src/weechat-matrix-protocol-script"
     echo "mkdir ~/.weechat/lua"
     echo "ln -s ~/src/weechat-matrix-protocol-script/matrix.lua ~/.weechat/lua/matrix.lua"
@@ -255,104 +238,14 @@ weechat-matrix-install () {
     echo "/join #<remote address>"
 }
 
-# migrate project to different version of Go, works both ways
-gvmmigrate() {
-    local usage='usage: gvmmigrate <pkg> <current_version> <new_version> [pkgset]'
-    local example='gvm migrate go.uber.org/dosa go1.7.1 go1.7.4 dosa2'
-
-    local pkg=$1
-    [[ -z "$pkg" ]] && echo "${usage}" && return
-
-    local current_version=$2
-    [[ -z "$current_version" ]] && echo "${usage}" && return
-
-    local new_version=$3
-    [[ -z "$new_version" ]] && echo "${usage}" && return
-
-    local pkgset=$4
-    [[ -z "$pkgset" ]] && pkgset=$(echo "${pkg%\.git}" | rev | cut -d '/' -f1 | rev)
-
-    local current_home="${GVM_ROOT}/pkgsets/${current_version}/${pkgset}"
-    local new_home="${GVM_ROOT}/pkgsets/${new_version}/${pkgset}"
-
-    # debug
-    echo "pkg: ${pkg}"
-    echo "current_version: ${current_version}"
-    echo "new_version: ${new_version}"
-    echo "pkgset: ${pkgset}"
-    echo "current_home: ${current_home}"
-    echo "new_home: ${new_home}"
-
-    # validate package exists where it should
-    if [ ! -d  "${current_home}" ]; then
-        echo "${RED}[ERROR]${RESET} Could not find existing project at ${current_home}"
-        return
-    fi
-
-    # remove symlink if exists
-    if [ -h "$UBER_HOME/${pkgset}" ]; then
-        echo "${GREEN}[INFO]${RESET} Found symlink at $UBER_HOME/${pkgset}, removing"
-        rm "$UBER_HOME/${pkgset}"
-    fi
-
-    # install new version if not exists
-    if [ ! $(gvm listall | grep "${new_version}") ]; then
-        echo "${RED}[ERROR]${RESET} ${new_version} is not a valid go version. Try \`gvm listall\` for a list of valid versions"
-        return
-    fi
-
-    if [ ! -d "$GVM_ROOT/pkgsets/${new_version}" ]; then
-        echo "${RED}[ERROR]${RESET} ${new_version} is not installed. Installing now..."
-        if ! gvm install "${new_version}"; then
-            echo "${RED}[ERROR]${RESET} Install failed"
-            return
-        fi
-    fi
-
-    export GOVERSION=${new_version#go}
-
-    # switch to new version
-    gvm use "${new_version}" || (echo "${RED}[ERROR]${RESET} Could not use new version ${new_version}" && return)
-
-    # create new pkgset
-    gvm pkgset create "${pkgset}" || (echo "${RED}[ERROR]${RESET} Could not create new pkgset ${pkgset}" && return)
-
-    # setup new pkgset
-    # echo "go-use ${pkgset}"
-    go-use "${pkgset}"
-
-    # echo "mkdir -p ${new_home}/src"
-    mkdir -p "${new_home}/src"
-
-    # echo "mv ${current_home}/src/* ${new_home}/src/"
-    mv ${current_home}/src/* ${new_home}/src/
-
-    echo "${GREEN}[INFO]${RESET} Successfully moved all source code in ${current_home}/src to ${new_home}/src"
-
-    if [ -d "$current_home/bin" ] && [ $(ls "${current_home}/bin" | wc -l) -gt "0" ]; then
-        echo "${WHITE}[INFO]${RESET} These binaries will need to be re-built using ${new_version}:"
-        ls -l "${current_home}/bin"
-    fi
-
-    local create_symlink
-    echo -n "${BOLD_WHITE}Create ${pkgset} symlink in $UBER_HOME? (Y/n) ${RESET}"
-    read -r create_symlink
-    if [ "${create_symlink}" == "Y" ]; then
-        ln -s "${new_home}/src/${pkg}" "$UBER_HOME/${pkgset}"
-        echo "${GREEN}[INFO]${RESET} Created symlink"
-    fi
-
-    echo "${GREEN}[INFO]${RESET} DONE"
-}
-
 # cleanup all exited and dangling docker images
-docker_rm_dead_images() {
+function docker_rm_dead_images() {
     docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
     docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
 }
 
 # cleanup all docker resources except built images
-docker_rm_dead_resources() {
+function docker_rm_dead_resources() {
     docker ps -a --format "{{.ID}}" | xargs docker stop
     docker ps -a --format "{{.ID}}" | xargs docker rm
     docker volume ls --format "{{.Name}}" | xargs docker volume rm
