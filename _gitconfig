@@ -3,7 +3,7 @@
 
   # default, for non-work projects
   email = e@eculver.io
-  signingkey = 4F81D4D4
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDNpmz/smNpMCUKot4pt+NX/PDMktWyX+LNaI8RXJLW4
 
 # for work-related (aka yobilabs repos)
 [includeIf "gitdir:~/dev/src/github.com/yobilabs/"]
@@ -78,7 +78,11 @@
   whitespace-error-style = purple bold
 
 [gpg]
-  program = gpg2
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+  allowedSignersFile = "/Users/eculver/.config/git/allowed_ssh_signers"
 
 [credential]
   helper = cache -- timeout=3600
