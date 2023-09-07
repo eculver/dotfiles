@@ -32,15 +32,19 @@ eval "$(op completion zsh)"; compdef _op op
 export OP_PLUGINS_FILE=$XDG_CONFIG_HOME/op/plugins.sh
 [[ -f $OP_PLUGINS_FILE ]] && source $OP_PLUGINS_FILE
 
+
 # -------------------------------------------------------------------------
 # Secrets -- these are 1password references that are meant to be used with
 # `op run` to be injected at runtime
 # -------------------------------------------------------------------------
+
 export OPENAI_APIKEY="op://Private/OpenAI/api key"
+
 
 # -------------------------------------------------------------------------
 # ssh-agent - ensure running and identities are loaded
 # -------------------------------------------------------------------------
+
 # if not running, start it
 if ! pgrep -x "ssh-agent" > /dev/null; then
   # make sure there isn't a sock file left around
