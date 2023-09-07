@@ -23,7 +23,8 @@ export CMAKE_HOME=/Applications/CMake.app/Contents
 [[ -s "$CMAKE_HOME" ]] && export PATH="$CMAKE_HOME/bin":"$PATH"
 
 # Set SSH_AUTH_SOCK rather than a randomly generated one, for shells to share an agent
-export SSH_AUTH_SOCK=$HOME/.ssh/ssh-agent.$HOSTNAME.sock
+#export SSH_AUTH_SOCK=$HOME/.ssh/ssh-agent.$HOSTNAME.sock
+export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 
 # 1password completions
 eval "$(op completion zsh)"; compdef _op op
@@ -39,11 +40,6 @@ export OP_PLUGINS_FILE=$XDG_CONFIG_HOME/op/plugins.sh
 # -------------------------------------------------------------------------
 
 export OPENAI_APIKEY="op://Private/OpenAI/api key"
-
-
-# -------------------------------------------------------------------------
-# ssh-agent - ensure running and identities are loaded
-# -------------------------------------------------------------------------
 
 
 # ------------------------------------------------------------------------
