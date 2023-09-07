@@ -47,7 +47,7 @@ zstyle ':omz:plugins:nvm' lazy-cmd eslint prettier typescript # these commands w
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # shellcheck disable=SC2034
-plugins=(git github macos dotenv nvm)
+plugins=(git github macos dotenv nvm zsh-autosuggestions)
 
 # meat-and-potatoes
 # shellcheck disable=SC1090
