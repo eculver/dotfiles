@@ -247,3 +247,6 @@ function docker_rm_dead_resources() {
     docker volume ls --format "{{.Name}}" | xargs docker volume rm
     docker network prune -f
 }
+
+# work includes
+source $CONFDIR/yobi.zsh
