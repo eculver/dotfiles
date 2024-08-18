@@ -18,6 +18,11 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 export GOPATH=$HOME/dev
 export PATH=$GOPATH/bin:$PATH
 
+# Rust
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export PATH=$XDG_DATA_HOME/cargo/bin:$PATH
+
 # Add Cmake to PATH
 export CMAKE_HOME=/Applications/CMake.app/Contents
 [[ -s "$CMAKE_HOME" ]] && export PATH="$CMAKE_HOME/bin":"$PATH"
