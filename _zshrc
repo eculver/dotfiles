@@ -61,6 +61,10 @@ export PROMPT='%{$fg_bold[green]%}%n@%{$fg_bold[green]%}%m %{$fg_bold[red]%}➜%
 fpath=($HOME/.zsh/func $fpath)
 typeset -U fpath
 
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit ; compinit
+
+
 # enable editing via v cmd
 autoload edit-command-line; zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
