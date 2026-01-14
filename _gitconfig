@@ -5,9 +5,9 @@
   email = e@eculver.io
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDNpmz/smNpMCUKot4pt+NX/PDMktWyX+LNaI8RXJLW4
 
-# for work-related (aka yobilabs repos)
-[includeIf "gitdir:~/dev/src/github.com/yobilabs/"]
-  path = .gitconfig-yobi
+# for work-related (aka sfcompute repos)
+[includeIf "gitdir:~/dev/src/github.com/sfcompute/"]
+  path = .gitconfig-sfc
 
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
