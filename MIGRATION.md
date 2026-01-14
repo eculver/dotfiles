@@ -1,8 +1,10 @@
 # ZSH Configuration Refactoring - Migration Guide
 
+**Status**: Migration complete. Old configuration removed.
+
 ## What Changed
 
-Your ZSH configuration has been refactored to follow modern ZSH conventions and best practices.
+The ZSH configuration was refactored to follow modern ZSH conventions and best practices.
 
 ### Old Structure
 ```
@@ -114,17 +116,24 @@ Settings split into 7 focused modules in `conf.d/`:
 
 ## Rollback (if needed)
 
-If you encounter issues, you can rollback by commenting out the `ZDOTDIR` line in `~/.zshenv`:
+The old configuration files have been removed from the repository. If you need to rollback:
 
-```bash
-# Edit ~/.zshenv and comment this line:
-# export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+1. Check out the previous commit:
+   ```bash
+   git checkout HEAD~1
+   ```
 
-# Then restart your shell
-exec zsh
-```
+2. Or restore from git history:
+   ```bash
+   git show HEAD~1:_zshrc > _zshrc
+   git show HEAD~1:_zshrc.d/common.zsh > _zshrc.d/common.zsh
+   # etc...
+   ```
 
-This will make ZSH use the old `~/.zshrc` configuration.
+3. Comment out `ZDOTDIR` in `~/.zshenv`:
+   ```bash
+   # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+   ```
 
 ## Next Steps
 
@@ -140,16 +149,15 @@ This will make ZSH use the old `~/.zshrc` configuration.
 - Old configs are still in `_zshrc` and `_zshrc.d/` for reference
 - The new structure is fully backwards compatible
 
-## Cleanup (Optional)
+## Cleanup Complete
 
-Once you've verified everything works, you can optionally archive the old configs:
+The old ZSH configuration files (`_zshrc`, `_zshrc.d/`) have been removed from the repository.
 
+If you need to reference the old configuration, it's available in git history:
 ```bash
-cd ~/dev/src/github.com/eculver/dotfiles
-mkdir _archive
-mv _zshrc _zshrc.d _archive/
-git add _archive/
-git commit -m "Archive old ZSH config after refactoring"
-```
+# View old _zshrc
+git show HEAD~1:_zshrc
 
-**Note**: Don't do this until you're 100% confident the new config works!
+# View old utils.zsh
+git show HEAD~1:_zshrc.d/utils.zsh
+```

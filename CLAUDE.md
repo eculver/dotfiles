@@ -2,15 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Important: New ZSH Configuration Structure
+## Important: ZSH Configuration Structure
 
-**The ZSH configuration has been refactored** (Jan 2026) to follow modern conventions:
+**The ZSH configuration follows modern conventions** (refactored Jan 2026):
 
-- **New location**: `~/.config/zsh/` (XDG-compliant)
-- **Old location**: `_zshrc` and `_zshrc.d/` (still present for reference)
-- **Active config**: Determined by `ZDOTDIR` in `~/.zshenv`
+- **Location**: `~/.config/zsh/` (XDG-compliant)
+- **Entry point**: `~/.zshenv` sets `ZDOTDIR=$XDG_CONFIG_HOME/zsh`
+- **Main config**: `~/.config/zsh/.zshrc`
 
-See `_config/zsh/README.md` for the new structure documentation and `MIGRATION.md` for migration details.
+See `_config/zsh/README.md` for complete documentation.
 
 ## Overview
 

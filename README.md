@@ -1,14 +1,24 @@
-## Files
-.vim
-    directory of file type configurations and plugins
-.vimrc
-    my vim configuration
-.screenrc
-    my screen configuration
-.weechat
-    my configuration for weechat, a great irc client
-.gimp
-    my tweaks/additions to gimp (fonts, brushes, etc)
+## Overview
+
+Personal dotfiles using a symlink-based installation approach.
+
+## Shell Configuration
+
+**ZSH**: Modern, XDG-compliant configuration in `_config/zsh/`
+- See `_config/zsh/README.md` for detailed documentation
+- Autoloadable functions, modular configs, completions
+- Machine-specific configs in `local.d/` (gitignored)
+
+**Bash**: Lightweight alternative for production environments in `_bashrc` and `_bashrc.d/`
+
+## Other Configurations
+
+- **Vim/Neovim**: `_vimrc`, `_vim/`
+- **Tmux**: `_tmux.conf`
+- **Git**: `_gitconfig` with delta, SSH signing via 1Password
+- **Screen**: `_screenrc`
+- **WeeChat**: `_config/weechat/`
+- **GIMP**: `_gimp/`
 
 ## Instructions
 ### Creating source files

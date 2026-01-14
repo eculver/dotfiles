@@ -12,11 +12,7 @@ _bashrc.d/*
 !_bashrc.d/*.bash
 _bashrc.d/uber.bash
 
-_zshrc.d/*
-!_zshrc.d/*.zsh
-_zshrc.d/uber.zsh
-
-# New ZSH config structure
+# ZSH config structure
 _cache/
 
 # Ignore local configs but keep examples
