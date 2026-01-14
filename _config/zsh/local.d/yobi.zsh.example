@@ -1,0 +1,19 @@
+# Example work (Yobi) configuration
+# Copy this file to yobi.zsh or work.zsh and customize
+# This file should NOT be committed to version control
+
+# ------------------------------------------------------------------------
+# Work-specific Functions
+# ------------------------------------------------------------------------
+
+# Generate a new customer ID to use with Pixel
+gen-pixel-cid() {
+    python3 -c "import random, string; print('yb' + ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(8)))"
+}
+
+# Generate a new advertiser ID to use with Pixel
+gen-pixel-aid() {
+    python3 -c "import random, string; print(''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(8)))"
+}
+
+# Add more work-specific aliases, functions, or environment variables here

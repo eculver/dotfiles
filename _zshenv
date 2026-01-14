@@ -1,0 +1,39 @@
+# ~/.zshenv
+#
+# Executed for ALL shells (login, non-login, interactive, non-interactive, scripts)
+# Keep MINIMAL - only essential environment variables that need to be available everywhere
+#
+# This file must be in $HOME, but our actual zsh config is in $ZDOTDIR
+
+# ------------------------------------------------------------------------
+# XDG Base Directory Specification
+# ------------------------------------------------------------------------
+
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+export XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+
+# Create XDG directories if they don't exist
+[[ -d $XDG_CONFIG_HOME ]] || mkdir -p $XDG_CONFIG_HOME
+[[ -d $XDG_CACHE_HOME ]] || mkdir -p $XDG_CACHE_HOME
+[[ -d $XDG_STATE_HOME ]] || mkdir -p $XDG_STATE_HOME
+[[ -d $XDG_DATA_HOME ]] || mkdir -p $XDG_DATA_HOME
+
+# ------------------------------------------------------------------------
+# ZDOTDIR - Point to XDG-compliant ZSH config location
+# ------------------------------------------------------------------------
+
+export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+
+# ------------------------------------------------------------------------
+# Essential environment variables
+# ------------------------------------------------------------------------
+
+# Locale
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# Editor
+export EDITOR='nvim'
+export VISUAL='nvim'

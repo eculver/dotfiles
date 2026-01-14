@@ -1,0 +1,4 @@
+# Print information about a host:port's SSL cert
+local domain=$1
+[[ -z "${domain}" ]] && echo "usage: sslinfo <domain>" && return
+echo | openssl s_client -showcerts -servername "${domain}" -connect "${domain}":443 2>/dev/null | openssl x509 -inform pem -noout -text

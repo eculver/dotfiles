@@ -1,0 +1,12 @@
+# Clone a <repo ...> by "owner/name" into ~/dev
+for repo in $@; do
+  if [[ "$repo" == */* ]]; then
+    local dir=$GOPATH/src/github.com/$repo
+    git clone ssh://git@github.com/$repo.git $dir
+    cd $dir
+  else
+    local dir=$GOPATH/src/github.com/${GO_DEFAULT:-eculver}/$repo
+    git clone ssh://git@github.com/${GO_DEFAULT:-eculver}/$repo.git $dir
+    cd $dir
+  fi
+done

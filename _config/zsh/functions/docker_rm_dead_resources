@@ -1,0 +1,5 @@
+# Cleanup all docker resources except built images
+docker ps -a --format "{{.ID}}" | xargs docker stop
+docker ps -a --format "{{.ID}}" | xargs docker rm
+docker volume ls --format "{{.Name}}" | xargs docker volume rm
+docker network prune -f

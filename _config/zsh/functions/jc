@@ -1,0 +1,8 @@
+# Cassandra JConsole helper - connect to remote Cassandra via SSH tunnel
+host=$1
+proxy_port=${2:-9999}
+jconsole_host=localhost
+ssh -f -D$proxy_port $host 'while true; do sleep 1; done'
+ssh_pid=$(ps ax | grep "[s]sh -f -D$proxy_port" | awk '{print $1}')
+jconsole -J-DsocksProxyHost=localhost -J-DsocksProxyPort=$proxy_port service:jmx:rmi:///jndi/rmi://${jconsole_host}:8181/jmxrmi
+kill $ssh_pid

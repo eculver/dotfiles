@@ -1,0 +1,6 @@
+#compdef goto
+
+# ZSH completion for goto()
+base=$GOPATH/src/github.com/
+compadd $(find $base -maxdepth 2 -mindepth 2 2>/dev/null | sed "s|$base/||")
+compadd $(find $base/${GO_DEFAULT:-eculver} -maxdepth 1 -mindepth 1 2>/dev/null | sed "s|$base/${GO_DEFAULT:-eculver}/||")

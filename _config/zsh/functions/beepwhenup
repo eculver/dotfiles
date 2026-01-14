@@ -1,0 +1,15 @@
+# Ping a host, beeping when it comes up
+echo 'Enter host you want to ping:';
+read PHOST;
+[[ "$PHOST" == "" ]] && echo "must enter a host or IP" && return
+
+while true; do
+    ping -c1 -W2 $PHOST 2>&1 >/dev/null
+    if [[ "$?" == "0" ]]; then
+        for j in $(seq 1 4); do
+            say "Host is up";
+        done
+        ping -c1 $PHOST
+        break
+    fi
+done

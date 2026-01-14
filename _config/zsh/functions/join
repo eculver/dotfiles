@@ -1,0 +1,4 @@
+# Helper for doing a string join on all args
+local IFS="$1"
+shift
+echo "$*"

@@ -1,0 +1,32 @@
+# Support notes management
+local supportlog_file=$1
+local today=$(date +%Y-%m-%d)
+local today_ym=$(date +%Y-%m)
+local today_d=$(date +%d)
+local today_file="${SUPPORTLOG_HOME:-$HOME/txt/support}/${today_ym}/${today_d}_support.md"
+
+[[ -z "${supportlog_file}" ]] && supportlog_file="${today_file}"
+
+if [ ! -f  "${supportlog_file}" ]; then
+    touch "${supportlog_file}"
+    (cat <<EOF
+# Support notes for ${today}
+
+## team-tooling
+- TOPIC
+-- @someone asked...
+-- solution:
+
+## atlantis
+- TOPIC
+-- @someone asked...
+-- solution:
+
+## buildkite
+- TOPIC
+-- @someone asked...
+-- solution:
+
+EOF
+) > "${supportlog_file}"
+fi

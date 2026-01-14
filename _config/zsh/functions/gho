@@ -1,0 +1,4 @@
+# Open the repo in the current directory on github
+repo=$(git remote -v)
+re="github.com/([^/]+/[^[:space:]]+)(.git)"
+if [[ $repo =~ $re ]]; then open "https://github.com/${BASH_REMATCH[1]}"; fi

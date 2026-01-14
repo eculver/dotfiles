@@ -1,0 +1,10 @@
+# Helper for Github cloning
+# deprecated: use goto()
+local repo=$1
+local dst=$2
+
+[[ -z "${repo}" ]] && echo "usage: ghclone <repo_path> [dest]" && return
+[[ -z "${dst}" ]] && dst=$(echo "${repo}" | rev | cut -d '/' -f1 | rev)
+
+echo "Cloning github.com/${repo} to ${dst}"
+git clone git@github.com:"${repo}" "${dst}"

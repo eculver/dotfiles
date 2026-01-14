@@ -15,3 +15,16 @@ _bashrc.d/uber.bash
 _zshrc.d/*
 !_zshrc.d/*.zsh
 _zshrc.d/uber.zsh
+
+# New ZSH config structure
+_cache/
+
+# Ignore local configs but keep examples
+_config/zsh/local.d/*
+!_config/zsh/local.d/*.example
+!_config/zsh/local.d/README.md
+
+# Ignore ZSH cache and session files
+_config/zsh/.zcompdump*
+_config/zsh/.zsh_history
+_config/zsh/.zsh_sessions/

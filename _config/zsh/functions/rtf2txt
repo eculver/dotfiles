@@ -1,0 +1,17 @@
+# Convert an .rtf file to .txt and remove common, non-web-friendly characters along the way
+f="$1"
+[[ -z "${f}" ]] && echo "usage: rtf2txt <filename>" && return
+
+# convert to plaintext, write to tmpfs
+ftmp="/tmp/.rtf2txt.$(tsnow).txt"
+textutil -convert txt -output "${ftmp}" "${f}"
+[[ $? -ne "0" ]] && echo "could not convert ${f} to plain-text" && return
+
+# .txt filename, use same basename
+dname="$(dirname ${f})"
+fname="${dname}/$(cut -d "." -f1 <<< $(basename ${f})).txt"
+
+# replace junk chars
+cat "${ftmp}" | sed "s/'/'/g" | sed "s/'/'/g" | sed 's/"/"/g' | sed 's/"/"/g' | sed 's/-/-/g' | sed 's/•//g' > "${fname}"
+rm "${ftmp}"
+echo "Wrote ${fname}"

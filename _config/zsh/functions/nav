@@ -1,0 +1,4 @@
+# The brains behind goto
+cd $GOPATH/src/github.com/$1 &> /dev/null ||
+clone $1 2> /dev/null ||
+echo "repo @ $1 does not exist"

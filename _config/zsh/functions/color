@@ -1,0 +1,2 @@
+# Wraps color code in appropriate escape sequence
+printf "\033[${1}m"

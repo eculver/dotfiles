@@ -1,0 +1,7 @@
+# Generate a random character string
+len=32
+if (( $# > 0 )) then
+    len=$1;
+fi
+
+python -c "import md5; from datetime import datetime; print md5.new(datetime.now().strftime(\"%s\")).hexdigest()[:$len]"

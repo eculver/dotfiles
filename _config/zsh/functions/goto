@@ -1,0 +1,20 @@
+# Go to a <repo> in ~/dev
+if hash shopt 2>/dev/null; then
+  shopt -s cdspell
+fi
+
+case $1 in
+
+  */*)
+    nav $1
+  ;;
+
+  *)
+    nav ${GO_DEFAULT:-eculver}/$1
+  ;;
+
+esac
+
+if hash shopt 2>/dev/null; then
+  shopt -s cdspell
+fi

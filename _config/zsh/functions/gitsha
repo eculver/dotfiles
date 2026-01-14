@@ -1,0 +1,3 @@
+# Get git commit SHA for a ref (defaults to HEAD)
+local ref="${1:-HEAD}"
+git rev-parse "${ref}"

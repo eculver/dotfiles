@@ -1,0 +1,8 @@
+# Convert integers to ip address strings
+num="$1"
+[[ -z "${num}" ]] && echo "usage: int2ip <integer>" && return
+(( pt1 = ($num & 255) ))
+(( pt2 = (($num >> 8) & 255) ))
+(( pt3 = (($num >> 16) & 255) ))
+(( pt4 = (($num >> 24) & 255) ))
+echo "${pt4}.${pt3}.${pt2}.${pt1}";

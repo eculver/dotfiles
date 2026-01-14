@@ -1,0 +1,39 @@
+# Notes, worklog management
+local worklog_file=$1
+local today=$(date +%Y-%m-%d)
+local today_ym=$(date +%Y-%m)
+local today_d=$(date +%d)
+local today_file="${WORKLOG_HOME:-$HOME/txt/worklog}/${today_ym}/${today_d}_worklog.md"
+local last_file=$(find ${WORKLOG_HOME:-$HOME/txt/worklog} -name '*_worklog.md' | sort -r | head -n1)
+local last_ym=$(dirname ${last_file} | rev | cut -d / -f1 | rev)
+local last_d=$(basename ${last_file} | cut -d _ -f1)
+local last_log=$(awk '/## Log/,/^$/' ${last_file} | tail -n+2)
+local last_dow=$(date -j -f %Y-%m-%d "${last_ym}-${last_d}" +%A)
+
+# create the new month directory if necessary
+if [ ! -d ${WORKLOG_HOME:-$HOME/txt/worklog}/${today_ym} ]; then
+  mkdir -p ${WORKLOG_HOME:-$HOME/txt/worklog}/${today_ym}
+fi
+
+[[ -z "${worklog_file}" ]] && worklog_file="${today_file}"
+
+if [ ! -f  "${worklog_file}" ]; then
+    touch "${worklog_file}"
+    (cat <<EOF
+# Worklog for ${today}
+
+## Stand-up
+
+### ${last_dow}
+${last_log}
+
+### Today
+-
+
+## Log
+-
+
+EOF
+) > "${worklog_file}"
+echo "created ${worklog_file}"
+fi

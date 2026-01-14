@@ -1,0 +1,10 @@
+# Validate HCL using hclfmt
+local p=$1
+if ! command -v hclfmt > /dev/null 2>&1; then
+  echo "hclfmt command not found, please build and install github.com/hashicorp/hcl/cmd/hclfmt first"
+  exit 1
+fi
+
+hclfmt "${p}" > /dev/null 2>&1
+
+[[ $? -eq 0 ]] && echo "valid" || echo "not valid"

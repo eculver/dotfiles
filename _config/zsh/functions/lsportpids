@@ -1,0 +1,4 @@
+# List pids of processes listening on a specific port
+local port=$1
+[ "$port" == "" ] && echo "usage: lsportpids <port>" && return
+lsof -n -i4TCP:$port | grep LISTEN

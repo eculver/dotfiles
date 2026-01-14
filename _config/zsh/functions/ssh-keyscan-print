@@ -1,0 +1,6 @@
+# Print SSH host key signatures for GitHub
+# This has the side-effect of updating ~/.ssh/known_hosts with the correct keys
+# which *should* fix errors like "Host key verification failed."
+local host="$1"
+[[ -z "${host}" ]] && echo "usage: ssh-keyscan-print <hostname>" && return
+ssh-keyscan "${host}" | ssh-keygen -l -f -

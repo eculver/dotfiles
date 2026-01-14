@@ -1,0 +1,111 @@
+# ------------------------------------------------------------------------
+# Build Environment
+# ------------------------------------------------------------------------
+
+# For building CPython libraries
+export LIBRARY_PATH=/usr/local/lib
+
+# For building things that depend on readline
+export LDFLAGS=-L/usr/local/opt/readline/lib
+export CPPFLAGS=-I/usr/local/opt/readline/include
+
+# ------------------------------------------------------------------------
+# Language Environments
+# ------------------------------------------------------------------------
+
+# Java
+if java_home=$(/usr/libexec/java_home 2>/dev/null); then
+    export JAVA_HOME=$java_home
+elif [[ -d /usr/local/opt/openjdk ]]; then
+    # Homebrew OpenJDK
+    export JAVA_HOME=/usr/local/opt/openjdk
+elif [[ -d /opt/homebrew/opt/openjdk ]]; then
+    # Homebrew OpenJDK (Apple Silicon)
+    export JAVA_HOME=/opt/homebrew/opt/openjdk
+elif [[ -d /Library/Java/JavaVirtualMachines ]]; then
+    # Check for manually installed JDKs
+    local jdk_path=$(ls -d /Library/Java/JavaVirtualMachines/*/Contents/Home 2>/dev/null | head -1)
+    [[ -n "$jdk_path" ]] && export JAVA_HOME=$jdk_path
+fi
+
+# Go
+export GOPATH=$HOME/dev
+export PATH=$GOPATH/bin:$PATH
+
+# Rust
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export PATH=$XDG_DATA_HOME/cargo/bin:$PATH
+
+# Cmake
+export CMAKE_HOME=/Applications/CMake.app/Contents
+[[ -s "$CMAKE_HOME" ]] && export PATH="$CMAKE_HOME/bin":"$PATH"
+
+# ------------------------------------------------------------------------
+# SSH Agent
+# ------------------------------------------------------------------------
+
+# Set SSH_AUTH_SOCK rather than a randomly generated one, for shells to share an agent
+# Using 1Password SSH agent:
+export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
+
+# Or use standard ssh-agent:
+# export SSH_AUTH_SOCK=$HOME/.ssh/ssh-agent.$HOSTNAME.sock
+
+# ------------------------------------------------------------------------
+# 1Password CLI
+# ------------------------------------------------------------------------
+
+# 1password completions
+eval "$(op completion zsh)"; compdef _op op
+
+# 1password plugins
+export OP_PLUGINS_FILE=$XDG_CONFIG_HOME/op/plugins.sh
+[[ -f $OP_PLUGINS_FILE ]] && source $OP_PLUGINS_FILE
+
+# ------------------------------------------------------------------------
+# Secrets (1Password references for use with `op run`)
+# ------------------------------------------------------------------------
+
+export OPENAI_APIKEY="op://Private/OpenAI/api key"
+
+
+# ------------------------------------------------------------------------
+# fzf - Fuzzy finder
+# ------------------------------------------------------------------------
+
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+
+# ------------------------------------------------------------------------
+# Arkade
+# ------------------------------------------------------------------------
+
+export PATH=$HOME/.arkade/bin/:$PATH
+
+
+# ------------------------------------------------------------------------
+# Local Machine Aliases
+# ------------------------------------------------------------------------
+
+# Kubernetes
+alias kc=kubectl
+alias kctx=kubectx
+alias kns=kubens
+alias ktail=kubetail
+alias kc-dump-all='for i in $(kc api-resources | tail -n +2 | cut -f 1 -d ' ') ; do kc get $i -A ; done'
+
+# SSH to various hosts (customize for your servers)
+# alias myserver='ssh -t myserver tmux -u -2 at -t base'
+
+# Turn off correction for these commands
+alias npm='nocorrect npm'
+alias ack='nocorrect ack'
+alias cap='nocorrect cap'
+alias grb='nocorrect grb'
+
+# cURL via Tor (if needed)
+alias torcurl='curl --socks4a localhost:9150'
+
+# Go playground shortcut
+alias goplay='goto eculver/go-play'

@@ -1,0 +1,7 @@
+# List Cassandra tables (requires ccm)
+cfs=$(cassie-keyspaces)
+for cf in $cfs; do
+    for t in $(ccm node1 nodetool cfstats $cf | grep -E 'Table:' | cut -d ' ' -f2); do
+        echo "$cf.$t"
+    done
+done

@@ -1,0 +1,2 @@
+# List Cassandra keyspaces (requires ccm)
+for cf in $(ccm node1 nodetool cfstats | grep Keyspace | grep -v system | cut -d ' ' -f2); do echo $cf; done

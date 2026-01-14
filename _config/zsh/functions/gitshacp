@@ -1,0 +1,2 @@
+# Copy git commit SHA to clipboard
+gitsha | tr -d '\n' | pbcopy

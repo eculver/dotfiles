@@ -1,0 +1,24 @@
+# Start SSH agent if it's not running
+# if not running, start it
+if  ! pgrep -x "ssh-agent" > /dev/null; then
+    # make sure there isn't a sock file left around
+    if [[ -f $SSH_AUTH_SOCK ]]; then
+        rm $SSH_AUTH_SOCK
+    fi
+    echo "Starting ssh-agent"
+    eval `ssh-agent -a $SSH_AUTH_SOCK`
+fi
+
+ssh-add -l > /dev/null 2>&1
+
+# running but no identities, add them
+if [ $? -eq 1 ]; then
+    echo "Adding SSH identities from Keychain"
+    ssh-add --apple-load-keychain
+fi
+
+# Our SSH_AUTH_SOCK is probably messed up, cleanup and be done
+if [[ $? -eq 2 ]]; then
+    echo "Could not list identities for sock at $SSH_AUTH_SOCK, killing existing processes and bailing. Try starting agent manually with start-ssh-agent-apple"
+    pkill "ssh-agent"
+fi

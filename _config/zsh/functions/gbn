@@ -1,0 +1,7 @@
+# Print the current branch name
+local branch_name="$(                                        \
+     git symbolic-ref --quiet --short HEAD 2> /dev/null      \
+  || git rev-parse --short HEAD 2> /dev/null                 \
+  || echo '(unknown)'                                        \
+)";
+echo $branch_name

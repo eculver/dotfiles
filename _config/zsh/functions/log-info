@@ -1,0 +1,2 @@
+# Log info message with colored prefix
+echo -e "${INFO_COLOR}[INFO]${RESET} ${1}"

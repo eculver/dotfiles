@@ -1,0 +1,2 @@
+# Log warning message with colored prefix
+echo -e "${WARNING_COLOR}[WARN]${RESET} ${1}"

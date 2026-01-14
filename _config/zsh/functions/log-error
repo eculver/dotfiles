@@ -1,0 +1,2 @@
+# Log error message with colored prefix
+echo -e "${ERROR_COLOR}[ERROR]${RESET} ${1}"
