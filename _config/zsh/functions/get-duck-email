@@ -1,0 +1,35 @@
+local NOTE_ID="osnrv45pjwd6fqk2oz3heynsey"
+local VAULT="Private"
+local website email current updated
+
+# Prompt for website
+read "website?Which website is this email for? "
+
+# Generate email
+email=$(duck-gen)
+
+# Get current content and append
+current=$(op item get "$NOTE_ID" --vault "$VAULT" --fields notesPlain | tr -d \")
+
+# Append the new email to the current content
+updated="notesPlain=${current}
+
+${website} - ${email}"
+
+# Save back to 1Password
+$(op item edit "$NOTE_ID" --vault "$VAULT" -- ${updated} > /dev/null)
+
+# Check if the operation was successful
+if [ $? -ne 0 ]; then
+    echo -e "\033[0;31m✗ Error!\033[0m - Failed to add email to 1Password"
+    exit 1
+fi
+
+# Copy email to clipboard
+echo "${email}" | pbcopy
+
+# Done
+echo -e "\033[0;32m✓ Success!\033[0m"
+echo "    - Generated Email: ${email}"
+echo "    - Added: \"${website} - ${email}\" to the note"
+echo "    - Copied email to clipboard"
