@@ -115,12 +115,15 @@
   br = branch
   co = checkout
   df = diff
+  dif = diff
+  difff = diff
   lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%an%d%Creset %s %Cgreen(%cr)%Creset' --date=relative
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   ls = ls-files
   rc = !"git rebase --continue"
   rpo = !"git remote prune origin"
+  rmbr = !"~/.config/zsh/functions/git-rmbr"
   pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/$(git symbolic-ref --short HEAD)"
   puoss = !"git fetch origin -v; git fetch oss -v; git merge oss/$(git symbolic-ref --short HEAD)"
   pullm = !"git fetch origin -v; git fetch mirror -v; git merge mirror/$(git symbolic-ref --short HEAD)"
@@ -143,3 +146,9 @@
 [mergetool "sourcetree"]
   cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
