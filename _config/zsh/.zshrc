@@ -18,6 +18,12 @@ autoload -Uz $ZDOTDIR/functions/*(.:t)
 # Completion System
 # ------------------------------------------------------------------------
 
+# Source local fpath configuration before initializing completions
+# This allows machine-specific completion paths (e.g., homebrew) to be added
+if [[ -f $ZDOTDIR/local.d/_fpath.zsh ]]; then
+  source $ZDOTDIR/local.d/_fpath.zsh
+fi
+
 # Initialize completion system
 # Store completion cache in XDG-compliant location
 autoload -Uz compinit
