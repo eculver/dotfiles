@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+set -u
+
+profile="${1:-admin}"
+
+echo "Logging in using ${profile} profile..." 
+
+aws sso login --profile "${profile}"
