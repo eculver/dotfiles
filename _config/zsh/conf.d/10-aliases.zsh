@@ -56,13 +56,6 @@ alias epochtodayms='date -j -f "%Y%m%d%H%M%S" "`today`000000" +%s000' # epoch (m
 alias epochtodayutc='date -u -j -f "%Y%m%d%H%M%S" "`todayutc`000000" +%s'      # epoch for today at 00:00:00 UTC
 alias epochtodayutcms='date -u -j -f "%Y%m%d%H%M%S" "`todayutc`000000" +%s000' # epoch (ms) for today at 00:00:00 UTC
 
-# ------------------------------------------------------------------------
-# Convenience
-# ------------------------------------------------------------------------
-
-alias confdir='cd $ZDOTDIR'
-
-alias uuidgen='/usr/bin/uuidgen | tr "[:upper:]" "[:lower:]"'
 
 # ------------------------------------------------------------------------
 # Development (generic, move project-specific ones to local.d/)
@@ -77,3 +70,11 @@ alias buildr='watchr static.watchr'
 # ------------------------------------------------------------------------
 
 alias ifup-cassandra='for i in {2..10}; do sudo ifconfig lo0 alias 127.0.0.$i up; done'
+
+# ------------------------------------------------------------------------
+# Kitchen Sink
+# ------------------------------------------------------------------------
+
+alias confdir='cd $ZDOTDIR'
+alias uuidgen='/usr/bin/uuidgen | tr "[:upper:]" "[:lower:]"'
+alias aws-login-admin='aws sso login --profile admin'
