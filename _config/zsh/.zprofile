@@ -13,3 +13,6 @@ export PATH=/usr/local/sbin:/usr/local/bin:$HOME/bin:$PATH
 
 # Add user local bin
 [[ -d $HOME/.local/bin ]] && export PATH=$HOME/.local/bin:$PATH
+
+# Add local/share bin
+[[ -d $HOME/.local/share/../bin/env ]] && source $HOME/.local/share/../bin/env
