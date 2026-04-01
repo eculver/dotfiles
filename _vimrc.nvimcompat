@@ -576,9 +576,6 @@ set wildignore=*.o,*~,*.pyc,*.so,*.swp,*.zip,*.gz
 
 " Encoding
 if has("multi_byte")
-  if &termencoding == ""
-    let &termencoding = &encoding
-  endif
   set encoding=utf-8
   setglobal fileencoding=utf-8
   "setglobal bomb
@@ -684,15 +681,6 @@ set tabstop=4               " 4-space tabs
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
 set shiftround              " rounds indent to a multiple of shiftwidth
 set shiftwidth=4            " 4-space indent/outdent
-
-"""" Tags
-" Tags can be in ./tags, ../tags, ..., /home/tags.
-set tags+=$HOME/.vim/tags/python.ctags
-set tags+=$HOME/.vim/tags/django.ctags
-
-set showfulltag             " Show more information while completing tags.
-set cscopetag               " When using :tag, <C-]>, or "vim -t", try cscope:
-set cscopetagorder=0        " try ":cscope find g foo" and then ":tselect foo"
 
 """" Reading/Writing
 set noautowrite             " Never write a file unless I request it.
