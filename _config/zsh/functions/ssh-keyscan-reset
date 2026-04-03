@@ -1,0 +1,5 @@
+# Reset the SSH host keys for the given host
+local host="$1"
+[[ -z "${host}" ]] && echo "usage: ssh-keyscan-reset <hostname>" && return
+ssh-keygen -R "${host}" -f "${HOME}/.ssh/known_hosts" 2>/dev/null || true
+ssh-keyscan -H "${host}" >> "${HOME}/.ssh/known_hosts" 2>/dev/null
