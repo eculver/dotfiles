@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 set -u
 
 profile="${1:-admin}"
