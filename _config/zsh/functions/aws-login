@@ -1,7 +1,16 @@
-set -u
+main() {
+  # `emulate -L zsh` resets options to a clean zsh baseline and, via
+  # the `-L` flag, implies LOCAL_OPTIONS + LOCAL_TRAPS so any setopt
+  # below is automatically reverted when this function returns. Without
+  # this, options set inside an autoloaded function leak into the
+  # caller's interactive shell.
+  emulate -L zsh
+  setopt no_unset    # fail loudly on unset variable references
 
-profile="${1:-admin}"
+  local profile="${1:-admin}"
 
-echo "Logging in using ${profile} profile..." 
+  echo "Logging in using ${profile} profile..."
+  aws sso login --profile "${profile}"
+}
 
-aws sso login --profile "${profile}"
+main "$@"
