@@ -16,3 +16,13 @@ export PATH=/usr/local/sbin:/usr/local/bin:$HOME/bin:$PATH
 
 # Add local/share bin
 [[ -d $HOME/.local/share/../bin/env ]] && source $HOME/.local/share/../bin/env
+
+# Homebrew (installers write to ~/.zprofile, but ZDOTDIR ignores that path)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# App installers (Obsidian, etc.) append to ~/.zprofile by default
+[[ -f ~/.zprofile ]] && source ~/.zprofile
