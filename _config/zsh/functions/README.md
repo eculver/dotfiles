@@ -97,6 +97,28 @@ It will be autoloaded on the next shell start. To pick it up in the current shel
 autoload -Uz myfunc
 ```
 
+## `tfplan` — collect terragrunt plan output
+
+`tfplan -o <outfile> [-j <n>] [-p <profile>] <workspace> [<workspace> ...]` runs
+`terragrunt plan -no-color` in each workspace directory (as `AWS_PROFILE=admin`
+by default) and writes the combined output to `<outfile>` as Markdown. Each
+workspace's plan is wrapped in a collapsible `<details>` block headed by the
+workspace name — the directory's absolute path with everything up to and
+including the top-level `terraform/` stripped (e.g.
+`infra-platform/aws/production/eks/...`).
+
+- `-j/--jobs <n>` runs up to `n` plans in parallel (default: all at once);
+  `-j 1` forces sequential.
+- `-p/--profile <name>` overrides the AWS profile.
+- Captured output is de-noised (terragrunt timestamps and `STDOUT/STDERR
+  terraform:` prefixes stripped) before writing.
+- On a non-zero terragrunt exit the error is printed to stderr (not just buried
+  in the file), the run continues to the remaining workspaces, and `tfplan`
+  returns non-zero if any workspace failed.
+- The combined Markdown is copied to the clipboard via `pbcopy` when available.
+
+Tab completion lives in [`../completions/_tfplan`](../completions/_tfplan).
+
 ## Related
 
 - Parent: [`../README.md`](../README.md) — overall zsh config structure

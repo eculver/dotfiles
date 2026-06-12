@@ -1,0 +1,14 @@
+#compdef tfplan
+
+# ZSH completion for tfplan()
+#   tfplan -o <outfile> [-j <n>] [-p <profile>] <workspace> [<workspace> ...]
+#
+# -o/--output takes a file; -j/--jobs a number; -p/--profile an AWS profile.
+# Everything else is a terragrunt workspace directory, so positional args
+# complete to directories only.
+_arguments -s \
+  '(-o --output)'{-o,--output}'[combined markdown output file]:output file:_files' \
+  '(-j --jobs)'{-j,--jobs}'[max concurrent plans (default: all)]:jobs:' \
+  '(-p --profile)'{-p,--profile}'[AWS profile to plan as (default: admin)]:profile:' \
+  '(-h --help)'{-h,--help}'[show usage]' \
+  '*:workspace directory:_files -/'
