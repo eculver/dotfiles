@@ -1,0 +1,20 @@
+# Convert an .rtf or .docx file (anything textutil supports) to .txt, removing
+# common non-web-friendly characters along the way
+f="$1"
+[[ -z "${f}" ]] && echo "usage: convert2txt <filename>" && return 1
+
+# convert to plaintext, write to a temp file so we can post-process the text
+ftmp="/tmp/.convert2txt.$(tsnow).txt"
+if ! textutil -convert txt -output "${ftmp}" "${f}"; then
+    echo "could not convert ${f} to plaintext"
+    return 1
+fi
+
+# .txt filename, use same basename
+dname="$(dirname ${f})"
+fname="${dname}/$(cut -d "." -f1 <<< $(basename ${f})).txt"
+
+# replace junk chars
+rm-junk-chars "${ftmp}" > "${fname}"
+rm "${ftmp}"
+echo "Wrote ${fname}"
