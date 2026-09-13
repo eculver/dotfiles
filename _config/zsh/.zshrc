@@ -14,6 +14,9 @@ typeset -U fpath  # Keep fpath entries unique
 # Autoload all functions from functions directory
 autoload -Uz $ZDOTDIR/functions/*(.:t)
 
+# Make add-zsh-hook available so conf.d/ and local.d/ can register hooks
+autoload -Uz add-zsh-hook
+
 # ------------------------------------------------------------------------
 # Completion System
 # ------------------------------------------------------------------------
