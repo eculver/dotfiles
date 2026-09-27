@@ -1,0 +1,51 @@
+# Back up Bovada hand histories to iCloud, and to a NAS share if one is set up.
+#
+# The NAS specifics are intentionally not baked in here - set them in local.d
+# (this repo is public):
+#
+#   POKER_BACKUP_MOUNT  local mount point, e.g. /Volumes/backup
+#   POKER_BACKUP_SHARE  smb share to mount there, e.g. //user@host/backup
+#
+# Without those the iCloud leg still runs and the NAS leg is skipped.
+local src=${POKER_HH_SRC:-$HOME/Bovada.lv Poker/Hand History}
+local rel=${POKER_HH_SUBPATH:-Documents/poker/Bovada}
+
+if [[ ! -d $src ]]; then
+    echo "no hand history found at ${src}"
+    return 1
+fi
+
+# --- iCloud ---
+local icloud_home="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+if [[ -d $icloud_home ]]; then
+    local icloud_dest="${icloud_home}/${rel}"
+    echo
+    echo "rsync'ing ${src} -> ${icloud_dest}"
+    mkdir -p "${icloud_dest}" || return 1
+    rsync -avz --progress "${src}" "${icloud_dest}" || return 1
+else
+    echo "iCloud Drive not present, skipping iCloud backup"
+fi
+
+# --- NAS ---
+if [[ -z $POKER_BACKUP_MOUNT || -z $POKER_BACKUP_SHARE ]]; then
+    echo
+    echo "POKER_BACKUP_MOUNT/POKER_BACKUP_SHARE not set, skipping NAS backup"
+    return 0
+fi
+
+if ! mount | grep -q " ${POKER_BACKUP_MOUNT} "; then
+    echo "${POKER_BACKUP_MOUNT} not mounted, mounting ${POKER_BACKUP_SHARE}..."
+    if [[ ! -d $POKER_BACKUP_MOUNT ]]; then
+        sudo mkdir -p "${POKER_BACKUP_MOUNT}" || return 1
+        sudo chown "$(whoami)" "${POKER_BACKUP_MOUNT}" || return 1
+    fi
+    mount -t smbfs "${POKER_BACKUP_SHARE}" "${POKER_BACKUP_MOUNT}" || return 1
+    echo "mounted ${POKER_BACKUP_SHARE} at ${POKER_BACKUP_MOUNT}"
+fi
+
+local nas_dest="${POKER_BACKUP_MOUNT}/${rel}"
+mkdir -p "${nas_dest}" || return 1
+echo
+echo "rsync'ing ${src} -> ${nas_dest}"
+rsync -avz --progress "${src}" "${nas_dest}"
