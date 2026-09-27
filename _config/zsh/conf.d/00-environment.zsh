@@ -49,3 +49,9 @@ export GOPATH=${GOPATH:-$HOME/dev}
 export TXT_HOME=$HOME/txt
 export WORKLOG_HOME=$TXT_HOME/worklog
 export SUPPORTLOG_HOME=$TXT_HOME/support
+
+# TDT podcast working directories, used by the tdt_* functions
+export TDT_HOME=${TDT_HOME:-$HOME/tdt}
+export TDT_NOTES_DIR=${TDT_NOTES_DIR:-$TDT_HOME/notes}
+export TDT_AUDIO_DIR=${TDT_AUDIO_DIR:-$TDT_HOME/audio}
+export TDT_IMAGE_DIR=${TDT_IMAGE_DIR:-$TDT_HOME/image}

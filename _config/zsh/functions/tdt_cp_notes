@@ -1,0 +1,20 @@
+# Copy a TDT episode's show notes (plus the standing intro) to the clipboard
+local episode_num=$1
+
+if [[ -z $episode_num ]]; then
+    echo "usage: tdt_cp_notes <episode_num>"
+    return 1
+fi
+
+if [[ ! $episode_num =~ ^[0-9]+$ ]]; then
+    echo "error: episode number must be an integer"
+    return 1
+fi
+
+local note_file="${TDT_NOTES_DIR}/episode_${episode_num}.html"
+if [[ ! -f $note_file ]]; then
+    echo "error: note file ${note_file} does not exist"
+    return 1
+fi
+
+cat "${note_file}" "${TDT_NOTES_DIR}/intro.html" | pbcopy

@@ -1,0 +1,55 @@
+# Prepare the note and teaser files for a TDT episode.
+#
+# Converts the episode's raw .rtf notes to plaintext, then seeds this episode's
+# note and teaser HTML from the previous episode's, so they can be edited down
+# rather than written from scratch.
+local episode_num=$1
+
+if [[ -z $episode_num ]]; then
+    echo "usage: tdt_prep_episode <episode_num>"
+    return 1
+fi
+
+if [[ ! $episode_num =~ ^[0-9]+$ ]]; then
+    echo "error: episode number must be an integer"
+    return 1
+fi
+
+local prev_episode_num=$((episode_num - 1))
+
+# the raw notes come out of the recording session as .rtf
+local raw_note_file="${TDT_NOTES_DIR}/Episode ${episode_num}.rtf"
+if [[ ! -f $raw_note_file ]]; then
+    echo "error: raw note file ${raw_note_file} does not exist"
+    return 1
+fi
+
+convert2txt "${raw_note_file}" || return 1
+
+local prev_note_file="${TDT_NOTES_DIR}/episode_${prev_episode_num}.html"
+local new_note_file="${TDT_NOTES_DIR}/episode_${episode_num}.html"
+if [[ ! -f $prev_note_file ]]; then
+    echo "error: previous note file ${prev_note_file} does not exist"
+    return 1
+fi
+if [[ -f $new_note_file ]]; then
+    echo "warning: new note file ${new_note_file} already exists, skipping copy"
+else
+    cp "${prev_note_file}" "${new_note_file}" || return 1
+fi
+
+local prev_teaser_file="${TDT_NOTES_DIR}/episode_${prev_episode_num}_teaser.html"
+local new_teaser_file="${TDT_NOTES_DIR}/episode_${episode_num}_teaser.html"
+if [[ ! -f $prev_teaser_file ]]; then
+    echo "error: previous teaser file ${prev_teaser_file} does not exist"
+    return 1
+fi
+if [[ -f $new_teaser_file ]]; then
+    echo "warning: new teaser file ${new_teaser_file} already exists, skipping copy"
+else
+    cp "${prev_teaser_file}" "${new_teaser_file}" || return 1
+fi
+
+echo "episode ${episode_num} prepared"
+echo " new note file: ${new_note_file}"
+echo " new teaser file: ${new_teaser_file}"

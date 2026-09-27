@@ -1,0 +1,20 @@
+# Copy a TDT episode's teaser to the clipboard
+local episode_num=$1
+
+if [[ -z $episode_num ]]; then
+    echo "usage: tdt_cp_teaser <episode_num>"
+    return 1
+fi
+
+if [[ ! $episode_num =~ ^[0-9]+$ ]]; then
+    echo "error: episode number must be an integer"
+    return 1
+fi
+
+local teaser_file="${TDT_NOTES_DIR}/episode_${episode_num}_teaser.html"
+if [[ ! -f $teaser_file ]]; then
+    echo "error: teaser file ${teaser_file} does not exist"
+    return 1
+fi
+
+pbcopy < "${teaser_file}"
