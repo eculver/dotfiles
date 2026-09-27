@@ -38,6 +38,13 @@ export ERROR_COLOR="${bg[red]}${fg[black]}"
 # Default GitHub user for goto/clone functions
 export GO_DEFAULT=eculver
 
+# Go workspace. This lives here rather than in local.d because the tracked
+# goto/clone/nav/scaffold_challenge functions and the _goto completion all
+# dereference $GOPATH - leaving it to a gitignored file meant they silently
+# broke on any freshly provisioned machine.
+export GOPATH=${GOPATH:-$HOME/dev}
+[[ -d $GOPATH/bin ]] && path=($GOPATH/bin $path)
+
 # Worklog and support log directories
 export TXT_HOME=$HOME/txt
 export WORKLOG_HOME=$TXT_HOME/worklog
