@@ -1,0 +1,11 @@
+# Return 0 if an ssh agent is actually listening on a socket, 1 otherwise.
+# Defaults to $SSH_AUTH_SOCK.
+#
+# ssh-add exits 2 when it cannot talk to an agent at all, and 1 when the agent
+# answers but holds no identities - so only 2 means "nothing is there".
+local sock=${1:-$SSH_AUTH_SOCK}
+
+[[ -n $sock && -S $sock ]] || return 1
+
+SSH_AUTH_SOCK=$sock ssh-add -l >/dev/null 2>&1
+(( $? != 2 ))

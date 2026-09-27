@@ -28,9 +28,8 @@ elif [[ -d /Library/Java/JavaVirtualMachines ]]; then
     [[ -n "$jdk_path" ]] && export JAVA_HOME=$jdk_path
 fi
 
-# Go
-export GOPATH=$HOME/dev
-export PATH=$GOPATH/bin:$PATH
+# Go - GOPATH is set in conf.d/00-environment.zsh because tracked functions
+# depend on it. Override it here only if this machine needs a different one.
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
@@ -45,19 +44,17 @@ export CMAKE_HOME=/Applications/CMake.app/Contents
 # SSH Agent
 # ------------------------------------------------------------------------
 
-# Set SSH_AUTH_SOCK rather than a randomly generated one, for shells to share an agent
-# Using 1Password SSH agent:
-export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
-
-# Or use standard ssh-agent:
-# export SSH_AUTH_SOCK=$HOME/.ssh/ssh-agent.$HOSTNAME.sock
+# SSH_AUTH_SOCK is resolved in conf.d/05-ssh-agent.zsh: the 1Password agent
+# where it exists, otherwise the agent forwarded from the Mac. Do not set it
+# here - local.d is sourced after conf.d, so anything set here wins and would
+# break agent forwarding on remote hosts.
 
 # ------------------------------------------------------------------------
 # 1Password CLI
 # ------------------------------------------------------------------------
 
 # 1password completions
-eval "$(op completion zsh)"; compdef _op op
+(( $+commands[op] )) && { eval "$(op completion zsh)"; compdef _op op }
 
 # 1password plugins
 export OP_PLUGINS_FILE=$XDG_CONFIG_HOME/op/plugins.sh
