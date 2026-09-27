@@ -99,6 +99,18 @@ export PATH=$HOME/.arkade/bin/:$PATH
 
 
 # ------------------------------------------------------------------------
+# Prompt
+# ------------------------------------------------------------------------
+
+# The hostname in the prompt is coloured from a hash of the hostname, so every
+# machine looks different without any setup. Pin a specific colour here if two
+# of your hosts happen to collide, or if you just want a particular box to be
+# unmistakable (e.g. red for anything production-adjacent).
+# Any 256-colour number works.
+# export PROMPT_HOST_COLOR=196
+
+
+# ------------------------------------------------------------------------
 # Poker hand-history backup
 # ------------------------------------------------------------------------
 
