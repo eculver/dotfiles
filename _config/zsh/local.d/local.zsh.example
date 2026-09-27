@@ -82,6 +82,33 @@ export PATH=$HOME/.arkade/bin/:$PATH
 
 
 # ------------------------------------------------------------------------
+# Machine-specific PATH additions
+# ------------------------------------------------------------------------
+
+# Tools installed outside a package manager land in per-app directories, so
+# these belong here rather than in tracked config.
+# export PATH=$HOME/Library/Python/3.9/bin:$PATH
+# export PATH=$HOME/.maestro/bin:$PATH
+# export PATH=$HOME/.lmstudio/bin:$PATH
+
+# Coursier is deferred behind a function because it ships different versions
+# of tools than what may already be on $PATH
+# function cs-init {
+#     export PATH="$HOME/Library/Application Support/Coursier/bin:$PATH"
+# }
+
+
+# ------------------------------------------------------------------------
+# Poker hand-history backup
+# ------------------------------------------------------------------------
+
+# Consumed by the backup_poker_hand_history function. Kept out of tracked
+# config because this repo is public.
+# export POKER_BACKUP_MOUNT=/Volumes/backup
+# export POKER_BACKUP_SHARE=//user@host/backup
+
+
+# ------------------------------------------------------------------------
 # Local Machine Aliases
 # ------------------------------------------------------------------------
 
