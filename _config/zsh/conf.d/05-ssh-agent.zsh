@@ -32,6 +32,17 @@ else
         ln -sfn $SSH_AUTH_SOCK $_pinned_agent
     fi
 
+    # No forwarded agent and the pin is dead (e.g. a login without -A, or the
+    # forwarding session ended): fall back to the host's own systemd user agent,
+    # which holds the devenv key (see ~/.gitconfig-devenv). Only re-point when
+    # the pin is dead, so a live forwarded agent always wins.
+    _host_agent=${XDG_RUNTIME_DIR:-/run/user/$UID}/openssh_agent
+    if ! ssh-agent-reachable $_pinned_agent && ssh-agent-reachable $_host_agent; then
+        mkdir -p ${_pinned_agent:h}
+        ln -sfn $_host_agent $_pinned_agent
+    fi
+    unset _host_agent
+
     # Adopt the stable path whenever something is listening on it. This is what
     # rescues tmux panes that inherited a dead socket from an older login.
     ssh-agent-reachable $_pinned_agent && export SSH_AUTH_SOCK=$_pinned_agent
