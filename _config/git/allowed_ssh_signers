@@ -3,3 +3,5 @@ eculver@sfcompute.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOROU9K/modIfsa/oDCOx3
 # The key [user] signingkey actually signs with - without this line git reports
 # your own commits as "U" (good signature, unknown signer).
 e@eculver.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDNpmz/smNpMCUKot4pt+NX/PDMktWyX+LNaI8RXJLW4
+# Devenv host signing key (~/.gitconfig-devenv).
+e@eculver.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRLvdNks599xCdXM+v4Onk4chz6eRriRM3JMcW+819C

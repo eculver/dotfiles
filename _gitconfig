@@ -5,6 +5,11 @@
   email = e@eculver.io
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDNpmz/smNpMCUKot4pt+NX/PDMktWyX+LNaI8RXJLW4
 
+# Linux devenv: host-held signing key (see .gitconfig-devenv). Before the
+# sfcompute include so work repos keep their own identity.
+[includeIf "gitdir:/home/eculver/"]
+  path = .gitconfig-devenv
+
 # for work-related (aka sfcompute repos)
 [includeIf "gitdir:~/dev/src/github.com/sfcompute/"]
   path = .gitconfig-sfc
