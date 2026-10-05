@@ -5,13 +5,18 @@
   email = e@eculver.io
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDNpmz/smNpMCUKot4pt+NX/PDMktWyX+LNaI8RXJLW4
 
+# Linux devenv: host-held signing key (see .gitconfig-devenv). Before the
+# sfcompute include so work repos keep their own identity.
+[includeIf "gitdir:/home/eculver/"]
+  path = .gitconfig-devenv
+
 # for work-related (aka sfcompute repos)
 [includeIf "gitdir:~/dev/src/github.com/sfcompute/"]
   path = .gitconfig-sfc
 
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  excludesfile = /Users/eculver/.gitignore
+  excludesfile = ~/.gitignore
   autocrlf = false
   editor = nvim
   pager = delta
@@ -84,8 +89,11 @@
   format = ssh
 
 [gpg "ssh"]
-  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-  allowedSignersFile = "/Users/eculver/.config/git/allowed_ssh_signers"
+  # No `program` on purpose. Git defaults to ssh-keygen, which signs through
+  # whatever agent $SSH_AUTH_SOCK points at - the 1Password agent on the Mac,
+  # or the agent forwarded from it on a remote host. op-ssh-sign would work
+  # only on macOS, and is unnecessary while the key is in the agent.
+  allowedSignersFile = ~/.config/git/allowed_ssh_signers
 
 [credential]
   helper = cache -- timeout=3600
@@ -151,7 +159,12 @@
   trustExitCode = true
 [credential "https://github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
+
+# Machine-specific overrides (not tracked): macOS application paths, keychain
+# credential helpers, work identities. Git silently ignores this if absent.
+[include]
+  path = ~/.config/git/config.local

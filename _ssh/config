@@ -1,5 +1,26 @@
-Include ~/.orbstack/ssh/config
+# Per-machine hosts and overrides (not tracked).
+# ssh uses the first value it obtains for each option, so including these
+# first lets a machine override anything below.
+Include ~/.ssh/config.d/*.conf
+
+Include ~/.orbstack/ssh/config*
 
 
-Host *
+# ------------------------------------------------------------------------
+# Agent
+# ------------------------------------------------------------------------
+
+# The Mac running 1Password is the root of trust for SSH auth. Use its agent
+# only on machines where it actually exists - on Linux this block is skipped
+# and ssh falls back to $SSH_AUTH_SOCK, which conf.d/05-ssh-agent.zsh points
+# at the agent forwarded from the Mac.
+Match exec "test -S ~/.1password/agent.sock"
     IdentityAgent "~/.1password/agent.sock"
+
+# Agent forwarding is deliberately NOT set under `Host *`: anyone with root on
+# the far end can use a forwarded agent for as long as you are connected, so it
+# belongs only on hosts you actually trust. Add those in ~/.ssh/config.d/*.conf:
+#
+#   Host devenv
+#       HostName devenv.example.internal
+#       ForwardAgent yes

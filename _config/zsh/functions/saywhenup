@@ -1,0 +1,22 @@
+# Check whether a host is up and reachable over SSH, announcing the result
+local host="${1:-}"
+
+if [ -z "$host" ]; then
+    read "host?Enter IP address or hostname: "
+fi
+[[ -z "$host" ]] && echo "must enter a host or IP" && return 1
+
+# Check if host is up using ping
+if ! ping -c 1 -W 1 "$host" &>/dev/null; then
+    echo "$host is not reachable (ping failed)."
+    return 1
+fi
+
+# Check if the SSH port is open
+if ! nc -z -w 2 "$host" 22 &>/dev/null; then
+    echo "$host is reachable but SSH is not available."
+    return 1
+fi
+
+say "$host is up and reachable via SSH"
+echo "$host is up and reachable via SSH"

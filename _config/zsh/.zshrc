@@ -14,6 +14,9 @@ typeset -U fpath  # Keep fpath entries unique
 # Autoload all functions from functions directory
 autoload -Uz $ZDOTDIR/functions/*(.:t)
 
+# Make add-zsh-hook available so conf.d/ and local.d/ can register hooks
+autoload -Uz add-zsh-hook
+
 # ------------------------------------------------------------------------
 # Completion System
 # ------------------------------------------------------------------------
@@ -36,10 +39,11 @@ compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 # Source all configuration files in conf.d/ in order
 # Files are prefixed with numbers to control load order:
 #   00-environment.zsh  - Environment variables and colors
+#   05-ssh-agent.zsh    - SSH agent resolution
 #   10-aliases.zsh      - Command aliases
 #   20-keybindings.zsh  - Key bindings
-#   30-prompt.zsh       - Prompt customization
-#   40-oh-my-zsh.zsh    - Oh-My-Zsh setup
+#   40-oh-my-zsh.zsh    - Oh-My-Zsh setup (sets PROMPT from the theme)
+#   45-prompt.zsh       - Prompt customization (must follow oh-my-zsh)
 #   50-tools.zsh        - External tool integrations
 #   60-zle.zsh          - ZLE customizations
 

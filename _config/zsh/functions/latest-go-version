@@ -1,0 +1,2 @@
+# Print the latest released Go version, without the leading "go" (e.g. "1.25.4")
+curl -s 'https://go.dev/VERSION?m=text' | awk '{print $1}' | head -n1 | sed 's/^go//'

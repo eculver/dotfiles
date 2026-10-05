@@ -1,0 +1,17 @@
+# Devenv (Linux homelab VM) overrides, included from ~/.gitconfig for any repo
+# under /home/eculver/ - the Mac's home is /Users/eculver, so this never applies
+# there.
+#
+# The devenv holds its own passphrase-protected signing key (~/.ssh/id_ed25519),
+# loaded once per boot into the systemd user ssh-agent:
+#
+#   SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/openssh_agent ssh-add ~/.ssh/id_ed25519
+#
+# Signing goes through that agent explicitly (see devenv-ssh-sign), so it works
+# whether or not the current login forwarded the Mac's agent, and survives
+# tmux reattach. Registered on GitHub as a signing key for eculver.
+[user]
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRLvdNks599xCdXM+v4Onk4chz6eRriRM3JMcW+819C
+
+[gpg "ssh"]
+  program = ~/.config/git/devenv-ssh-sign

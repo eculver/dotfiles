@@ -1,0 +1,46 @@
+# Scaffold a new code-challenge directory in go-play.
+# Assumes go-play is already cloned to $GOPATH/src/github.com/eculver/go-play
+local challenge_name=$1
+if [ -z "${challenge_name}" ]; then
+    echo "usage: scaffold_challenge <challenge_name>"
+    return 1
+fi
+
+local challenge_dir="$GOPATH/src/github.com/eculver/go-play/pkg/challenge/${challenge_name}"
+if [ -d "${challenge_dir}" ]; then
+    echo "challenge directory ${challenge_dir} already exists"
+    return 1
+fi
+
+# resolved lazily so shell startup does not pay for a `go version` fork
+local go_version=${GOVERSION:-$(go version | cut -d ' ' -f3 | cut -d 'o' -f2)}
+
+mkdir -p "${challenge_dir}" || return 1
+
+cat > "${challenge_dir}/README.md" <<EOF
+# ${challenge_name}
+
+## Description
+
+## Solution
+
+EOF
+
+cat > "${challenge_dir}/${challenge_name}.go" <<EOF
+package ${challenge_name}
+
+EOF
+
+cat > "${challenge_dir}/${challenge_name}_test.go" <<EOF
+package ${challenge_name}_test
+
+EOF
+
+cat > "${challenge_dir}/go.mod" <<EOF
+module github.com/eculver/go-play/pkg/challenge/${challenge_name}
+
+go ${go_version}
+
+EOF
+
+echo "created ${challenge_dir}"

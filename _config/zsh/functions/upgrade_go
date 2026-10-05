@@ -1,0 +1,32 @@
+# Install a newer Go toolchain via golang.org/dl and make it the active one.
+# Defaults to the latest released version when called with no argument.
+local go_version_current go_version
+
+go_version_current=$(go version | cut -d ' ' -f3 | cut -d 'o' -f2)
+go_version=$1
+if [ -z "${go_version}" ]; then
+    go_version=$(latest-go-version)
+fi
+[[ -z "${go_version}" ]] && echo "could not determine a Go version to upgrade to" && return 1
+
+if [[ "${go_version}" == "${go_version_current}" ]]; then
+    echo "Go is already at ${go_version_current}"
+    return 0
+fi
+
+echo "upgrading Go from ${go_version_current} to ${go_version}"
+read -k 1 -s "REPLY?Are you sure? (y/n) "
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "aborted"
+    return 1
+fi
+
+go install golang.org/dl/go${go_version}@latest || return 1
+go${go_version} download || return 1
+go${go_version} install
+go${go_version} version
+go version
+
+export GOVERSION=${go_version}
+echo "Go upgraded from ${go_version_current} to ${go_version}"

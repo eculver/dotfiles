@@ -1,0 +1,6 @@
+# Replace common non-web-friendly characters in a text file, typically one that
+# has just been converted to plaintext from .rtf/.docx by convert2txt
+f="$1"
+[[ -z "${f}" ]] && echo "usage: rm-junk-chars <filename>" && return 1
+
+cat "${f}" | sed "s/’/'/g" | sed "s/‘/'/g" | sed 's/”/"/g' | sed 's/“/"/g' | sed 's/-/-/g' | sed 's/•//g'

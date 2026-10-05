@@ -1,2 +1,7 @@
 e@eculver.io ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDfkQZH2QJ5stcUeZZDYS7PFgcLVVEHDPSZViqFLzu5UUQOKqx56ks/pXVSUddQlee12AFNWhllZEsGvpE3h8vxmSrTTKxTb1HsEPyW7yBeOmLvAE7CVQNyUL3bwZP2EUbLTj3revjNe1wv1KKyEBVf4dSUrAFYVEiEDdElD1dAxcH7od7lgBY8gNiU66UQYgsuXMRGF+Y7qotjaMLYZwYzUlCPFwTPdnk6ZHwx23aejqZK7CPYoaAusSklwtykV04sbJ6CG3ednaeSwgCQ7dlzFigk7C/Pw/b/C2X+/FcFwgNFGM/mDfOUDLXPwgdendsr1jiJoBs3tjheyMY464jx
 eculver@sfcompute.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOROU9K/modIfsa/oDCOx3eMQ5iOKM31hyhYlwxk7lW1
+# The key [user] signingkey actually signs with - without this line git reports
+# your own commits as "U" (good signature, unknown signer).
+e@eculver.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDNpmz/smNpMCUKot4pt+NX/PDMktWyX+LNaI8RXJLW4
+# Devenv host signing key (~/.gitconfig-devenv).
+e@eculver.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRLvdNks599xCdXM+v4Onk4chz6eRriRM3JMcW+819C
