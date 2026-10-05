@@ -36,7 +36,7 @@ The shell configurations follow a modular architecture with common and environme
 - Loads hostname-specific config from `~/.zshrc.d/$HOSTNAME`
 - Includes utility functions from `~/.zshrc.d/utils.zsh`
 - Key environment-specific configs: `local.zsh`, `yobi.zsh`, `miner.zsh`, `plow.zsh`, `wd.zsh`
-- Plugins: git, github, macos, dotenv, nvm (lazy-loaded), zsh-autosuggestions
+- Plugins: git, gh, macos, dotenv, nvm (lazy-loaded), zsh-autosuggestions
 - Uses vi keybindings with custom readline settings (^R for history search, ^Space for autosuggest)
 
 **Bash (_bashrc)**

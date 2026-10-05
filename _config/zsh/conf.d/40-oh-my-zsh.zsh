@@ -34,7 +34,7 @@ zstyle ':omz:plugins:nvm' silent-autoload yes # suppress the output NVM generate
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git github macos dotenv nvm zsh-autosuggestions)
+plugins=(git gh macos dotenv nvm zsh-autosuggestions)
 
 # Source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
