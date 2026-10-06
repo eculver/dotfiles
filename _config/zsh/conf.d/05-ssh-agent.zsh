@@ -41,7 +41,18 @@ else
         mkdir -p ${_pinned_agent:h}
         ln -sfn $_host_agent $_pinned_agent
     fi
-    unset _host_agent
+
+    # The host agent starts empty after every boot. On hosts that hold their
+    # own key, load it on the first interactive login so unattended work
+    # (tmux, background agents, git signing) has it until the next reboot.
+    # ssh-add -l exits 1 when the agent answers but holds no identities, so
+    # this prompts once per boot and is skipped when the agent is unreachable.
+    _host_key=$HOME/.ssh/id_ed25519
+    if [[ -o interactive && -t 0 && -f $_host_key ]]; then
+        SSH_AUTH_SOCK=$_host_agent ssh-add -l >/dev/null 2>&1
+        (( $? == 1 )) && SSH_AUTH_SOCK=$_host_agent ssh-add $_host_key
+    fi
+    unset _host_agent _host_key
 
     # Adopt the stable path whenever something is listening on it. This is what
     # rescues tmux panes that inherited a dead socket from an older login.
