@@ -19,15 +19,30 @@ See `_config/zsh/README.md` for complete documentation.
 
 ## Overview
 
-This is a personal dotfiles repository using a symlink-based installation approach. Files prefixed with `_` are automatically symlinked to `$HOME` with the underscore replaced by a dot (e.g., `_bashrc` becomes `~/.bashrc`).
+This is a personal dotfiles repository using a symlink-based installation approach. Files prefixed with `_` are symlinked into `$HOME` with the underscore replaced by a dot (e.g., `_bashrc` becomes `~/.bashrc`).
 
 ## Installation
 
 ```bash
-./install.sh
+./install.sh --dry-run   # print what would change, touch nothing
+./install.sh             # apply
 ```
 
-This script creates symlinks for all files matching `_*` in the repository root to `$HOME` with the first underscore replaced by a dot.
+Each top-level `_*` entry is linked into `$HOME` with the first `_` replaced by
+a `.` — except `_config` and `_ssh`, which have their **contents** linked
+rather than the directory itself.
+
+So `~/.config/zsh → _config/zsh` and `~/.ssh/config → _ssh/config`, rather than
+handing all of `~/.config` or `~/.ssh` to this repo. Those directories are
+shared with other programs, and `ln -sf DIR TARGET` does not replace an
+existing directory anyway — it silently creates `TARGET/DIR` *inside* it, which
+is how you get a stray `~/.config/_config`. When a target entry is itself a
+real directory (e.g. `~/.config/git`, which git writes its own `ignore` into),
+the script recurses rather than taking the directory over.
+
+Nothing real is ever clobbered: an existing non-symlink file or directory is
+moved to `<name>.backup.<timestamp>` first. Re-running is a no-op — already
+correct links are reported `ok` and left alone.
 
 ## Architecture
 
