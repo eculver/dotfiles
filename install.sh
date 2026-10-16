@@ -51,7 +51,7 @@ if [ -z "${HOME:-}" ] || [ ! -d "$HOME" ]; then
     exit 1
 fi
 
-say() {
+msg() {
     printf '%s\n' "$*"
 }
 
@@ -80,7 +80,7 @@ is_shared() {
 # Move an existing real file/directory out of the way.
 backup() {
     local target="$1" dest="$1.backup.$STAMP"
-    say "backup    $(rel "$target") -> $(rel "$dest")"
+    msg "backup    $(rel "$target") -> $(rel "$dest")"
     run mv "$target" "$dest"
     backed_up=$((backed_up + 1))
 }
@@ -94,11 +94,11 @@ link() {
         # -ef follows symlinks, so this also catches links that reach the same
         # file by a different path (e.g. a symlink checked into the repo).
         if [ "$current" = "$source" ] || [ "$target" -ef "$source" ]; then
-            say "ok        $(rel "$target")"
+            msg "ok        $(rel "$target")"
             unchanged=$((unchanged + 1))
             return 0
         fi
-        say "update    $(rel "$target") -> $(src "$source") (was $current)"
+        msg "update    $(rel "$target") -> $(src "$source") (was $current)"
         # -n so an existing symlink-to-directory is replaced, not followed.
         run ln -sfn "$source" "$target"
         updated=$((updated + 1))
@@ -107,7 +107,7 @@ link() {
 
     [ -e "$target" ] && backup "$target"
 
-    say "create    $(rel "$target") -> $(src "$source")"
+    msg "create    $(rel "$target") -> $(src "$source")"
     run ln -sfn "$source" "$target"
     created=$((created + 1))
 }
@@ -121,7 +121,7 @@ link_contents() {
 
     if [ ! -d "$target" ]; then
         { [ -e "$target" ] || [ -L "$target" ]; } && backup "$target"
-        say "mkdir     $(rel "$target")/"
+        msg "mkdir     $(rel "$target")/"
         run mkdir -p "$target"
     fi
 
@@ -139,23 +139,23 @@ link_contents() {
 
 cd "$REPO" || exit 1
 
-[ "$DRY_RUN" -eq 1 ] && say "dry run: nothing will be changed"
-say "repo: $REPO"
-say "home: $HOME"
-say ""
+[ "$DRY_RUN" -eq 1 ] && msg "dry run: nothing will be changed"
+msg "repo: $REPO"
+msg "home: $HOME"
+msg ""
 
 for entry in _*; do
     [ -e "$entry" ] || continue
     if is_shared "$entry"; then
-        say "shared    $(rel "$HOME/${entry/_/.}")/ (linking contents)"
+        msg "shared    $(rel "$HOME/${entry/_/.}")/ (linking contents)"
         link_contents "$REPO/$entry" "$HOME/${entry/_/.}"
     else
         link "$REPO/$entry" "$HOME/${entry/_/.}"
     fi
 done
 
-say ""
-say "created: $created  updated: $updated  unchanged: $unchanged  backed up: $backed_up"
-[ "$DRY_RUN" -eq 1 ] && say "dry run: nothing was changed"
+msg ""
+msg "created: $created  updated: $updated  unchanged: $unchanged  backed up: $backed_up"
+[ "$DRY_RUN" -eq 1 ] && msg "dry run: nothing was changed"
 
 exit 0
