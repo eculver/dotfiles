@@ -32,12 +32,30 @@ becomes
 
     ${HOME}/.bashrc
 
+`_config` and `_ssh` are the exceptions: their **contents** are linked rather
+than the directory itself, so
+
+    _config/zsh
+
+becomes
+
+    ${HOME}/.config/zsh
+
+`~/.config` and `~/.ssh` are shared with other programs, so handing either of
+them wholesale to this repo would clobber whatever else lives there.
+
 ### Installing source files
 It's as simple as running:
 
     ./install.sh
 
-From this top-level directory.
+From this top-level directory. To see what it would do without changing
+anything:
+
+    ./install.sh --dry-run
+
+Anything real that is in the way gets moved to `<name>.backup.<timestamp>`
+rather than overwritten, and re-running is a no-op.
 
 ## Requirements
 * bash
