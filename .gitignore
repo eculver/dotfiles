@@ -24,3 +24,6 @@ _config/zsh/local.d/*
 _config/zsh/.zcompdump*
 _config/zsh/.zsh_history
 _config/zsh/.zsh_sessions/
+
+# Per-machine git overrides (see CLAUDE.md, Git Configuration)
+_config/git/config.local
