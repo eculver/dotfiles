@@ -127,7 +127,11 @@ key and forwards its agent to remote hosts. `conf.d/05-ssh-agent.zsh`:
   that stable path, so long-lived tmux panes survive a reconnect (sshd hands out
   a fresh socket path per login)
 - no live forwarded agent → fall back to the host's own systemd user agent at
-  `$XDG_RUNTIME_DIR/openssh_agent`, loading `~/.ssh/id_ed25519` once per boot
+  `$XDG_RUNTIME_DIR/openssh_agent`, loading `~/.ssh/id_ed25519_git` (or
+  `~/.ssh/id_ed25519` where that is absent) once per boot
+
+On a headless host that agent comes from `_config/systemd/user/ssh-agent.service.d/headless.conf`,
+which also clears a socket left behind by a killed agent so the unit can restart.
 
 `_ssh/config` mirrors this: `IdentityAgent` is set only under a
 `Match exec "test -S ~/.1password/agent.sock"` guard so Linux skips it, and
@@ -150,9 +154,15 @@ this is what makes signing work on Linux. `gpg.ssh.allowedSignersFile` points at
 actually signs with or git reports your own commits as unknown-signer.
 
 The Linux devenv is the exception: `_gitconfig-devenv` (included for repos under
-`/home/eculver/`) sets `gpg.ssh.program = ~/.config/git/devenv-ssh-sign`, a
-shim that pins `SSH_AUTH_SOCK` to the host's systemd user agent before exec'ing
-`ssh-keygen`, because that host signs with its own key rather than a forwarded one.
+`/home/eculver/`) sets `gpg.ssh.program` to `/home/eculver/.config/git/devenv-ssh-sign`
+(absolute, because git 2.43 does not expand `~` there), a shim that pins
+`SSH_AUTH_SOCK` to the host's systemd user agent before exec'ing `ssh-keygen`,
+because that host signs with its own key rather than a forwarded one. A devenv
+other than the homelab sets its host key as `user.signingkey` in
+`~/.config/git/config.local`. `_gitconfig-devenv` also includes
+`.gitconfig-sfc-devenv` (work name and email, no key) for any repo with a
+`github.com/sfcompute/` remote, via `includeIf "hasconfig:remote.*.url:..."`,
+since devenv checkouts don't live under `~/dev/src/github.com/sfcompute/`.
 
 **Diff/Merge**: Uses `delta` as pager with custom theme (`custom-theme`) featuring:
 - Line numbers enabled
@@ -160,9 +170,11 @@ shim that pins `SSH_AUTH_SOCK` to the host's systemd user agent before exec'ing
 - diff3 conflict style
 - Color-moved support
 
-**Conditional Includes** (order matters, first match for a path wins per key):
-- `gitdir:/home/eculver/` → `.gitconfig-devenv` (Linux devenv signing identity)
-- `gitdir:~/dev/src/github.com/sfcompute/` → `.gitconfig-sfc` (work identity)
+**Conditional Includes** (in order; a later value overrides an earlier one):
+- `gitdir:/home/eculver/` → `.gitconfig-devenv` (Linux devenv signing key, and
+  `.gitconfig-sfc-devenv` for sfcompute remotes)
+- `gitdir:/Users/eculver/dev/src/github.com/sfcompute/` → `.gitconfig-sfc` (Mac
+  work identity and key; absolute so it never fires on a devenv)
 - `~/.config/git/config.local` — untracked per-machine overrides, silently
   ignored when absent
 

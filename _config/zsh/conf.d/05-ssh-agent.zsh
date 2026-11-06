@@ -47,7 +47,11 @@ else
     # (tmux, background agents, git signing) has it until the next reboot.
     # ssh-add -l exits 1 when the agent answers but holds no identities, so
     # this prompts once per boot and is skipped when the agent is unreachable.
-    _host_key=$HOME/.ssh/id_ed25519
+    # Hosts whose default identity is already taken (e.g. by a passphrase-less
+    # test-harness key that tooling injects into VMs) keep theirs at
+    # id_ed25519_git instead.
+    _host_key=$HOME/.ssh/id_ed25519_git
+    [[ -f $_host_key ]] || _host_key=$HOME/.ssh/id_ed25519
     if [[ -o interactive && -t 0 && -f $_host_key ]]; then
         SSH_AUTH_SOCK=$_host_agent ssh-add -l >/dev/null 2>&1
         (( $? == 1 )) && SSH_AUTH_SOCK=$_host_agent ssh-add $_host_key

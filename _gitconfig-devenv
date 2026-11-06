@@ -2,16 +2,32 @@
 # under /home/eculver/ - the Mac's home is /Users/eculver, so this never applies
 # there.
 #
-# The devenv holds its own passphrase-protected signing key (~/.ssh/id_ed25519),
-# loaded once per boot into the systemd user ssh-agent:
+# The devenv holds its own passphrase-protected signing key (~/.ssh/id_ed25519,
+# or ~/.ssh/id_ed25519_git where the default identity is taken), loaded once
+# per boot into the systemd user ssh-agent - conf.d/05-ssh-agent.zsh prompts on
+# the first interactive login, or by hand:
 #
 #   SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/openssh_agent ssh-add ~/.ssh/id_ed25519
 #
 # Signing goes through that agent explicitly (see devenv-ssh-sign), so it works
 # whether or not the current login forwarded the Mac's agent, and survives
 # tmux reattach. Registered on GitHub as a signing key for eculver.
+#
+# The key below is the homelab's. Another devenv sets its own [user] signingkey
+# in ~/.config/git/config.local, which is included last. A headless host also
+# needs ~/.config/systemd/user/ssh-agent.service.d/headless.conf, since
+# Ubuntu's stock unit only starts the agent for a graphical session.
 [user]
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRLvdNks599xCdXM+v4Onk4chz6eRriRM3JMcW+819C
 
 [gpg "ssh"]
-  program = ~/.config/git/devenv-ssh-sign
+  # Absolute, because older git (2.43 on Ubuntu 24.04) execs this value
+  # verbatim without expanding ~. Safe: this file only applies under that home.
+  program = /home/eculver/.config/git/devenv-ssh-sign
+
+# Match work repos by remote rather than path: devenv checkouts don't live
+# under ~/dev/src/github.com/sfcompute/.
+[includeIf "hasconfig:remote.*.url:git@github.com:sfcompute/**"]
+  path = ~/.gitconfig-sfc-devenv
+[includeIf "hasconfig:remote.*.url:https://github.com/sfcompute/**"]
+  path = ~/.gitconfig-sfc-devenv

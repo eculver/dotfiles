@@ -5,3 +5,6 @@ eculver@sfcompute.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOROU9K/modIfsa/oDCOx3
 e@eculver.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDNpmz/smNpMCUKot4pt+NX/PDMktWyX+LNaI8RXJLW4
 # Devenv host signing key (~/.gitconfig-devenv).
 e@eculver.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRLvdNks599xCdXM+v4Onk4chz6eRriRM3JMcW+819C
+# sfcompute devenv1 host signing key (~/.ssh/id_ed25519_git there). Signs both
+# work and personal commits on that host, so it carries both identities.
+eculver@sfcompute.com,e@eculver.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJPqYzYoRF9PzbydDLYecfcCBFSmUkMbUarrQpP5pwk7

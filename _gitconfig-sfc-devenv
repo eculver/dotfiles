@@ -1,0 +1,7 @@
+# Work identity on a devenv, included from ~/.gitconfig-devenv for any repo with
+# an sfcompute GitHub remote, wherever it is checked out. The signing key stays
+# the devenv host's own (see ~/.gitconfig-devenv), not the Mac's .gitconfig-sfc
+# key, so signing works without the Mac's forwarded agent.
+[user]
+  name = Evan Culver
+  email = eculver@sfcompute.com
