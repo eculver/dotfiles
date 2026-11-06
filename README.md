@@ -14,7 +14,7 @@ Personal dotfiles using a symlink-based installation approach.
 ## Other Configurations
 
 - **Vim/Neovim**: `_vimrc`, `_vim/`
-- **Tmux**: `_tmux.conf`
+- **Tmux**: `_tmux.conf` (local, C-a prefix) and `_tmux.conf.remote` (remote hosts, C-j prefix), both with tpm, resurrect and continuum
 - **Git**: `_gitconfig` with delta, SSH signing via 1Password
 - **Screen**: `_screenrc`
 - **WeeChat**: `_config/weechat/`

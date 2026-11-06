@@ -51,3 +51,24 @@ setw -g window-status-activity-style 'bg=colour236,fg=colour231,none'
 setw -g window-status-separator ''
 setw -g window-status-format '#[fg=color231,bg=colour236] #I: #W '
 setw -g window-status-current-format '#[fg=colour236,bg=colour231,nobold,nounderscore,noitalics]#[fg=colour236,bg=colour231] #I: #[fg=colour236,bg=colour231,bold]#W #[fg=colour231,bg=colour236,nobold,nounderscore,noitalics]'
+
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @plugin 'Someblueman/tmux-ping'
+set -g @plugin 'eculver/tmux-date'
+# These ensure that I can restore sessions with Claude Code / Codex / etc when I restore a session
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'timvw/tmux-assistant-resurrect'
+# A remote tmux server dies with the host (or the OOM killer), not with a
+# terminal, so bring the last save back as soon as a new server starts.
+set -g @continuum-restore 'on'
+
+run '~/.tmux/plugins/tpm/tpm'
+
+# tmux-assistant-resurrect sets its resurrect hooks as `bash "$HOME"'/...'`, but
+# tmux 3.4's `show-option -v` hands that back as `\$HOME`, which resurrect then
+# evals literally, so the hooks never run. Re-point them with `~` (which tmux
+# leaves alone) after tpm has loaded the plugin.
+set -g @resurrect-hook-post-save-all 'bash ~/.tmux/plugins/tmux-assistant-resurrect/scripts/save-assistant-sessions.sh'
+set -g @resurrect-hook-post-restore-all 'bash ~/.tmux/plugins/tmux-assistant-resurrect/scripts/restore-assistant-sessions.sh'
