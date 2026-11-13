@@ -8,3 +8,5 @@ log/
 
 # OS meta junk
 .DS_Store
+
+**/.claude/settings.local.json
