@@ -24,6 +24,31 @@ bind + split-window -h # horizontal split
 unbind '"'
 bind _ split-window -v # vertical split
 
+## mouse: click to select a pane, drag a border to resize, wheel to scroll
+set -g mouse on
+
+## no lag on Escape (copy-mode, vim), and a longer window for -r repeats
+set -sg escape-time 0
+set -g repeat-time 1000
+
+## vim-style pane selection
+unbind Up
+unbind Down
+unbind Left
+unbind Right
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+## resizing: prefix then H/J/K/L, keep tapping without re-pressing the prefix.
+## The local conf also binds C-H/C-J/C-K/C-L to resize by 5, but tmux treats
+## C-J and C-j as the same key, so that would clobber the C-j send-prefix above.
+bind -r H resize-pane -L
+bind -r J resize-pane -D
+bind -r K resize-pane -U
+bind -r L resize-pane -R
+
 ## window title
 set-option -g set-titles on
 set-option -g set-titles-string '#S:#I.#P #W' # window number,program name,active (or not)
