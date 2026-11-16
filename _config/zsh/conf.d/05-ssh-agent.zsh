@@ -1,9 +1,8 @@
 # SSH agent resolution
 #
-# The Mac running 1Password is the single root of trust for SSH auth: it holds
-# every private key and forwards its agent out to remote hosts (see the
-# ForwardAgent entries in ~/.ssh/config). Remote hosts never hold key material
-# of their own, so all they have to do is point at the forwarded agent.
+# The Mac running 1Password holds its keys and forwards its agent out to remote
+# hosts (see the ForwardAgent entries in ~/.ssh/config). Remote hosts point at
+# the forwarded agent when there is one.
 #
 #   1Password socket present -> talk to it directly (the Mac)
 #   otherwise                -> adopt the agent forwarded by the current login
