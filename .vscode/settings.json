@@ -3,7 +3,6 @@
     "**/_config/zsh/functions/*": "shellscript",
     "**/_config/zsh/completions/*": "shellscript",
     "**/_config/zsh/local.d/*": "shellscript",
-    "**/_bashrc.d/*": "shellscript",
-    "**/_zshrc.d/*": "shellscript"
+    "**/_bashrc.d/*": "shellscript"
   }
 }
